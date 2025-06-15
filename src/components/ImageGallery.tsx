@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from "react";
 import { parseFiles } from "@/utils/tagUtils";
 import { TagSidebar } from "./TagSidebar";
@@ -25,9 +26,6 @@ export const ImageGallery: React.FC = () => {
       .map(([name, val]) => ({ name, count: val.images.length }))
       .sort((a, b) => a.name.localeCompare(b.name))
   ), [tagMap]);
-
-  // Count unique tags
-  const totalTagCount = Object.keys(tagMap).length;
 
   // Images of active tag or all
   const visibleImages = useMemo(() =>
@@ -113,16 +111,10 @@ export const ImageGallery: React.FC = () => {
             document.getElementById("sidebar-pop")?.classList.add("hidden");
           }} />
         </div>
-        {/* Tag and image count info */}
-        <div className="mb-2 flex flex-wrap items-center justify-between pr-2">
-          <div className="text-md font-semibold text-muted-foreground">
-            Total tags: <span className="text-accent font-bold">{totalTagCount}</span>
-          </div>
-          <div className="text-lg font-semibold text-muted-foreground text-right">
-            {visibleImages.length} image{visibleImages.length !== 1 ? "s" : ""} found{activeTag ? ` for: "${activeTag}"` : ""}
-          </div>
-        </div>
         {/* Professional Gallery grid */}
+        <div className="mb-4 text-lg font-semibold text-muted-foreground text-right pr-2">
+          {visibleImages.length} image{visibleImages.length !== 1 ? "s" : ""} found{activeTag ? ` for: "${activeTag}"` : ""}
+        </div>
         <div className={cn(
           "grid gap-8 md:gap-10",
           "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
@@ -147,9 +139,9 @@ export const ImageGallery: React.FC = () => {
                 {img.title}
               </div>
               <div className="flex flex-wrap gap-2 w-full justify-center mt-auto">
-                {img.tags.map((tag, i) => (
+                {img.tags.map(tag => (
                   <span
-                    key={tag + "-" + i}
+                    key={tag}
                     className={cn(
                       "text-xs px-3 py-1 rounded-full font-semibold cursor-pointer transition-all duration-100",
                       "bg-badge text-badgeText border hover:bg-accent focus:ring-2",

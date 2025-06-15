@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { themes, ThemeName } from "./themes";
 import { getTheme, setTheme } from "@/utils/localPersistence";
@@ -27,7 +28,7 @@ function getInitialTheme(): ThemeName {
 
 // Provider
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeName>(() => getInitialTheme());
+  const [theme, setThemeState] = useState<ThemeName>(getInitialTheme);
   useEffect(() => {
     setTheme(theme);
   }, [theme]);

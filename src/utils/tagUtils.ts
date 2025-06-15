@@ -39,7 +39,7 @@ export function levenshtein(a: string, b: string): number {
 }
 
 // Fuzzily group similar tags using Levenshtein distance
-function groupTags(rawTags: string[], threshold = 4): Record<string, string[]> {
+function groupTags(rawTags: string[], threshold = 2): Record<string, string[]> {
   const canonical: Record<string, string[]> = {};
   const used: Set<string> = new Set();
   for (let tag of rawTags) {
