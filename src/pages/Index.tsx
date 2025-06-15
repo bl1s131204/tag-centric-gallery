@@ -1,11 +1,21 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { ThemeProvider } from "@/theme/themeContext";
 import { ImageGallery } from "@/components/ImageGallery";
 import { ThemeDropdown } from "@/components/ThemeDropdown";
 import { Bell, UserCircle, Search } from "lucide-react";
+import { HiddenAccess, HiddenFolderAccess } from "@/components/HiddenAccess";
 
 const Index = () => {
+  const [showHidden, setShowHidden] = useState(false);
+  const [specialFolderPath, setSpecialFolderPath] = useState<string | null>(null);
+
+  // Handler for opening folder
+  const handleOpenInGallery = (folderPath: string) => {
+    setSpecialFolderPath(folderPath);
+    setShowHidden(false);
+  };
+
   return (
     <ThemeProvider>
       <header className="fixed top-0 left-0 w-full z-[45] nav-blur shadow-lg border-b border-[#232838]">
@@ -44,10 +54,21 @@ const Index = () => {
         </div>
       </header>
       <main className="pt-[80px] bg-[#121212] min-h-screen">
-        <ImageGallery />
+        <ImageGallery specialFolderPath={specialFolderPath} />
+        <HiddenAccess
+          onReveal={() => setShowHidden(true)}
+          show={showHidden}
+        />
+        {showHidden && (
+          <HiddenFolderAccess
+            onClose={() => setShowHidden(false)}
+            onOpenInGallery={handleOpenInGallery}
+          />
+        )}
         {/* Future: Sidebar, etc */}
       </main>
     </ThemeProvider>
   );
 };
 export default Index;
+

@@ -54,9 +54,11 @@ export const HiddenAccess: React.FC<{ onReveal: () => void; show: boolean }> = (
 
 /**
  * Folder path display, after unlock
+ * - Add an "Open Folder in Gallery" button that calls onOpenInGallery(folderPath)
  */
-export const HiddenFolderAccess: React.FC<{ onClose: () => void }> = ({
+export const HiddenFolderAccess: React.FC<{ onClose: () => void; onOpenInGallery: (folderPath: string) => void }> = ({
   onClose,
+  onOpenInGallery,
 }) => {
   const [folderPath, setFolderPath] = useState("F:\\movie\\Telegram Desktop");
 
@@ -81,6 +83,12 @@ export const HiddenFolderAccess: React.FC<{ onClose: () => void }> = ({
         >
           Copy Path
         </button>
+        <button
+          className="bg-emerald text-white px-3 py-1 rounded font-semibold flex-1"
+          onClick={() => onOpenInGallery(folderPath)}
+        >
+          Open in Gallery
+        </button>
       </div>
       <span className="text-xs text-muted-foreground mb-2">
         To open this folder, paste the copied path into your system's File Explorer address bar.
@@ -94,3 +102,4 @@ export const HiddenFolderAccess: React.FC<{ onClose: () => void }> = ({
     </div>
   );
 };
+

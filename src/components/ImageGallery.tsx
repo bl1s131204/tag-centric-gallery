@@ -1,18 +1,31 @@
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { parseFiles } from "@/utils/tagUtils";
 import { TagSidebar } from "./TagSidebar";
 import { FullscreenViewer } from "./FullscreenViewer";
 import { cn } from "@/lib/utils";
 
-/**
- * Accepts local files, parses tags/titles, shows UI
- */
-export const ImageGallery: React.FC = () => {
+/*
+  - Accept specialFolderPath prop, if set show a banner and prompt user to select that folder in the picker.
+  - If files loaded and all file paths (webkitRelativePath) include the requested folder path, auto-filter for those files.
+*/
+type ImageGalleryProps = {
+  specialFolderPath?: string | null;
+};
+
+export const ImageGallery: React.FC<ImageGalleryProps> = ({ specialFolderPath }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [viewerIdx, setViewerIdx] = useState<number | null>(null);
-  const [showHidden, setShowHidden] = useState(false);
+  const [specialBanner, setSpecialBanner] = useState<string | null>(null);
+
+  // Special folder: Show banner when requested
+  useEffect(() => {
+    if (specialFolderPath) {
+      setSpecialBanner(`To open this folder (${specialFolderPath}), click "Change Folder" and pick it in the file picker.`);
+      setFiles([]); // clear previous files
+    }
+  }, [specialFolderPath]);
 
   // Parse only once
   const { imageData, tagMap } = useMemo(() =>
@@ -44,18 +57,25 @@ export const ImageGallery: React.FC = () => {
     setFiles(Array.from(e.target.files));
     setActiveTag(null);
     setViewerIdx(null);
+    setSpecialBanner(null);
   }
 
-  // UI
+  // UI if no files selected
   if (!files.length) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
         <h1 className="text-4xl font-bold mb-2">Select Image Folder</h1>
         <p className="text-muted-foreground mb-4">Choose a folder with images to get started.</p>
+        {specialBanner && (
+          <div className="bg-gold/10 border border-gold rounded-lg text-gold px-4 py-3 mb-3 max-w-xl text-center">
+            {specialBanner}
+            <br />
+            <span className="text-sm text-gold font-mono">{specialFolderPath}</span>
+          </div>
+        )}
         <input
           type="file"
           multiple
-          // Use as any to pass webkitdirectory for directory upload
           {...{ webkitdirectory: "true", directory: "true" } as any}
           className="mb-4"
           onChange={handleFilePick}
@@ -65,7 +85,6 @@ export const ImageGallery: React.FC = () => {
           className="hidden"
           tabIndex={-1}
           aria-hidden
-          onClick={() => setShowHidden(true)}
         >Unlock</button>
       </div>
     );
