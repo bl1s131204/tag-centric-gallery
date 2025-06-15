@@ -63,6 +63,22 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
   const openViewerAt = (idx: number) => setViewerIdx(idx);
   const closeViewer = () => setViewerIdx(null);
 
+  const handleNext = () => {
+    if (viewerIdx === null) return;
+    const nextIdx = viewerIdx + 1;
+    if (nextIdx < visibleImages.length) {
+      setViewerIdx(nextIdx);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (viewerIdx === null) return;
+    const prevIdx = viewerIdx - 1;
+    if (prevIdx >= 0) {
+      setViewerIdx(prevIdx);
+    }
+  };
+
   function handleFilePick(e: React.ChangeEvent<HTMLInputElement>) {
     if (!e.target.files) return;
     setFiles(Array.from(e.target.files));
@@ -98,6 +114,8 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
           idx={viewerIdx ?? 0}
           images={visibleImages.map(({ filename, url }) => ({ filename, url }))}
           onClose={closeViewer}
+          onNext={handleNext}
+          onPrevious={handlePrevious}
         />
       </div>
     </div>
