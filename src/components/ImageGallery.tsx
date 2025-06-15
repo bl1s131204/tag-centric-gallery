@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect } from "react";
 import { parseFiles } from "@/utils/tagUtils";
 import { TagSidebar } from "./TagSidebar";
@@ -133,7 +134,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
         {/* Card grid */}
         <div
           className={cn(
-            "w-full grid gap-x-10 gap-y-12",
+            "w-full grid gap-x-3 gap-y-8",
             "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3",
             "justify-items-center pb-16"
           )}
@@ -151,11 +152,11 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
                 "rounded-2xl",
                 "flex flex-col group relative cursor-pointer overflow-hidden",
                 "hover:-translate-y-1.5",
-                "min-h-[382px] max-w-[330px] w-full"
+                "min-h-[382px] max-w-[350px] w-full"
               )}
               style={{
                 width: "100%",
-                maxWidth: 330,
+                maxWidth: 350,
                 minWidth: 255,
                 minHeight: 382,
                 margin: "0 auto",
