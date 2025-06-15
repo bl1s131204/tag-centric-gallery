@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -24,7 +25,8 @@ export default {
         'playfair': ['Playfair Display', 'serif']
       },
 			colors: {
-        gold: "#FFD700",
+        gold: "#FFD700", // This will be our neon yellow
+        "neon-purple": "#8000FF",
         emerald: "#25c08a",
         royal: "#2D3A64",
         navbar: "#181b20",

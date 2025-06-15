@@ -23,7 +23,7 @@ function getInitialTheme(): ThemeName {
   if (stored && typeof stored === "string" && Object.keys(themes).includes(stored)) {
     return stored as ThemeName;
   }
-  return "glass";
+  return "neonPunk";
 }
 
 // Provider

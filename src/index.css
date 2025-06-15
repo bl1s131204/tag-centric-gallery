@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,14 +6,14 @@
   /* Luxurious dark base */
   html, body {
     font-family: 'Poppins', 'Inter', system-ui, sans-serif;
-    background: #121212;
+    background: #0B0B0B;
     color: #f7f7fa;
     letter-spacing: 0.01em;
     -webkit-font-smoothing: antialiased;
     @apply min-h-screen;
   }
   a { @apply text-gold transition hover:text-emerald; }
-  input, textarea { @apply bg-[#22252d] rounded-xl border-none text-white placeholder:text-gray-400 focus:ring-2 focus:ring-accent-gold transition duration-200; }
+  input, textarea { @apply bg-[#22252d] rounded-xl border-none text-white placeholder:text-gray-400 focus:ring-2 focus:ring-gold transition duration-200; }
   /* Glassmorphism / shadow */
   .glass {
     backdrop-filter: blur(8px) saturate(180%);
@@ -24,10 +23,10 @@
     border: 1.5px solid rgba(250,250,250,0.08);
   }
   /* Buttons */
-  button, .btn {
+  .btn {
     @apply rounded-full bg-gradient-to-br from-gold to-emerald text-[#21242a] px-6 py-2 font-semibold shadow-[0_2px_8px_rgba(37,192,138,0.13)] transition duration-300;
   }
-  button:hover, .btn:hover {
+  .btn:hover {
     filter: brightness(1.12) drop-shadow(0 0 8px #FFD70090);
     background: linear-gradient(90deg, #FFD700cc 20%, #25c08a 80%);
   }
@@ -72,9 +71,11 @@
   box-shadow: 0 2px 12px 0 rgba(255,215,0,0.07) !important;
 }
 
-::-webkit-scrollbar {
-  width: 8px; background: rgba(34,37,43,.22);
+.theme-neon-punk ::-webkit-scrollbar {
+  width: 8px;
+  background: #0B0B0B;
 }
-::-webkit-scrollbar-thumb {
-  background: #282a35; border-radius: 4px;
+.theme-neon-punk ::-webkit-scrollbar-thumb {
+  background: #FFD700;
+  border-radius: 4px;
 }

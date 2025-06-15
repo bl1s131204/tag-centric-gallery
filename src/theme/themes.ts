@@ -1,4 +1,3 @@
-
 export type ThemeName =
   | "glass"
   | "pastel"
@@ -9,7 +8,8 @@ export type ThemeName =
   | "contrast"
   | "nature"
   | "mono"
-  | "ink";
+  | "ink"
+  | "neonPunk";
 
 export const themes: Record<
   ThemeName,
@@ -177,6 +177,21 @@ export const themes: Record<
       badgeText: "text-gray-900",
       sidebar: "bg-gray-50/95",
       shadow: "shadow-lg shadow-gray-500/20",
+    },
+  },
+  neonPunk: {
+    label: "Neon Punk",
+    className: "theme-neon-punk",
+    fontFamily: "Poppins, sans-serif",
+    colors: {
+      bg: "bg-[#0B0B0B]",
+      card: "bg-black/80",
+      text: "text-gray-100",
+      accent: "bg-neon-purple text-[#FFD700]",
+      badge: "bg-yellow-400/20",
+      badgeText: "text-yellow-300",
+      sidebar: "bg-black/90",
+      shadow: "shadow-lg shadow-neon-purple/20",
     },
   },
 };
