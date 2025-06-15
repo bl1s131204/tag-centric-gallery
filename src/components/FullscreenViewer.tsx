@@ -22,17 +22,41 @@ export const FullscreenViewer: React.FC<ViewerProps> = ({
         onClick={onClose}
         aria-label="Close"
       >×</button>
-      <div className="flex items-center h-full">
-        <button className="mx-2 p-2 rounded-full bg-black/40 text-white text-2xl" onClick={onPrev}><ArrowLeft size={32} /></button>
+      {/* The navigation buttons remain floated around the image */}
+      <div className="flex items-center h-full w-full justify-center">
+        <button
+          className="absolute left-6 top-1/2 transform -translate-y-1/2 mx-2 p-2 rounded-full bg-black/40 text-white text-2xl z-10"
+          onClick={onPrev}
+        >
+          <ArrowLeft size={32} />
+        </button>
         <img
           src={img.url}
           alt={img.filename}
-          className="max-h-[90vh] max-w-[80vw] rounded-lg shadow-xl border-4 border-white/20"
-          style={{ objectFit: "contain", background: "rgba(255,255,255,0.03)" }}
+          className="w-screen h-screen object-cover"
+          style={{
+            width: "100vw",
+            height: "100vh",
+            objectFit: "cover",
+            borderRadius: 0,
+            boxShadow: "none",
+            border: "none",
+            background: "rgba(0,0,0,0.2)",
+            display: "block"
+          }}
+          draggable={false}
         />
-        <button className="mx-2 p-2 rounded-full bg-black/40 text-white text-2xl" onClick={onNext}><ArrowRight size={32} /></button>
+        <button
+          className="absolute right-6 top-1/2 transform -translate-y-1/2 mx-2 p-2 rounded-full bg-black/40 text-white text-2xl z-10"
+          onClick={onNext}
+        >
+          <ArrowRight size={32} />
+        </button>
       </div>
-      <div className="text-lg text-white mt-6">{img.filename}</div>
+      {/* Filename at the bottom */}
+      <div className="text-lg text-white absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/50 px-5 py-2 rounded-lg shadow">
+        {img.filename}
+      </div>
     </div>
   );
 }
