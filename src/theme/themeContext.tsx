@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { themes, ThemeName } from "./themes";
 import { getTheme, setTheme } from "@/utils/localPersistence";
@@ -22,7 +23,8 @@ function getInitialTheme(): ThemeName {
   if (stored && typeof stored === "string" && Object.keys(themes).includes(stored)) {
     return stored as ThemeName;
   }
-  return "darkLuxury";
+  // Default to the light theme
+  return "elegantMinimalist";
 }
 
 // Provider

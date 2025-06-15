@@ -4,7 +4,7 @@ import { parseFiles } from "@/utils/tagUtils";
 import { TagSidebar } from "./TagSidebar";
 import { FullscreenViewer } from "./FullscreenViewer";
 import { cn } from "@/lib/utils";
-import { Search, Folder, Heart, Pencil } from "lucide-react";
+import { Folder, Heart, Pencil } from "lucide-react";
 import { useTheme } from "@/theme/themeContext";
 import { themes } from "@/theme/themes";
 
@@ -14,14 +14,19 @@ import { themes } from "@/theme/themes";
 */
 type ImageGalleryProps = {
   specialFolderPath?: string | null;
+  searchTerm?: string;
+  onSearchTermChange?: (search: string) => void;
 };
 
-export const ImageGallery: React.FC<ImageGalleryProps> = ({ specialFolderPath }) => {
+export const ImageGallery: React.FC<ImageGalleryProps> = ({
+  specialFolderPath,
+  searchTerm = "",
+  onSearchTermChange,
+}) => {
   const [files, setFiles] = useState<File[]>([]);
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [viewerIdx, setViewerIdx] = useState<number | null>(null);
   const [specialBanner, setSpecialBanner] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
   const { theme } = useTheme();
   const themeColors = themes[theme].colors;
 
@@ -50,9 +55,9 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({ specialFolderPath })
   const visibleImages = useMemo(() =>
     imageData
       .filter(img => !activeTag || img.tags.includes(activeTag))
-      .filter(img => 
-        !searchTerm || 
-        img.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      .filter(img =>
+        !searchTerm ||
+        img.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         img.tags.some(t => t.toLowerCase().includes(searchTerm.toLowerCase())))
   , [imageData, activeTag, searchTerm]);
 
@@ -112,82 +117,79 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({ specialFolderPath })
       </div>
       {/* Main */}
       <div className="w-full min-h-screen flex flex-col px-4">
-        <div className="sticky top-[70px] z-20 backdrop-blur-sm py-4 mb-4 flex flex-col items-center">
-            <form className="w-full max-w-2xl relative group mb-2">
-              <input
-                type="text"
-                placeholder="Search by title or tags..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className={`w-full pl-11 pr-5 py-3 rounded-full bg-[#23283a]/90 text-white placeholder:text-gray-400 border focus:outline-none focus:ring-2 transition-shadow hover:shadow-lg`}
-                style={{ borderColor: themeColors.accent, '--tw-ring-color': themeColors.accent, boxShadow: `0 0 0 0 ${themeColors.accent}20` } as React.CSSProperties}
-              />
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: themeColors.accent }} size={20} />
-            </form>
-            <div className="text-lg font-semibold text-gray-400">
-              {visibleImages.length} image{visibleImages.length !== 1 ? "s" : ""} found
-            </div>
-          </div>
+        <div className="text-lg font-semibold text-gray-500 pt-8 pb-2">
+          {visibleImages.length} image{visibleImages.length !== 1 ? "s" : ""} found
+        </div>
         {/* Mobile sidebar panel */}
-        <div id="sidebar-pop" className="md:hidden fixed left-0 top-0 z-50 h-full bg-white/95 dark:bg-black/95 shadow-lg hidden">
+        <div id="sidebar-pop" className="md:hidden fixed left-0 top-0 z-50 h-full bg-white/95 shadow-lg hidden">
           <TagSidebar tags={tagSidebar} active={activeTag} onSelect={tag => {
             setActiveTag(tag);
             document.getElementById("sidebar-pop")?.classList.add("hidden");
           }} />
         </div>
-        {/* Professional Gallery grid */}
-        <div className={cn(
-          "grid gap-8 md:gap-10",
-          "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-        )}>
+        {/* Gallery grid */}
+        <div
+          className={cn(
+            "grid gap-10",
+            "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          )}
+        >
           {visibleImages.map((img, idx) => (
             <div
               key={img.filename}
-              className={`rounded-2xl border border-transparent p-4 flex flex-col group relative transition-all duration-300 cursor-pointer ${themeColors.card}`}
-              style={{ '--hover-border-color': themeColors.accent, '--hover-shadow-color': `${themeColors.accent}33` } as React.CSSProperties}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = e.currentTarget.style.getPropertyValue('--hover-border-color'); e.currentTarget.style.boxShadow = `0 8px 32px 0 ${e.currentTarget.style.getPropertyValue('--hover-shadow-color')}`; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'; }}
+              className={`bg-white border border-black rounded-xl flex flex-col group relative transition-all duration-300 cursor-pointer overflow-hidden shadow hover:shadow-lg`}
+              style={{
+                minHeight: 330,
+                maxWidth: 480,
+                margin: "auto",
+              }}
               onClick={() => openViewerAt(idx)}
             >
-              <div className="absolute top-3 right-3 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button className="p-1.5 bg-black/50 rounded-full text-white hover:text-red-500" onClick={(e) => e.stopPropagation()}><Heart size={16} /></button>
-                <button className="p-1.5 bg-black/50 rounded-full text-white hover:text-gold" onClick={(e) => e.stopPropagation()}><Pencil size={16} /></button>
+              <div className="font-bold text-base md:text-lg text-center text-black bg-[#fafafa] border-b border-black w-full py-2 px-4">
+                {img.title}
               </div>
-
-              <div className="relative w-full aspect-video rounded-xl mb-4 overflow-hidden">
+              <div
+                className="relative w-full aspect-[16/9] md:aspect-[16/7] bg-gray-100 flex items-center justify-center"
+                style={{
+                  height: 250,
+                  borderRadius: "0.75rem 0.75rem 0 0",
+                  overflow: "hidden"
+                }}
+              >
                 <img
                   src={img.url}
                   alt={img.title}
-                  className="w-full h-full object-cover rounded-xl transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover"
                   draggable={false}
+                  style={{
+                    borderRadius: "0.55rem"
+                  }}
                 />
-                <div className="absolute bottom-2 left-2 flex flex-col gap-1 text-left">
-                  <span className="text-xs font-semibold p-1 rounded bg-red-500/50 text-white">Excerpt: Some details here...</span>
+                <div className="absolute top-2 right-2 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button className="p-1.5 bg-black/60 rounded-full text-white hover:text-red-500" onClick={(e) => e.stopPropagation()}><Heart size={16} /></button>
+                  <button className="p-1.5 bg-black/60 rounded-full text-white hover:text-gold" onClick={(e) => e.stopPropagation()}><Pencil size={16} /></button>
                 </div>
               </div>
-              <div className="text-left">
-                <div className="font-bold text-lg mb-1 truncate w-full tracking-tight">{img.title}</div>
-                <div className="flex items-center gap-2 text-sm text-gray-400 mb-3">
-                  <Folder size={16} />
-                  <span>{img.filename.substring(0, img.filename.lastIndexOf('/')) || "/"}</span>
+              {/* File info */}
+              <div className="flex-1 flex flex-col items-start justify-end px-4 py-3">
+                <div className="flex flex-wrap gap-2 w-full justify-start mt-2">
+                  {img.tags.length > 0
+                    ? img.tags.map(tag => (
+                      <span
+                        key={tag}
+                        className={cn(
+                          "text-xs px-3 py-1 rounded-full font-semibold cursor-pointer border border-black transition-all duration-100",
+                          `bg-gray-200 text-gray-700 hover:bg-gray-300`,
+                          tag === activeTag && `ring-2 ring-black`
+                        )}
+                        style={tag === activeTag ? { boxShadow: `0 0 0 2px ${themeColors.accent}` } : {}}
+                        onClick={e => { e.stopPropagation(); setActiveTag(tag); }}
+                      >
+                        {tag}
+                      </span>
+                    ))
+                    : <span className="text-xs text-gray-500">No tags found</span>}
                 </div>
-              </div>
-
-              <div className="flex flex-wrap gap-2 w-full justify-start mt-auto">
-                {img.tags.length > 0 ? img.tags.map(tag => (
-                  <span
-                    key={tag}
-                    className={cn(
-                      "text-xs px-3 py-1 rounded-full font-semibold cursor-pointer transition-all duration-100",
-                      `${themeColors.badge} ${themeColors.badgeText} hover:brightness-125`,
-                      tag === activeTag && `ring-2`
-                    )}
-                    style={tag === activeTag ? { 'borderColor': themeColors.accent, '--tw-ring-color': themeColors.accent } as React.CSSProperties : {}}
-                    onClick={e => { e.stopPropagation(); setActiveTag(tag); }}
-                  >
-                    {tag}
-                  </span>
-                )) : <span className="text-xs text-gray-500">No tags found</span>}
               </div>
             </div>
           ))}

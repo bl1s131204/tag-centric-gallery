@@ -79,3 +79,15 @@
   background: #FFD700;
   border-radius: 4px;
 }
+
+/* Navbar expanded state for search focus */
+.navbar-expanded {
+  box-shadow: 0 6px 30px -4px rgba(37, 192, 138, 0.12);
+  background: #fff !important;
+  transform: translateY(4px) scale(1.022);
+  transition:
+    box-shadow 0.22s,
+    background 0.22s,
+    transform 0.25s cubic-bezier(.36,.34,.62,.86);
+  z-index: 50;
+}
