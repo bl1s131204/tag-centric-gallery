@@ -142,7 +142,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
         <div
           className={cn(
             "w-full grid gap-x-10 gap-y-12",
-            "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4",
+            "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3",
             "justify-items-center pb-16"
           )}
           style={{

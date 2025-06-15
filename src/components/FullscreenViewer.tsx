@@ -1,4 +1,3 @@
-
 import React from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 type ViewerProps = {
@@ -33,11 +32,12 @@ export const FullscreenViewer: React.FC<ViewerProps> = ({
         <img
           src={img.url}
           alt={img.filename}
-          className="w-screen h-screen object-cover"
+          className="object-contain transition-all"
           style={{
             width: "100vw",
             height: "100vh",
-            objectFit: "cover",
+            maxWidth: "100vw",
+            maxHeight: "100vh",
             borderRadius: 0,
             boxShadow: "none",
             border: "none",
