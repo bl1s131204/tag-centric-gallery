@@ -8,6 +8,7 @@ const Index = () => {
   const [showHidden, setShowHidden] = useState(false);
   const [specialFolderPath, setSpecialFolderPath] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Handler for opening folder via path
   const handleOpenInGallery = (folderPath: string) => {
@@ -27,13 +28,13 @@ const Index = () => {
 
   return (
     <>
-      <Header />
+      <Header searchTerm={searchTerm} onSearchChange={setSearchTerm} />
       <main className="pt-[70px] min-h-screen transition-all duration-300">
         <ImageGallery
           files={files}
           onFilesChange={handleFilesSelected}
           specialFolderPath={specialFolderPath}
-          searchTerm=""
+          searchTerm={searchTerm}
         />
         <HiddenAccess
           onReveal={() => setShowHidden(true)}
