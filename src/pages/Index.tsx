@@ -14,11 +14,22 @@ const AppContent = () => {
   const [navbarActive, setNavbarActive] = useState(false);
   const { theme } = useTheme();
   const themeColors = themes[theme].colors;
+  const [files, setFiles] = useState<File[]>([]);
 
-  // Handler for opening folder
+  // Handler for opening folder via path
   const handleOpenInGallery = (folderPath: string) => {
     setSpecialFolderPath(folderPath);
+    setFiles([]); // Important: clear files to show EmptyGallery with instructions
     setShowHidden(false);
+  };
+
+  // Handler for when files are picked directly
+  const handleFilesSelected = (newFiles: File[]) => {
+    setFiles(newFiles);
+    setSpecialFolderPath(null); // Clear special path, if any
+    if (newFiles.length > 0) {
+      setShowHidden(false); // Also hide if it was open and files were selected
+    }
   };
 
   return (
@@ -81,9 +92,10 @@ const AppContent = () => {
       </header>
       <main className="pt-[100px] md:pt-[80px] min-h-screen transition-all duration-300">
         <ImageGallery
+          files={files}
+          onFilesChange={handleFilesSelected}
           specialFolderPath={specialFolderPath}
           searchTerm={searchTerm}
-          onSearchTermChange={setSearchTerm}
         />
         <HiddenAccess
           onReveal={() => setShowHidden(true)}
@@ -93,6 +105,7 @@ const AppContent = () => {
           <HiddenFolderAccess
             onClose={() => setShowHidden(false)}
             onOpenInGallery={handleOpenInGallery}
+            onFilesSelected={handleFilesSelected}
           />
         )}
         {/* Future: Sidebar, etc */}

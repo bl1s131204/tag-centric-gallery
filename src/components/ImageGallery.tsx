@@ -9,28 +9,38 @@ import { GalleryGrid } from "./GalleryGrid";
 import { Image } from "@/types/image";
 
 type ImageGalleryProps = {
+  files: File[];
+  onFilesChange: (files: File[]) => void;
   specialFolderPath?: string | null;
   searchTerm?: string;
-  onSearchTermChange?: (search: string) => void;
 };
 
 export const ImageGallery: React.FC<ImageGalleryProps> = ({
+  files,
+  onFilesChange,
   specialFolderPath,
   searchTerm = "",
 }) => {
-  const [files, setFiles] = useState<File[]>([]);
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [viewerIdx, setViewerIdx] = useState<number | null>(null);
   const [specialBanner, setSpecialBanner] = useState<string | null>(null);
 
   useEffect(() => {
+    // When a special folder is requested, show a banner.
+    // The parent component is responsible for clearing files.
     if (specialFolderPath) {
       setSpecialBanner(
-        `To open this folder (${specialFolderPath}), click "Change Folder" and pick it in the file picker.`
+        `To open this folder, click "Change Folder" and pick it in the file picker.`
       );
-      setFiles([]);
+    } else {
+      setSpecialBanner(null);
     }
-  }, [specialFolderPath]);
+
+    // Any time the folder source changes (new files selected, or special folder requested)
+    // reset the internal state of the gallery.
+    setActiveTag(null);
+    setViewerIdx(null);
+  }, [files, specialFolderPath]);
 
   const { imageData, tagMap } = useMemo(
     () => (files.length ? parseFiles(files) : { imageData: [], tagMap: {} }),
@@ -81,10 +91,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
 
   function handleFilePick(e: React.ChangeEvent<HTMLInputElement>) {
     if (!e.target.files) return;
-    setFiles(Array.from(e.target.files));
-    setActiveTag(null);
-    setViewerIdx(null);
-    setSpecialBanner(null);
+    onFilesChange(Array.from(e.target.files));
   }
 
   if (!files.length) {

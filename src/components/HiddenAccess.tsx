@@ -55,9 +55,14 @@ export const HiddenAccess: React.FC<{ onReveal: () => void; show: boolean }> = (
  * Folder path display, after unlock
  * - Add an "Open Folder in Gallery" button that calls onOpenInGallery(folderPath)
  */
-export const HiddenFolderAccess: React.FC<{ onClose: () => void; onOpenInGallery: (folderPath: string) => void }> = ({
+export const HiddenFolderAccess: React.FC<{
+  onClose: () => void;
+  onOpenInGallery: (folderPath: string) => void;
+  onFilesSelected: (files: File[]) => void;
+}> = ({
   onClose,
   onOpenInGallery,
+  onFilesSelected,
 }) => {
   const [folderPath, setFolderPath] = useState("F:\\movie\\Telegram Desktop");
 
@@ -66,16 +71,25 @@ export const HiddenFolderAccess: React.FC<{ onClose: () => void; onOpenInGallery
     toast({ title: "Copied!", description: "Folder path copied to clipboard." });
   };
 
+  const handleFileSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
+      onFilesSelected(Array.from(e.target.files));
+    }
+  };
+
   return (
     <div className="fixed bottom-12 right-8 z-[999] bg-black/90 border border-neon-purple/50 rounded-xl p-5 shadow-lg flex flex-col gap-2 w-[360px] max-w-full">
       <div className="font-semibold text-gold">Special Folder Access:</div>
+      <p className="text-xs text-gray-400">
+        For special folders, manually enter the path and click "Open in Gallery". You will then be prompted to select that folder with the file picker.
+      </p>
       <input
         value={folderPath}
         onChange={(e) => setFolderPath(e.target.value)}
-        className="rounded px-2 py-1 font-mono w-full mb-2 border bg-[#22252d] border-neon-purple/50 focus:outline-none focus:ring-2 focus:ring-neon-purple"
+        className="rounded px-2 py-1 font-mono w-full mb-1 border bg-[#22252d] border-neon-purple/50 focus:outline-none focus:ring-2 focus:ring-neon-purple"
         spellCheck={false}
       />
-      <div className="flex gap-2 mb-2">
+      <div className="flex gap-2">
         <button
           className="bg-neon-purple/80 text-gold px-3 py-1 rounded-lg font-semibold flex-1"
           onClick={handleCopy}
@@ -89,11 +103,32 @@ export const HiddenFolderAccess: React.FC<{ onClose: () => void; onOpenInGallery
           Open in Gallery
         </button>
       </div>
-      <span className="text-xs text-gray-400 mb-2">
-        To open this folder, paste the copied path into your system's File Explorer address bar.
-      </span>
+      
+      <div className="relative flex py-3 items-center">
+          <div className="flex-grow border-t border-neon-purple/30"></div>
+          <span className="flex-shrink mx-4 text-gray-400 text-sm">OR</span>
+          <div className="flex-grow border-t border-neon-purple/30"></div>
+      </div>
+
+      <label htmlFor="direct-folder-upload" className="w-full">
+        <div
+          className="bg-sky-500 text-white px-3 py-2 rounded-lg font-semibold flex-1 text-center cursor-pointer w-full hover:bg-sky-600 transition-colors"
+        >
+          Select Folder Directly
+        </div>
+        <input
+          id="direct-folder-upload"
+          type="file"
+          multiple
+          {...{ webkitdirectory: "true", directory: "true" } as any}
+          className="hidden"
+          onChange={handleFileSelectChange}
+          accept="image/*"
+        />
+      </label>
+
       <button
-        className="text-xs underline text-gold mt-1"
+        className="text-xs underline text-gold mt-2"
         onClick={onClose}
       >
         Hide
