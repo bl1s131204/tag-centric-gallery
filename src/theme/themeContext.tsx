@@ -24,7 +24,7 @@ function getInitialTheme(): ThemeName {
     return stored as ThemeName;
   }
   // Default to the light theme
-  return "elegantMinimalist";
+  return "light";
 }
 
 // Provider
