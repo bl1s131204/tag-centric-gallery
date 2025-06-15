@@ -108,88 +108,101 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
     );
   }
 
+  // NEW: Gallery UI
   return (
-    <div className="flex flex-row w-full">
+    <div className="flex flex-row w-full min-h-screen bg-[#f8f9fa] dark:bg-[#121212] transition-colors duration-200">
       {/* Sidebar */}
       <div className="hidden md:flex">
         <TagSidebar tags={tagSidebar} active={activeTag} onSelect={setActiveTags} />
       </div>
       {/* Main */}
-      <div className="w-full min-h-screen flex flex-col px-4">
-        <div className="text-lg font-semibold text-gray-500 pt-8 pb-2">
-          {visibleImages.length} image{visibleImages.length !== 1 ? "s" : ""} found
+      <div className="w-full min-h-screen flex flex-col px-2 md:px-8">
+        <div className="flex items-center justify-between pt-10 pb-4">
+          <div className="text-2xl md:text-3xl font-semibold text-[#202f3c] dark:text-[#d6e3ef]">
+            Gallery
+          </div>
+          <div className="text-base font-medium text-gray-500 dark:text-gray-300">
+            {visibleImages.length} image{visibleImages.length !== 1 ? "s" : ""} found
+          </div>
         </div>
-        {/* Mobile sidebar panel */}
-        <div id="sidebar-pop" className="md:hidden fixed left-0 top-0 z-50 h-full bg-white/95 shadow-lg hidden">
-          <TagSidebar tags={tagSidebar} active={activeTag} onSelect={tag => {
-            setActiveTags(tag);
-            document.getElementById("sidebar-pop")?.classList.add("hidden");
-          }} />
-        </div>
+
         {/* Gallery grid */}
         <div
           className={cn(
-            "grid gap-8 sm:gap-10 xl:gap-14",
+            "w-full",
+            "grid gap-7 sm:gap-9 xl:gap-12",
             "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4",
-            "justify-items-center"
+            "justify-items-center pb-16"
           )}
         >
           {visibleImages.map((img, idx) => (
             <div
               key={img.filename}
-              className={`bg-white border border-black rounded-2xl flex flex-col group relative transition-all duration-300 cursor-pointer overflow-hidden shadow hover:shadow-lg`}
+              className={cn(
+                "bg-white dark:bg-[#181b20] border border-neutral-200 dark:border-neutral-700",
+                "rounded-3xl shadow-lg hover:shadow-2xl relative flex flex-col group transition-all duration-300 cursor-pointer overflow-hidden",
+                "hover:ring-2 hover:ring-[var(--tw-prose-invert-bullets,#2563eb)] dark:hover:ring-emerald"
+              )}
               style={{
-                minHeight: 330,
-                maxWidth: 480,
-                margin: "auto",
+                width: "100%",
+                maxWidth: 430,
+                minHeight: 320
               }}
+              tabIndex={0}
               onClick={() => openViewerAt(idx)}
+              aria-label={img.title}
             >
-              <div className="font-bold text-base md:text-lg text-center text-black bg-[#fafafa] border-b border-black w-full py-2 px-4">
-                {img.title}
-              </div>
+              {/* Image wrapper */}
               <div
-                className="relative w-full aspect-[16/9] md:aspect-[16/7] bg-gray-100 flex items-center justify-center"
+                className="relative w-full aspect-[16/10] bg-gradient-to-br from-gray-200/70 to-gray-50 dark:from-[#252c39]/70 dark:to-[#161921] flex items-center justify-center overflow-hidden"
                 style={{
-                  height: 250,
-                  borderRadius: "0.75rem 0.75rem 0 0",
-                  overflow: "hidden"
+                  borderTopLeftRadius: "1.5rem",
+                  borderTopRightRadius: "1.5rem"
                 }}
               >
                 <img
                   src={img.url}
                   alt={img.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105 hover:brightness-105"
                   draggable={false}
                   style={{
-                    borderRadius: "0.55rem"
+                    borderTopLeftRadius: "1.2rem",
+                    borderTopRightRadius: "1.2rem",
                   }}
                 />
-                <div className="absolute top-2 right-2 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button className="p-1.5 bg-black/60 rounded-full text-white hover:text-red-500" onClick={(e) => e.stopPropagation()}><Heart size={16} /></button>
-                  <button className="p-1.5 bg-black/60 rounded-full text-white hover:text-gold" onClick={(e) => e.stopPropagation()}><Pencil size={16} /></button>
+                <div className="absolute top-3 right-3 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <button className="p-1.5 bg-black/70 dark:bg-[#2A67C8]/90 rounded-full text-white hover:bg-emerald-600/80 transition-shadow shadow-md"
+                    onClick={e => e.stopPropagation() }>
+                    <Heart size={16} />
+                  </button>
+                  <button className="p-1.5 bg-black/70 dark:bg-[#2A67C8]/90 rounded-full text-white hover:bg-gold transition-shadow shadow-md"
+                    onClick={e => e.stopPropagation()}>
+                    <Pencil size={16} />
+                  </button>
                 </div>
               </div>
-              {/* File info */}
-              <div className="flex-1 flex flex-col items-start justify-end px-4 py-3">
-                <div className="flex flex-wrap gap-2 w-full justify-start mt-2">
-                  {img.tags.length > 0
-                    ? img.tags.map(tag => (
-                      <span
-                        key={tag}
-                        className={cn(
-                          "text-xs px-3 py-1 rounded-full font-semibold cursor-pointer border border-black transition-all duration-100",
-                          `bg-gray-200 text-gray-700 hover:bg-gray-300`,
-                          tag === activeTag && `ring-2 ring-black`
-                        )}
-                        style={tag === activeTag ? { boxShadow: `0 0 0 2px ${themeColors.accent}` } : {}}
-                        onClick={e => { e.stopPropagation(); setActiveTags(tag); }}
-                      >
-                        {tag}
-                      </span>
-                    ))
-                    : <span className="text-xs text-gray-500">No tags found</span>}
-                </div>
+              {/* Title */}
+              <div className="font-bold text-lg md:text-xl text-[#1a2330] dark:text-[#ebf7fe] text-left w-full py-3 px-6 truncate pt-5">
+                {img.title}
+              </div>
+              {/* Tags */}
+              <div className="flex flex-wrap gap-2 w-full px-6 pb-4 pt-2">
+                {img.tags.length > 0
+                  ? img.tags.map(tag => (
+                    <span
+                      key={tag}
+                      className={cn(
+                        "text-xs px-3 py-1 rounded-full font-medium border transition-shadow duration-100",
+                        `bg-[#eef2f8] text-[#374958] dark:bg-[#252c39] dark:text-[#cde1ec] border-[#cfdbe9] dark:border-[#283046]`,
+                        tag === activeTag && "ring-2 ring-[var(--tw-prose-invert-bullets,#2A67C8)] dark:ring-emerald"
+                      )}
+                      style={tag === activeTag ? { boxShadow: `0 0 0 2px ${themeColors.accent}` } : {}}
+                      onClick={e => { e.stopPropagation(); setActiveTags(tag); }}
+                    >
+                      {tag}
+                    </span>
+                  ))
+                  : <span className="text-xs text-gray-400">No tags found</span>}
               </div>
             </div>
           ))}
