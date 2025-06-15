@@ -134,7 +134,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
         {/* Card grid */}
         <div
           className={cn(
-            "w-full grid gap-x-3 gap-y-8",
+            "w-full grid gap-x-[0.1cm] gap-y-[0.2cm]",
             "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3",
             "justify-items-center pb-16"
           )}
