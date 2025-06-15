@@ -146,7 +146,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
           className={cn(
             "w-full",
             "grid",
-            "gap-x-7 gap-y-10", // Professional consistent gap
+            "gap-x-8 gap-y-12", // Increased gaps for a crisp grid
             "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4",
             "justify-items-center pb-16",
             "masonry-cols-none"
@@ -159,17 +159,18 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
             <div
               key={img.filename}
               className={cn(
-                // Card style (matches high-end apps)
+                // Modified Card style for rectangular, modern look
                 "bg-white dark:bg-[#181b20]",
                 "border border-neutral-200 dark:border-neutral-700",
-                "rounded-3xl shadow-lg hover:shadow-2xl group relative flex flex-col",
-                "transition-all duration-200 cursor-pointer overflow-hidden hover:scale-[1.025]",
+                "rounded-xl shadow-lg hover:shadow-2xl group relative flex flex-col",
+                "transition-all duration-200 cursor-pointer overflow-hidden hover:scale-[1.023]",
                 "ring-0 hover:ring-2 hover:ring-[var(--tw-prose-invert-bullets,#2563eb)] dark:hover:ring-emerald"
               )}
               style={{
                 width: "100%",
-                maxWidth: 420,
-                minHeight: 325,
+                maxWidth: 410,
+                minWidth: 270,
+                minHeight: 292,
                 margin: "0 auto",
                 display: "flex",
                 flexDirection: "column",
@@ -181,12 +182,13 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
             >
               {/* Image */}
               <div
-                className="relative w-full aspect-[16/10] bg-gradient-to-br from-gray-200/70 to-gray-50 dark:from-[#252c39]/70 dark:to-[#161921] flex items-center justify-center overflow-hidden"
+                className="relative w-full aspect-[16/9] bg-gradient-to-br from-gray-200/70 to-gray-50 dark:from-[#252c39]/70 dark:to-[#161921] flex items-center justify-center overflow-hidden"
                 style={{
-                  borderTopLeftRadius: "1.5rem",
-                  borderTopRightRadius: "1.5rem",
-                  minHeight: 200,
-                  maxHeight: 230,
+                  borderTopLeftRadius: "0.9rem",
+                  borderTopRightRadius: "0.9rem",
+                  minHeight: "182px",
+                  maxHeight: "228px",
+                  width: "100%",
                 }}
               >
                 <img
@@ -195,9 +197,11 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
                   className="w-full h-full object-cover object-center transition-transform duration-200 hover:scale-105 hover:brightness-105 fade-in-img"
                   draggable={false}
                   style={{
-                    borderTopLeftRadius: "1.2rem",
-                    borderTopRightRadius: "1.2rem",
-                    boxShadow: "0 2px 12px 0 rgba(90,90,90,0.10)",
+                    borderTopLeftRadius: "0.6rem",
+                    borderTopRightRadius: "0.6rem",
+                    objectFit: "cover",
+                    width: "100%",
+                    height: "100%",
                   }}
                 />
                 {/* Card actions on image */}
@@ -217,11 +221,11 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
                 </div>
               </div>
               {/* Title */}
-              <div className="font-bold text-lg md:text-xl text-[#1a2330] dark:text-[#ebf7fe] text-left w-full py-3 px-6 truncate pt-5">
+              <div className="font-bold text-lg md:text-xl text-[#1a2330] dark:text-[#ebf7fe] text-left w-full py-2 px-5 truncate pt-4">
                 {img.title}
               </div>
               {/* Tags */}
-              <div className="flex flex-wrap gap-2 w-full px-6 pb-4 pt-2">
+              <div className="flex flex-wrap gap-2 w-full px-5 pb-4 pt-1">
                 {img.tags.length > 0
                   ? img.tags.map(tag => (
                       <span
@@ -264,3 +268,4 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
 };
 
 // Note: This file is now over 200 lines and should be refactored into smaller components for long-term maintainability.
+
