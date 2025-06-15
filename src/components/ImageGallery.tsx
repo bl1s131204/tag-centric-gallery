@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from "react";
 import { parseFiles } from "@/utils/tagUtils";
 import { TagSidebar } from "./TagSidebar";
@@ -26,6 +25,9 @@ export const ImageGallery: React.FC = () => {
       .map(([name, val]) => ({ name, count: val.images.length }))
       .sort((a, b) => a.name.localeCompare(b.name))
   ), [tagMap]);
+
+  // Count unique tags
+  const totalTagCount = Object.keys(tagMap).length;
 
   // Images of active tag or all
   const visibleImages = useMemo(() =>
@@ -111,10 +113,16 @@ export const ImageGallery: React.FC = () => {
             document.getElementById("sidebar-pop")?.classList.add("hidden");
           }} />
         </div>
-        {/* Professional Gallery grid */}
-        <div className="mb-4 text-lg font-semibold text-muted-foreground text-right pr-2">
-          {visibleImages.length} image{visibleImages.length !== 1 ? "s" : ""} found{activeTag ? ` for: "${activeTag}"` : ""}
+        {/* Tag and image count info */}
+        <div className="mb-2 flex flex-wrap items-center justify-between pr-2">
+          <div className="text-md font-semibold text-muted-foreground">
+            Total tags: <span className="text-accent font-bold">{totalTagCount}</span>
+          </div>
+          <div className="text-lg font-semibold text-muted-foreground text-right">
+            {visibleImages.length} image{visibleImages.length !== 1 ? "s" : ""} found{activeTag ? ` for: "${activeTag}"` : ""}
+          </div>
         </div>
+        {/* Professional Gallery grid */}
         <div className={cn(
           "grid gap-8 md:gap-10",
           "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
