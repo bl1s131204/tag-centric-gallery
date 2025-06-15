@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect } from "react";
 import { parseFiles } from "@/utils/tagUtils";
 import { TagSidebar } from "./TagSidebar";
@@ -121,9 +122,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
     );
   }
 
-  // ------------------------
-  // Masonry Layout & Gallery
-  // ------------------------
+  // Main gallery layout and cards
   return (
     <div className="flex flex-row w-full min-h-screen bg-[#f8f9fa] dark:bg-[#121212] transition-colors duration-200">
       {/* Sidebar */}
@@ -131,7 +130,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
         <TagSidebar tags={tagSidebar} active={activeTag} onSelect={setActiveTags} />
       </div>
       {/* Main */}
-      <div className="w-full min-h-screen flex flex-col px-2 md:px-8">
+      <div className="flex-1 min-h-screen flex flex-col px-2 md:px-8">
         <div className="flex items-center justify-between pt-10 pb-4">
           <div className="text-2xl md:text-3xl font-semibold text-[#202f3c] dark:text-[#d6e3ef]">
             Gallery
@@ -140,15 +139,14 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
             {visibleImages.length} image{visibleImages.length !== 1 ? "s" : ""} found
           </div>
         </div>
-        {/* Masonry grid for images */}
+        {/* Card grid */}
         <div
           className={cn(
             "w-full",
             "grid",
-            "gap-x-8 gap-y-12",
+            "gap-x-7 gap-y-9",
             "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4",
-            "justify-items-center pb-16",
-            "masonry-cols-none"
+            "justify-items-center pb-16"
           )}
           style={{
             alignItems: "start",
@@ -159,98 +157,104 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
               key={img.filename}
               className={cn(
                 "bg-white dark:bg-[#181b20]",
-                "border-4 border-black", // THICK BLACK BORDER
-                "rounded-md",            // LESS ROUND, more rectangular look
-                "shadow-lg hover:shadow-2xl group relative flex flex-col",
-                "transition-all duration-200 cursor-pointer overflow-hidden hover:scale-[1.023]",
-                "hover:ring-2 hover:ring-[var(--tw-prose-invert-bullets,#2563eb)] dark:hover:ring-emerald"
+                "border-2 border-[#222] shadow-md",
+                "rounded-2xl",
+                "flex flex-col group relative transition-all duration-200 cursor-pointer overflow-hidden",
+                "hover:shadow-lg hover:-translate-y-[2.5px]"
               )}
               style={{
                 width: "100%",
-                maxWidth: 380,
+                maxWidth: 365,
                 minWidth: 270,
-                minHeight: 210,
+                minHeight: 355,
                 margin: "0 auto",
                 display: "flex",
                 flexDirection: "column",
                 boxSizing: "border-box",
-                aspectRatio: "8 / 5", // Rectangular, wider than tall
+                aspectRatio: "1.18 / 1", // closer to reference
               }}
               tabIndex={0}
               onClick={() => openViewerAt(idx)}
               aria-label={img.title}
             >
-              {/* Image */}
-              <div
-                className="relative w-full h-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-200/70 to-gray-50 dark:from-[#252c39]/70 dark:to-[#161921]"
-                style={{
-                  flex: 1,
-                  width: "100%",
-                  aspectRatio: "8 / 5", // Match the outer box
-                  minHeight: "175px",
-                  maxHeight: "300px",
-                  borderTopLeftRadius: "0.5rem",
-                  borderTopRightRadius: "0.5rem",
-                }}
-              >
-                <img
-                  src={img.url}
-                  alt={img.title}
-                  className="w-full h-full object-cover object-center transition-transform duration-200 hover:scale-105 hover:brightness-105 fade-in-img"
-                  draggable={false}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    borderRadius: 0,
-                  }}
-                />
-                {/* Card actions on image */}
-                <div className="absolute top-3 right-3 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              {/* Filename Header */}
+              <div className="px-5 pt-5 flex flex-row items-center justify-between w-full">
+                <span className="font-bold text-[1.08rem] text-[#202f3c] dark:text-[#ebf7fe] truncate max-w-[65%]">
+                  {img.filename}
+                </span>
+                {/* Card actions */}
+                <div className="flex gap-2 z-10">
                   <button
-                    className="p-1.5 bg-black/70 dark:bg-[#2A67C8]/90 rounded-full text-white hover:bg-emerald-600/80 transition-shadow shadow-md"
+                    className="p-1.5 bg-black/75 dark:bg-[#2A67C8]/90 rounded-full text-white hover:bg-emerald-600/80 transition-shadow shadow-md"
                     onClick={e => e.stopPropagation()}
                   >
                     <Heart size={16} />
                   </button>
                   <button
-                    className="p-1.5 bg-black/70 dark:bg-[#2A67C8]/90 rounded-full text-white hover:bg-gold transition-shadow shadow-md"
+                    className="p-1.5 bg-black/75 dark:bg-[#2A67C8]/90 rounded-full text-white hover:bg-gold transition-shadow shadow-md"
                     onClick={e => e.stopPropagation()}
                   >
                     <Pencil size={16} />
                   </button>
                 </div>
               </div>
-              {/* Title */}
-              <div className="font-bold text-lg md:text-xl text-[#1a2330] dark:text-[#ebf7fe] text-left w-full py-2 px-5 truncate pt-4">
-                {img.title}
+              {/* Folder source */}
+              <div className="flex items-center gap-1 text-xs font-medium text-gray-500 pl-5 pb-1 pt-1 select-none">
+                <Folder size={15} className="mr-1 text-gray-400" />
+                Telegram Desktop
               </div>
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2 w-full px-5 pb-4 pt-1">
-                {img.tags.length > 0
-                  ? img.tags.map(tag => (
-                      <span
-                        key={tag}
-                        className={cn(
-                          "text-xs px-3 py-1 rounded-full font-medium border transition-shadow duration-100",
-                          `bg-[#eef2f8] text-[#374958] dark:bg-[#252c39] dark:text-[#cde1ec] border-[#cfdbe9] dark:border-[#283046]`,
-                          tag === activeTag && "ring-2 ring-[var(--tw-prose-invert-bullets,#2A67C8)] dark:ring-emerald"
-                        )}
-                        style={
-                          tag === activeTag
-                            ? { boxShadow: `0 0 0 2px ${themeColors.accent}` }
-                            : {}
-                        }
-                        onClick={e => {
-                          e.stopPropagation();
-                          setActiveTags(tag);
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    ))
-                  : <span className="text-xs text-gray-400">No tags found</span>
-                }
+              {/* Image */}
+              <div
+                className="relative w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-200/70 to-gray-50 dark:from-[#252c39]/70 dark:to-[#161921]"
+                style={{
+                  flex: 1,
+                  width: "100%",
+                  minHeight: "150px",
+                  maxHeight: "240px",
+                  borderRadius: "0.7rem",
+                  margin: "0 auto",
+                  boxSizing: "border-box",
+                  border: "2.5px solid #bbb",
+                }}
+              >
+                <img
+                  src={img.url}
+                  alt={img.title}
+                  className="w-full h-full object-cover object-center fade-in-img"
+                  draggable={false}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    borderRadius: "0.2rem",
+                  }}
+                />
+              </div>
+              {/* Tag/Info section */}
+              <div className="px-5 pb-4 pt-3 w-full">
+                <div className="text-[1rem] font-semibold text-[#374958] dark:text-[#cde1ec] mb-0.5">Tags:</div>
+                <div className="flex flex-wrap gap-2 w-full min-h-[22px]">
+                  {img.tags.length > 0
+                    ? img.tags.map(tag => (
+                        <span
+                          key={tag}
+                          className={cn(
+                            "text-xs px-3 py-1 rounded-full font-medium border border-[#cfdbe9] bg-[#eef2f8] text-[#374958] dark:bg-[#252c39] dark:text-[#cde1ec] dark:border-[#283046]"
+                          )}
+                          onClick={e => {
+                            e.stopPropagation();
+                            setActiveTags(tag);
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))
+                    : <span className="text-xs text-gray-400">No tags found</span>
+                  }
+                </div>
+                <div className="text-xs text-gray-400 mt-1">
+                  {img.tags.length} tag{img.tags.length !== 1 ? "s" : ""}
+                </div>
               </div>
             </div>
           ))}
@@ -269,3 +273,4 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
 };
 
 // Note: This file is now over 200 lines and should be refactored into smaller components for long-term maintainability.
+
