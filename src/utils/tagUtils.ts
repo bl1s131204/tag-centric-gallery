@@ -1,8 +1,15 @@
 
 /**
- * Regex for tag splitting after first "title" part.
+ * Regex to identify the first occurrence of a "split point" between title and tags.
+ * Split on the first: 2+ spaces, --, ,, (multiple commas), ... (multiple dots), |.
  */
-const tagSplitRegex = /(?:,{1,3}|\s{2,}|--|\.{2,}|\|)+/g;
+const TITLE_TAG_SPLIT_REGEX = /[\s]{2,}|--|,{2,}|\.{2,}|\|/;
+
+/**
+ * Separate pattern for splitting just the tags section into individual tags.
+ * Split by any of: multiple commas, any sequence of spaces, --, ... (multiple dots), |.
+ */
+const TAG_SPLIT_REGEX = /(?:,{1,}|\.{2,}|--|\|)+|\s{2,}/g;
 
 const STOPWORDS = [
   "by", "but", "as", "to", "and", "of", "the",
@@ -53,9 +60,10 @@ function groupTags(rawTags: string[], threshold = 2): Record<string, string[]> {
 
 /**
  * Parse filenames into title/tags and build canonical map.
- * Return:
- * - imageData: [{filename, title, tags: [canonical]}]
- * - canonicalTags: { canonical: { originalVariants: [...], images: [...] } }
+ * For each filename:
+ *  - Split title/tags at first "split point" (see above)
+ *  - Tags: SPLIT on all common delimiters.
+ *  - Each tag is trimmed and cleaned, and falsey/stopwords are dropped.
  */
 export function parseFiles(files: File[]): {
   imageData: { filename: string; url: string; title: string; tags: string[] }[];
@@ -65,19 +73,32 @@ export function parseFiles(files: File[]): {
   let rawTags: string[] = [];
   const tagRawVariants: Record<string, string[]> = {};
 
-  // Build up images, split filename at first double space, --, ,, or so
   files.forEach(file => {
-    const [titlePart, ...rest] = file.name.split(/[\s]{2,}|--|,{2,}|\.{2,}|\|/);
-    const title = (titlePart || file.name).replace(/\.[a-z0-9]+$/i, "").replace(/[_-]+/g, " ").trim();
-    const tagPart = rest.join("").replace(/\.[a-z0-9]+$/i, "");
-    const splitTags = tagPart.split(tagSplitRegex).filter(Boolean);
-    const normed = splitTags
-      .map(normalizeTag)
-      .filter(Boolean) as string[];
-    normed.forEach(tag => {
-      if (tag) rawTags.push(tag);
-      (tagRawVariants[tag] = tagRawVariants[tag] || []).push(tag);
-    });
+    // Find where tag metadata starts (after split point)
+    const nameNoExt = file.name.replace(/\.[a-z0-9]+$/i, "");
+    const splitMatch = TITLE_TAG_SPLIT_REGEX.exec(nameNoExt);
+    let title = nameNoExt;
+    let tagString = "";
+    if (splitMatch) {
+      const splitIdx = splitMatch.index;
+      title = nameNoExt.slice(0, splitIdx).trim();
+      tagString = nameNoExt.slice(splitIdx + splitMatch[0].length).trim();
+    }
+    // Split tags (exactly as user wants)
+    const splitTags = tagString
+      .split(TAG_SPLIT_REGEX)
+      .map(t => t.trim())
+      .filter(Boolean);
+
+    const normed: string[] = [];
+    for (let tag of splitTags) {
+      const cleaned = normalizeTag(tag);
+      if (cleaned) {
+        normed.push(cleaned);
+        (tagRawVariants[cleaned] = tagRawVariants[cleaned] || []).push(tag);
+        rawTags.push(cleaned);
+      }
+    }
     imageData.push({
       filename: file.name,
       url: URL.createObjectURL(file),
@@ -86,14 +107,13 @@ export function parseFiles(files: File[]): {
     });
   });
 
-  // Fuzzy group tags
+  // Fuzzy group tags as before
   const canonicalGroups = groupTags([...new Set(rawTags)]);
-  // Canonical mapping, images per canonical
   const tagMap: Record<string, { originalVariants: string[]; images: string[] }> = {};
   for (const [canonical, variants] of Object.entries(canonicalGroups)) {
     tagMap[canonical] = { originalVariants: variants, images: [] };
   }
-  // Map which images belong to each canonical tag
+  // Assign images to canonical tags
   imageData.forEach(img => {
     img.tags = img.tags.map(t => {
       let canon = t;
@@ -112,3 +132,4 @@ export function parseFiles(files: File[]): {
 
   return { imageData, tagMap };
 }
+
