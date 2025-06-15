@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { themes, ThemeName } from "./themes";
 import { getTheme, setTheme } from "@/utils/localPersistence";
@@ -23,7 +22,7 @@ function getInitialTheme(): ThemeName {
   if (stored && typeof stored === "string" && Object.keys(themes).includes(stored)) {
     return stored as ThemeName;
   }
-  return "neonPunk";
+  return "darkLuxury";
 }
 
 // Provider
@@ -34,7 +33,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [theme]);
   return (
     <ThemeCtx.Provider value={{ theme, setTheme: setThemeState }}>
-      <div className={`min-h-screen ${themes[theme].className} ${themes[theme].colors.bg}`} style={{ fontFamily: themes[theme].fontFamily, transition: "background 0.2s, color 0.2s" }}>
+      <div className={`min-h-screen ${themes[theme].className} ${themes[theme].colors.bg} ${themes[theme].colors.text}`} style={{ fontFamily: themes[theme].fontFamily, transition: "background 0.2s, color 0.2s" }}>
         {children}
       </div>
     </ThemeCtx.Provider>

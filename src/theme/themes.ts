@@ -1,197 +1,214 @@
-export type ThemeName =
-  | "glass"
-  | "pastel"
-  | "retro"
-  | "neon"
-  | "sepia"
-  | "gold"
-  | "contrast"
-  | "nature"
-  | "mono"
-  | "ink"
-  | "neonPunk";
 
-export const themes: Record<
-  ThemeName,
-  {
-    label: string;
-    className: string;
-    fontFamily: string;
+export type ThemeName =
+  | "elegantMinimalist"
+  | "darkLuxury"
+  | "neonCyberpunk"
+  | "softPastel"
+  | "boldMagazine"
+  | "natureInspired"
+  | "glassmorphism"
+  | "retroVintage"
+  | "artisticBrush"
+  | "futuristicMinimal";
+
+interface Theme {
+  label: string;
+  className: string;
+  fontFamily: string;
+  colors: {
+    bg: string;
+    card: string;
+    text: string;
+    accent: string; // hex
+    accentText: string; // hex
+    primary: string; // hex, for card bg etc
+    primaryText: string; // hex
+    badge: string;
+    badgeText: string;
+    sidebar: string;
+    shadow: string;
+  };
+}
+
+export const themes: Record<ThemeName, Theme> = {
+  elegantMinimalist: {
+    label: "Elegant Minimalist",
+    className: "theme-elegant-minimalist",
+    fontFamily: "'Inter', sans-serif",
     colors: {
-      bg: string;
-      card: string;
-      text: string;
-      accent: string;
-      badge: string;
-      badgeText: string;
-      sidebar: string;
-      shadow: string;
-    };
-  }
-> = {
-  glass: {
-    label: "Glassmorphism",
-    className: "theme-glass",
-    fontFamily: "Outfit, sans-serif",
-    colors: {
-      bg: "bg-gradient-to-br from-white/80 via-blue-100/40 to-gray-100/60 backdrop-blur-lg",
-      card: "bg-white/70 border border-white/30 backdrop-blur rounded-xl",
-      text: "text-gray-900",
-      accent: "bg-blue-200 text-blue-900",
-      badge: "bg-blue-100/80",
-      badgeText: "text-blue-700",
-      sidebar: "bg-white/80",
-      shadow: "shadow-xl shadow-blue-200/40",
-    },
-  },
-  pastel: {
-    label: "Pastel Bloom",
-    className: "theme-pastel",
-    fontFamily: "Montserrat, sans-serif",
-    colors: {
-      bg: "bg-gradient-to-br from-pink-100 via-blue-100 to-lime-100",
-      card: "bg-white/90 backdrop-blur-lg rounded-xl",
-      text: "text-pink-900",
-      accent: "bg-pink-200 text-pink-900",
-      badge: "bg-blue-100",
-      badgeText: "text-indigo-900",
-      sidebar: "bg-pink-50/80",
-      shadow: "shadow-lg shadow-blue-100/20",
-    },
-  },
-  retro: {
-    label: "Retro Terminal",
-    className: "theme-retro",
-    fontFamily: "IBM Plex Mono, monospace",
-    colors: {
-      bg: "bg-gradient-to-br from-black to-green-900",
-      card: "bg-green-800/95 border border-green-600 rounded-md",
-      text: "text-green-300",
-      accent: "bg-black text-green-300",
-      badge: "bg-green-600/50",
-      badgeText: "text-green-300",
-      sidebar: "bg-black/90",
-      shadow: "shadow-lg shadow-black/70",
-    },
-  },
-  neon: {
-    label: "Neon Vibe",
-    className: "theme-neon",
-    fontFamily: "Fira Mono, monospace",
-    colors: {
-      bg: "bg-gradient-to-br from-fuchsia-900 via-black to-blue-900",
-      card: "bg-black/80 border border-fuchsia-600 rounded-xl",
-      text: "text-fuchsia-300",
-      accent: "bg-fuchsia-900 text-yellow-400",
-      badge: "bg-blue-900/60",
-      badgeText: "text-fuchsia-300",
-      sidebar: "bg-black/90",
-      shadow: "shadow-lg shadow-fuchsia-600/40",
-    },
-  },
-  sepia: {
-    label: "Sepia Storybook",
-    className: "theme-sepia",
-    fontFamily: "Playfair Display, serif",
-    colors: {
-      bg: "bg-gradient-to-b from-yellow-50 via-amber-100 to-orange-50",
-      card: "bg-yellow-50 border border-amber-200 rounded-xl",
-      text: "text-amber-900",
-      accent: "bg-amber-200 text-amber-900",
-      badge: "bg-orange-100",
-      badgeText: "text-orange-800",
-      sidebar: "bg-yellow-100/80",
-      shadow: "shadow-lg shadow-amber-200/40",
-    },
-  },
-  gold: {
-    label: "Luxury Gold",
-    className: "theme-gold",
-    fontFamily: "Montserrat, sans-serif",
-    colors: {
-      bg: "bg-gradient-to-br from-yellow-100 via-yellow-300 to-amber-400",
-      card: "bg-yellow-200 border border-amber-500 rounded-xl",
-      text: "text-yellow-900",
-      accent: "bg-yellow-300 text-amber-900",
-      badge: "bg-amber-100",
-      badgeText: "text-yellow-800",
-      sidebar: "bg-yellow-100/90",
-      shadow: "shadow-xl shadow-amber-300/50",
-    },
-  },
-  contrast: {
-    label: "High Contrast",
-    className: "theme-contrast",
-    fontFamily: "Outfit, sans-serif",
-    colors: {
-      bg: "bg-black",
-      card: "bg-white border border-black rounded-lg",
-      text: "text-black",
-      accent: "bg-black text-white",
-      badge: "bg-gray-800",
-      badgeText: "text-white",
-      sidebar: "bg-gray-100",
-      shadow: "shadow-lg shadow-black/40",
-    },
-  },
-  nature: {
-    label: "Nature Green",
-    className: "theme-nature",
-    fontFamily: "Montserrat, sans-serif",
-    colors: {
-      bg: "bg-gradient-to-b from-green-100 via-emerald-100 to-amber-50",
-      card: "bg-white/80 border border-green-300 rounded-xl",
-      text: "text-emerald-900",
-      accent: "bg-green-200 text-emerald-900",
-      badge: "bg-emerald-50",
-      badgeText: "text-emerald-900",
-      sidebar: "bg-green-100/80",
-      shadow: "shadow-lg shadow-emerald-200/50",
-    },
-  },
-  mono: {
-    label: "Monochrome Minimal",
-    className: "theme-mono",
-    fontFamily: "IBM Plex Mono, monospace",
-    colors: {
-      bg: "bg-gradient-to-b from-white via-gray-200 to-gray-100",
-      card: "bg-white border border-gray-300 rounded-lg",
-      text: "text-gray-900",
-      accent: "bg-gray-900 text-white",
+      bg: "bg-white",
+      card: "bg-[#F5F5F5]",
+      text: "text-[#111111]",
+      accent: "#007ACC",
+      accentText: "#FFFFFF",
+      primary: "#F5F5F5",
+      primaryText: "#111111",
       badge: "bg-gray-200",
-      badgeText: "text-gray-800",
-      sidebar: "bg-gray-100/90",
-      shadow: "shadow",
+      badgeText: "text-gray-700",
+      sidebar: "bg-white/90 backdrop-blur-sm",
+      shadow: "shadow-lg shadow-gray-200/50",
     },
   },
-  ink: {
-    label: "Ink & Paper",
-    className: "theme-ink",
-    fontFamily: "Playfair Display, serif",
+  darkLuxury: {
+    label: "Dark Luxury",
+    className: "theme-dark-luxury",
+    fontFamily: "'Playfair Display', serif",
     colors: {
-      bg: "bg-gradient-to-b from-gray-100 via-amber-50 to-white",
-      card: "bg-white border border-gray-400 rounded-xl",
-      text: "text-gray-900",
-      accent: "bg-gray-800 text-white",
-      badge: "bg-amber-100",
-      badgeText: "text-gray-900",
-      sidebar: "bg-gray-50/95",
-      shadow: "shadow-lg shadow-gray-500/20",
-    },
-  },
-  neonPunk: {
-    label: "Neon Punk",
-    className: "theme-neon-punk",
-    fontFamily: "Poppins, sans-serif",
-    colors: {
-      bg: "bg-[#0B0B0B]",
-      card: "bg-black/80",
-      text: "text-gray-100",
-      accent: "bg-neon-purple text-[#FFD700]",
+      bg: "bg-[#121212]",
+      card: "bg-[#1E1E1E]",
+      text: "text-white",
+      accent: "#FFD700",
+      accentText: "#121212",
+      primary: "#1E1E1E",
+      primaryText: "#FFFFFF",
       badge: "bg-yellow-400/20",
       badgeText: "text-yellow-300",
-      sidebar: "bg-black/90",
-      shadow: "shadow-lg shadow-neon-purple/20",
+      sidebar: "bg-black/80 backdrop-blur-sm",
+      shadow: "shadow-lg shadow-yellow-400/10",
+    },
+  },
+  neonCyberpunk: {
+    label: "Neon Cyberpunk",
+    className: "theme-neon-cyberpunk",
+    fontFamily: "'Poppins', sans-serif",
+    colors: {
+      bg: "bg-[#0B0B20]",
+      card: "bg-black/80 border border-[#FF00FF]",
+      text: "text-white",
+      accent: "#00FFFF",
+      accentText: "#000000",
+      primary: "#FF00FF",
+      primaryText: "#FFFFFF",
+      badge: "bg-fuchsia-500/30",
+      badgeText: "text-fuchsia-300",
+      sidebar: "bg-black/90 backdrop-blur-sm",
+      shadow: "shadow-lg shadow-cyan-500/20",
+    },
+  },
+  softPastel: {
+    label: "Soft Pastel",
+    className: "theme-soft-pastel",
+    fontFamily: "'Poppins', sans-serif",
+    colors: {
+      bg: "bg-[#FAFAFA]",
+      card: "bg-[#E0F7FA]",
+      text: "text-[#333333]",
+      accent: "#F8BBD0",
+      accentText: "#880E4F",
+      primary: "#E0F7FA",
+      primaryText: "#333333",
+      badge: "bg-pink-100",
+      badgeText: "text-pink-800",
+      sidebar: "bg-[#E0F7FA]/80 backdrop-blur-sm",
+      shadow: "shadow-lg shadow-pink-100/50",
+    },
+  },
+  boldMagazine: {
+    label: "Bold Magazine",
+    className: "theme-bold-magazine",
+    fontFamily: "'Playfair Display', serif",
+    colors: {
+      bg: "bg-white",
+      card: "bg-black",
+      text: "text-white",
+      accent: "#FF0000",
+      accentText: "#FFFFFF",
+      primary: "#000000",
+      primaryText: "#FFFFFF",
+      badge: "bg-red-500/20",
+      badgeText: "text-red-400",
+      sidebar: "bg-gray-100/90 backdrop-blur-sm",
+      shadow: "shadow-2xl shadow-black/20",
+    },
+  },
+  natureInspired: {
+    label: "Nature Inspired",
+    className: "theme-nature-inspired",
+    fontFamily: "'Inter', sans-serif",
+    colors: {
+      bg: "bg-[#F0F8F5]",
+      card: "bg-white/80 border border-green-300",
+      text: "text-[#2D3142]",
+      accent: "#386641",
+      accentText: "#FFFFFF",
+      primary: "#6A994E",
+      primaryText: "#FFFFFF",
+      badge: "bg-green-200",
+      badgeText: "text-green-800",
+      sidebar: "bg-[#F0F8F5]/80 backdrop-blur-sm",
+      shadow: "shadow-lg shadow-green-200/50",
+    },
+  },
+  glassmorphism: {
+    label: "Glassmorphism",
+    className: "theme-glassmorphism",
+    fontFamily: "'Poppins', sans-serif",
+    colors: {
+      bg: "bg-gradient-to-br from-gray-200 to-blue-200",
+      card: "bg-white/20 backdrop-blur-lg border border-white/30",
+      text: "text-black",
+      accent: "#4A90E2",
+      accentText: "#FFFFFF",
+      primary: "rgba(255,255,255,0.2)",
+      primaryText: "#000000",
+      badge: "bg-blue-100/80",
+      badgeText: "text-blue-800",
+      sidebar: "bg-white/30 backdrop-blur-lg",
+      shadow: "shadow-xl shadow-blue-200/20",
+    },
+  },
+  retroVintage: {
+    label: "Retro Vintage",
+    className: "theme-retro-vintage",
+    fontFamily: "'Playfair Display', serif",
+    colors: {
+      bg: "bg-[#F5F5DC]",
+      card: "bg-[#FAF0E6] border border-[#C19A6B]",
+      text: "text-[#3E2723]",
+      accent: "#6B4226",
+      accentText: "#FFFFFF",
+      primary: "#C19A6B",
+      primaryText: "#FFFFFF",
+      badge: "bg-amber-200",
+      badgeText: "text-amber-800",
+      sidebar: "bg-[#F5F5DC]/80 backdrop-blur-sm",
+      shadow: "shadow-lg shadow-yellow-800/20",
+    },
+  },
+  artisticBrush: {
+    label: "Artistic Brush",
+    className: "theme-artistic-brush",
+    fontFamily: "'Playfair Display', serif",
+    colors: {
+      bg: "bg-white",
+      card: "bg-[#FFF8DC]",
+      text: "text-[#2F4F4F]",
+      accent: "#FF6347",
+      accentText: "#FFFFFF",
+      primary: "#FFF8DC",
+      primaryText: "#2F4F4F",
+      badge: "bg-red-200",
+      badgeText: "text-red-900",
+      sidebar: "bg-[#FFF8DC]/90 backdrop-blur-sm",
+      shadow: "shadow-lg shadow-red-200/40",
+    },
+  },
+  futuristicMinimal: {
+    label: "Futuristic Minimal",
+    className: "theme-futuristic-minimal",
+    fontFamily: "'Inter', sans-serif",
+    colors: {
+      bg: "bg-black",
+      card: "bg-[#1F1F1F]",
+      text: "text-white",
+      accent: "#00FFCC",
+      accentText: "#000000",
+      primary: "#1F1F1F",
+      primaryText: "#FFFFFF",
+      badge: "bg-cyan-400/20",
+      badgeText: "text-cyan-300",
+      sidebar: "bg-gray-900/90 backdrop-blur-sm",
+      shadow: "shadow-lg shadow-cyan-500/10",
     },
   },
 };

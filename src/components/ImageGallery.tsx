@@ -1,9 +1,12 @@
+
 import React, { useState, useMemo, useEffect } from "react";
 import { parseFiles } from "@/utils/tagUtils";
 import { TagSidebar } from "./TagSidebar";
 import { FullscreenViewer } from "./FullscreenViewer";
 import { cn } from "@/lib/utils";
 import { Search, Folder, Heart, Pencil } from "lucide-react";
+import { useTheme } from "@/theme/themeContext";
+import { themes } from "@/theme/themes";
 
 /*
   - Accept specialFolderPath prop, if set show a banner and prompt user to select that folder in the picker.
@@ -19,6 +22,8 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({ specialFolderPath })
   const [viewerIdx, setViewerIdx] = useState<number | null>(null);
   const [specialBanner, setSpecialBanner] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const { theme } = useTheme();
+  const themeColors = themes[theme].colors;
 
   // Special folder: Show banner when requested
   useEffect(() => {
@@ -70,16 +75,16 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({ specialFolderPath })
   if (!files.length) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-        <h1 className="text-4xl font-bold mb-2 text-gold">Select Image Folder</h1>
+        <h1 className="text-4xl font-bold mb-2" style={{ color: themeColors.accent }}>Select Image Folder</h1>
         <p className="text-gray-400 mb-4">Choose a folder with images to get started.</p>
         {specialBanner && (
-          <div className="bg-gold/10 border border-gold rounded-lg text-gold px-4 py-3 mb-3 max-w-xl text-center">
+          <div className={`bg-[${themeColors.accent}]/10 border border-[${themeColors.accent}] rounded-lg text-[${themeColors.accent}] px-4 py-3 mb-3 max-w-xl text-center`}>
             {specialBanner}
             <br />
-            <span className="text-sm text-gold font-mono">{specialFolderPath}</span>
+            <span className="text-sm font-mono" style={{ color: themeColors.accent }}>{specialFolderPath}</span>
           </div>
         )}
-        <label className="btn cursor-pointer">
+        <label className="btn cursor-pointer" style={{ backgroundColor: themeColors.accent, color: themeColors.accentText }}>
           Select Folder
           <input
             type="file"
@@ -114,9 +119,10 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({ specialFolderPath })
                 placeholder="Search by title or tags..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-11 pr-5 py-3 rounded-full bg-[#23283a]/90 text-white placeholder:text-gray-400 border border-neon-purple focus:outline-none focus:ring-2 focus:ring-neon-purple transition-shadow hover:shadow-lg hover:shadow-neon-purple/20"
+                className={`w-full pl-11 pr-5 py-3 rounded-full bg-[#23283a]/90 text-white placeholder:text-gray-400 border focus:outline-none focus:ring-2 transition-shadow hover:shadow-lg`}
+                style={{ borderColor: themeColors.accent, '--tw-ring-color': themeColors.accent, boxShadow: `0 0 0 0 ${themeColors.accent}20` } as React.CSSProperties}
               />
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neon-purple" size={20} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: themeColors.accent }} size={20} />
             </form>
             <div className="text-lg font-semibold text-gray-400">
               {visibleImages.length} image{visibleImages.length !== 1 ? "s" : ""} found
@@ -137,7 +143,10 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({ specialFolderPath })
           {visibleImages.map((img, idx) => (
             <div
               key={img.filename}
-              className="rounded-2xl bg-black border border-transparent p-4 flex flex-col group relative transition-all duration-300 hover:border-neon-purple hover:shadow-2xl hover:shadow-neon-purple/20 cursor-pointer"
+              className={`rounded-2xl border border-transparent p-4 flex flex-col group relative transition-all duration-300 cursor-pointer ${themeColors.card}`}
+              style={{ '--hover-border-color': themeColors.accent, '--hover-shadow-color': `${themeColors.accent}33` } as React.CSSProperties}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = e.currentTarget.style.getPropertyValue('--hover-border-color'); e.currentTarget.style.boxShadow = `0 8px 32px 0 ${e.currentTarget.style.getPropertyValue('--hover-shadow-color')}`; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'; }}
               onClick={() => openViewerAt(idx)}
             >
               <div className="absolute top-3 right-3 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -157,7 +166,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({ specialFolderPath })
                 </div>
               </div>
               <div className="text-left">
-                <div className="font-bold text-lg mb-1 truncate w-full tracking-tight text-gray-100">{img.title}</div>
+                <div className="font-bold text-lg mb-1 truncate w-full tracking-tight">{img.title}</div>
                 <div className="flex items-center gap-2 text-sm text-gray-400 mb-3">
                   <Folder size={16} />
                   <span>{img.filename.substring(0, img.filename.lastIndexOf('/')) || "/"}</span>
@@ -170,9 +179,10 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({ specialFolderPath })
                     key={tag}
                     className={cn(
                       "text-xs px-3 py-1 rounded-full font-semibold cursor-pointer transition-all duration-100",
-                      "bg-yellow-400/20 text-yellow-300 hover:bg-yellow-400/40",
-                      tag === activeTag && "ring-2 ring-gold"
+                      `${themeColors.badge} ${themeColors.badgeText} hover:brightness-125`,
+                      tag === activeTag && `ring-2`
                     )}
+                    style={tag === activeTag ? { 'borderColor': themeColors.accent, '--tw-ring-color': themeColors.accent } as React.CSSProperties : {}}
                     onClick={e => { e.stopPropagation(); setActiveTag(tag); }}
                   >
                     {tag}

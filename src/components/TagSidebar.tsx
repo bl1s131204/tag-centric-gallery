@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Info } from "lucide-react";
+import { useTheme } from "@/theme/themeContext";
+import { themes } from "@/theme/themes";
 
 type TagSidebarProps = {
   tags: { name: string; count: number }[];
@@ -10,20 +12,24 @@ type TagSidebarProps = {
 };
 export const TagSidebar: React.FC<TagSidebarProps> = ({ tags, active, onSelect }) => {
   const [search, setSearch] = useState("");
+  const { theme } = useTheme();
+  const themeColors = themes[theme].colors;
+
   const filtered = tags.filter((t) =>
     t.name.toLowerCase().includes(search.toLowerCase())
   );
   return (
     <aside
-      className="sticky top-[70px] h-[calc(100vh-70px)] min-w-[220px] max-w-[280px] bg-black/50 p-4 flex flex-col overflow-y-auto z-40 border-r border-neon-purple/20"
-      style={{ transition: "left 0.2s" }}
+      className={`sticky top-[70px] h-[calc(100vh-70px)] min-w-[220px] max-w-[280px] p-4 flex flex-col overflow-y-auto z-40 border-r ${themeColors.sidebar}`}
+      style={{ transition: "left 0.2s", borderColor: `${themeColors.accent}33` }}
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-bold text-lg text-gold">Filter by Tags</h3>
+        <h3 className="font-bold text-lg" style={{ color: themeColors.accent }}>Filter by Tags</h3>
         <Info size={16} className="text-gray-400" />
       </div>
       <input
-        className="w-full px-3 py-2 mb-4 rounded-lg bg-[#22252d] border border-neon-purple/50 focus:outline-none focus:ring-2 focus:ring-neon-purple"
+        className={`w-full px-3 py-2 mb-4 rounded-lg bg-[#22252d] border focus:outline-none focus:ring-2`}
+        style={{ borderColor: `${themeColors.accent}80`, '--tw-ring-color': themeColors.accent } as React.CSSProperties}
         value={search}
         onChange={e => setSearch(e.target.value)}
         placeholder="Search tags..."
@@ -31,8 +37,9 @@ export const TagSidebar: React.FC<TagSidebarProps> = ({ tags, active, onSelect }
       <button
         className={cn(
           "mb-2 px-3 py-2 text-left w-full rounded-full font-semibold transition-colors",
-          !active ? "bg-neon-purple text-gold" : "hover:bg-neon-purple/50"
+          !active ? "" : `hover:bg-[${themeColors.accent}]/20`
         )}
+        style={!active ? { backgroundColor: themeColors.accent, color: themeColors.accentText } : {}}
         onClick={() => onSelect(null)}
       >
         Show All <span className="text-xs opacity-70">({tags.reduce((s, t) => s + t.count, 0)})</span>
@@ -43,12 +50,13 @@ export const TagSidebar: React.FC<TagSidebarProps> = ({ tags, active, onSelect }
             <button
               className={cn(
                 "w-full text-left px-3 py-1.5 rounded-full flex justify-between items-center transition-colors",
-                active === tag.name ? "bg-neon-purple text-gold" : "hover:bg-neon-purple/50"
+                active !== tag.name && `hover:bg-[${themeColors.accent}]/20`
               )}
+              style={active === tag.name ? { backgroundColor: themeColors.accent, color: themeColors.accentText } : {}}
               onClick={() => onSelect(tag.name)}
             >
               <span>{tag.name}</span>
-              <span className="text-xs font-mono bg-yellow-400/20 text-yellow-300 px-2 py-0.5 rounded-full">{tag.count}</span>
+              <span className={`text-xs font-mono px-2 py-0.5 rounded-full ${themeColors.badge} ${themeColors.badgeText}`}>{tag.count}</span>
             </button>
           </li>
         ))}
