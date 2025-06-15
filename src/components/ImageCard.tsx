@@ -17,7 +17,7 @@ export const ImageCard: React.FC<ImageCardProps> = ({ image, onClick, onTagClick
         "bg-white dark:bg-[#20232c]",
         "border border-[#121212] dark:border-[#292632]",
         "shadow-xl hover:shadow-2xl transition-shadow duration-150",
-        "rounded-md",
+        "rounded-lg",
         "flex flex-col group relative cursor-pointer overflow-hidden",
         "hover:-translate-y-1.5",
         "min-h-[362px] max-w-[350px] w-full"
@@ -50,7 +50,7 @@ export const ImageCard: React.FC<ImageCardProps> = ({ image, onClick, onTagClick
       <img
         src={image.url}
         alt={image.title}
-        className="w-full h-full object-cover rounded-md transition-all fade-in-img mt-2"
+        className="w-full h-full object-cover rounded-lg transition-all fade-in-img mt-2"
         draggable={false}
         style={{
           width: "95%",
