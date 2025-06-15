@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from "react";
 import { parseFiles } from "@/utils/tagUtils";
 import { TagSidebar } from "./TagSidebar";
@@ -171,7 +170,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
                 display: "flex",
                 flexDirection: "column",
                 boxSizing: "border-box",
-                aspectRatio: "0.93 / 1", // taller rectangle
+                aspectRatio: "0.93 / 1",
                 borderWidth: "3.5px",
               }}
               tabIndex={0}
@@ -208,41 +207,24 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
                 <Folder size={15} className="mr-0.5 text-gray-300" />
                 Telegram Desktop
               </div>
-              {/* Image - boxed and inset */}
-              <div
-                className="relative w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-100/70 to-gray-200 dark:from-[#282834]/80 dark:to-[#25252d]/100"
+              {/* Image - flush to card, with thin border */}
+              <img
+                src={img.url}
+                alt={img.title}
+                className="w-full h-full object-cover rounded-lg transition-all fade-in-img mt-3"
+                draggable={false}
                 style={{
-                  flex: 1,
-                  width: "100%",
-                  minHeight: "180px",
-                  maxHeight: "230px",
-                  margin: "0 auto",
-                  boxSizing: "border-box",
-                  borderRadius: "1.05rem",
-                  border: "3.5px solid #171717",
-                  padding: "11px 0",
-                  background: "linear-gradient(112deg, #ececec 87%, #f8fafc 100%)",
-                  boxShadow:
-                    "0 4px 20px 0 rgba(48,60,78,0.06), 0 1px 9px 0 rgba(37,50,58,0.07)",
+                  width: "95%",
+                  height: "210px",
+                  objectFit: "cover",
+                  borderRadius: "0.67rem",
+                  border: "1.5px solid #232A36",
+                  background: "#dcdfe3",
+                  boxShadow: "0 1.5px 8px 0 #c0c0c044",
+                  display: "block",
+                  margin: "0 auto"
                 }}
-              >
-                <img
-                  src={img.url}
-                  alt={img.title}
-                  className="w-full h-full object-cover rounded-lg transition-all fade-in-img"
-                  draggable={false}
-                  style={{
-                    width: "95%",
-                    height: "210px",
-                    objectFit: "cover",
-                    borderRadius: "0.67rem",
-                    border: "3.5px solid #232A36",
-                    background: "#dcdfe3",
-                    boxShadow: "0 1.5px 8px 0 #c0c0c044",
-                    display: "block",
-                  }}
-                />
-              </div>
+              />
               {/* Tag/Info section */}
               <div className="px-5 pb-5 pt-4 w-full">
                 <div className="text-base font-semibold text-[#383F4F] dark:text-[#b8e1ff] mb-1">
@@ -289,4 +271,3 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
 };
 
 // Note: This file is now over 200 lines and should be refactored into smaller components for long-term maintainability.
-
