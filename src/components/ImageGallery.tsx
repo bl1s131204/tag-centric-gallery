@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from "react";
 import { parseFiles } from "@/utils/tagUtils";
 import { TagSidebar } from "./TagSidebar";
@@ -146,7 +145,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
           className={cn(
             "w-full",
             "grid",
-            "gap-x-8 gap-y-12", // Increased gaps for a crisp grid
+            "gap-x-8 gap-y-12",
             "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4",
             "justify-items-center pb-16",
             "masonry-cols-none"
@@ -159,22 +158,23 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
             <div
               key={img.filename}
               className={cn(
-                // Modified Card style for rectangular, modern look
                 "bg-white dark:bg-[#181b20]",
-                "border border-neutral-200 dark:border-neutral-700",
-                "rounded-xl shadow-lg hover:shadow-2xl group relative flex flex-col",
+                "border-4 border-black", // THICK BLACK BORDER
+                "rounded-md",            // LESS ROUND, more rectangular look
+                "shadow-lg hover:shadow-2xl group relative flex flex-col",
                 "transition-all duration-200 cursor-pointer overflow-hidden hover:scale-[1.023]",
-                "ring-0 hover:ring-2 hover:ring-[var(--tw-prose-invert-bullets,#2563eb)] dark:hover:ring-emerald"
+                "hover:ring-2 hover:ring-[var(--tw-prose-invert-bullets,#2563eb)] dark:hover:ring-emerald"
               )}
               style={{
                 width: "100%",
-                maxWidth: 410,
+                maxWidth: 380,
                 minWidth: 270,
-                minHeight: 292,
+                minHeight: 210,
                 margin: "0 auto",
                 display: "flex",
                 flexDirection: "column",
                 boxSizing: "border-box",
+                aspectRatio: "8 / 5", // Rectangular, wider than tall
               }}
               tabIndex={0}
               onClick={() => openViewerAt(idx)}
@@ -182,13 +182,15 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
             >
               {/* Image */}
               <div
-                className="relative w-full aspect-[16/9] bg-gradient-to-br from-gray-200/70 to-gray-50 dark:from-[#252c39]/70 dark:to-[#161921] flex items-center justify-center overflow-hidden"
+                className="relative w-full h-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-200/70 to-gray-50 dark:from-[#252c39]/70 dark:to-[#161921]"
                 style={{
-                  borderTopLeftRadius: "0.9rem",
-                  borderTopRightRadius: "0.9rem",
-                  minHeight: "182px",
-                  maxHeight: "228px",
+                  flex: 1,
                   width: "100%",
+                  aspectRatio: "8 / 5", // Match the outer box
+                  minHeight: "175px",
+                  maxHeight: "300px",
+                  borderTopLeftRadius: "0.5rem",
+                  borderTopRightRadius: "0.5rem",
                 }}
               >
                 <img
@@ -197,11 +199,10 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
                   className="w-full h-full object-cover object-center transition-transform duration-200 hover:scale-105 hover:brightness-105 fade-in-img"
                   draggable={false}
                   style={{
-                    borderTopLeftRadius: "0.6rem",
-                    borderTopRightRadius: "0.6rem",
-                    objectFit: "cover",
                     width: "100%",
                     height: "100%",
+                    objectFit: "cover",
+                    borderRadius: 0,
                   }}
                 />
                 {/* Card actions on image */}
@@ -268,4 +269,3 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
 };
 
 // Note: This file is now over 200 lines and should be refactored into smaller components for long-term maintainability.
-
