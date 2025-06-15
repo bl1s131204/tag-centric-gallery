@@ -17,16 +17,16 @@ export const ImageCard: React.FC<ImageCardProps> = ({ image, onClick, onTagClick
         "bg-white dark:bg-[#20232c]",
         "border border-[#121212] dark:border-[#292632]",
         "shadow-xl hover:shadow-2xl transition-shadow duration-150",
-        "rounded-2xl",
+        "rounded-md",
         "flex flex-col group relative cursor-pointer overflow-hidden",
         "hover:-translate-y-1.5",
-        "min-h-[382px] max-w-[350px] w-full"
+        "min-h-[362px] max-w-[350px] w-full"
       )}
       style={{
         width: "100%",
         maxWidth: 350,
         minWidth: 255,
-        minHeight: 382,
+        minHeight: 362,
         margin: "0 auto",
         display: "flex",
         flexDirection: "column",
@@ -38,7 +38,7 @@ export const ImageCard: React.FC<ImageCardProps> = ({ image, onClick, onTagClick
       onClick={onClick}
       aria-label={image.title}
     >
-      <div className="px-5 pt-6 pb-0 flex flex-row items-center justify-between w-full">
+      <div className="px-5 pt-4 pb-0 flex flex-row items-center justify-between w-full">
         <span className="font-bold text-[1.09rem] text-[#232A36] dark:text-[#ebf7fe] truncate max-w-[70%]">
           {image.filename}
         </span>
@@ -50,13 +50,12 @@ export const ImageCard: React.FC<ImageCardProps> = ({ image, onClick, onTagClick
       <img
         src={image.url}
         alt={image.title}
-        className="w-full h-full object-cover rounded-lg transition-all fade-in-img mt-3"
+        className="w-full h-full object-cover rounded-md transition-all fade-in-img mt-2"
         draggable={false}
         style={{
           width: "95%",
           height: "210px",
           objectFit: "cover",
-          borderRadius: "0.67rem",
           border: "1.2px solid #232A36",
           background: "#dcdfe3",
           boxShadow: "0 1.5px 8px 0 #c0c0c044",
@@ -64,7 +63,7 @@ export const ImageCard: React.FC<ImageCardProps> = ({ image, onClick, onTagClick
           margin: "0 auto"
         }}
       />
-      <div className="px-5 pb-5 pt-4 w-full">
+      <div className="px-5 pb-4 pt-3 w-full">
         <div className="text-base font-semibold text-[#383F4F] dark:text-[#b8e1ff] mb-1">
           Tags
         </div>
