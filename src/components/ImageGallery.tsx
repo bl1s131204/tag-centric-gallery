@@ -129,14 +129,15 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
         {/* Gallery grid */}
         <div
           className={cn(
-            "grid gap-10",
-            "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            "grid gap-8 sm:gap-10 xl:gap-14",
+            "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4",
+            "justify-items-center"
           )}
         >
           {visibleImages.map((img, idx) => (
             <div
               key={img.filename}
-              className={`bg-white border border-black rounded-xl flex flex-col group relative transition-all duration-300 cursor-pointer overflow-hidden shadow hover:shadow-lg`}
+              className={`bg-white border border-black rounded-2xl flex flex-col group relative transition-all duration-300 cursor-pointer overflow-hidden shadow hover:shadow-lg`}
               style={{
                 minHeight: 330,
                 maxWidth: 480,
