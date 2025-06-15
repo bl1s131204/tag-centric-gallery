@@ -16,9 +16,19 @@ export function useTheme() {
   return ctx;
 }
 
+// Validate theme from storage
+function getInitialTheme(): ThemeName {
+  const stored = getTheme();
+  // Only use if it matches allowed themes
+  if (stored && typeof stored === "string" && Object.keys(themes).includes(stored)) {
+    return stored as ThemeName;
+  }
+  return "glass";
+}
+
 // Provider
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeName>(() => getTheme() || "glass");
+  const [theme, setThemeState] = useState<ThemeName>(getInitialTheme);
   useEffect(() => {
     setTheme(theme);
   }, [theme]);
