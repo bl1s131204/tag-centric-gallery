@@ -14,7 +14,7 @@ export const GalleryGrid: React.FC<GalleryGridProps> = ({ images, onImageClick, 
   return (
     <div
       className={cn(
-        "w-full grid gap-x-[0.2cm] gap-y-[0.4cm]",
+        "w-full grid gap-x-[0.2cm] gap-y-[0.8cm]",
         "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3",
         "justify-items-center pb-16"
       )}
