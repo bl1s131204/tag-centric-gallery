@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Info } from "lucide-react";
@@ -42,7 +41,7 @@ export const TagSidebar: React.FC<TagSidebarProps> = ({ tags, active, onSelect }
         style={!active ? { backgroundColor: themeColors.accent, color: themeColors.accentText } : {}}
         onClick={() => onSelect(null)}
       >
-        Show All <span className="text-xs opacity-70">({tags.reduce((s, t) => s + t.count, 0)})</span>
+        Show All
       </button>
       <ul className="space-y-1">
         {filtered.map(tag => (

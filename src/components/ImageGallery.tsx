@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from "react";
 import { parseFiles } from "@/utils/tagUtils";
 import { TagSidebar } from "./TagSidebar";
@@ -24,7 +23,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
   onSearchTermChange,
 }) => {
   const [files, setFiles] = useState<File[]>([]);
-  const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [activeTag, setActiveTags] = useState<string | null>(null);
   const [viewerIdx, setViewerIdx] = useState<number | null>(null);
   const [specialBanner, setSpecialBanner] = useState<string | null>(null);
   const { theme } = useTheme();
@@ -71,7 +70,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
   function handleFilePick(e: React.ChangeEvent<HTMLInputElement>) {
     if (!e.target.files) return;
     setFiles(Array.from(e.target.files));
-    setActiveTag(null);
+    setActiveTags(null);
     setViewerIdx(null);
     setSpecialBanner(null);
   }
@@ -113,7 +112,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
     <div className="flex flex-row w-full">
       {/* Sidebar */}
       <div className="hidden md:flex">
-        <TagSidebar tags={tagSidebar} active={activeTag} onSelect={setActiveTag} />
+        <TagSidebar tags={tagSidebar} active={activeTag} onSelect={setActiveTags} />
       </div>
       {/* Main */}
       <div className="w-full min-h-screen flex flex-col px-4">
@@ -123,7 +122,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
         {/* Mobile sidebar panel */}
         <div id="sidebar-pop" className="md:hidden fixed left-0 top-0 z-50 h-full bg-white/95 shadow-lg hidden">
           <TagSidebar tags={tagSidebar} active={activeTag} onSelect={tag => {
-            setActiveTag(tag);
+            setActiveTags(tag);
             document.getElementById("sidebar-pop")?.classList.add("hidden");
           }} />
         </div>
@@ -183,7 +182,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
                           tag === activeTag && `ring-2 ring-black`
                         )}
                         style={tag === activeTag ? { boxShadow: `0 0 0 2px ${themeColors.accent}` } : {}}
-                        onClick={e => { e.stopPropagation(); setActiveTag(tag); }}
+                        onClick={e => { e.stopPropagation(); setActiveTags(tag); }}
                       >
                         {tag}
                       </span>
