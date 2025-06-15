@@ -3,7 +3,7 @@ import { parseFiles } from "@/utils/tagUtils";
 import { TagSidebar } from "./TagSidebar";
 import { FullscreenViewer } from "./FullscreenViewer";
 import { cn } from "@/lib/utils";
-import { Folder, Heart, Pencil } from "lucide-react";
+import { Folder } from "lucide-react";
 import { useTheme } from "@/theme/themeContext";
 import { themes } from "@/theme/themes";
 
@@ -171,31 +171,12 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
                 flexDirection: "column",
                 boxSizing: "border-box",
                 aspectRatio: "0.93 / 1",
-                borderWidth: "3.5px",
+                borderWidth: "1.5px", // Slightly thinner border (from the user's earlier request)
               }}
               tabIndex={0}
               onClick={() => openViewerAt(idx)}
               aria-label={img.title}
             >
-              {/* Quick actions */}
-              <div className="absolute top-0 right-0 flex gap-2 p-3 z-20">
-                <button
-                  className="p-1.5 bg-white shadow border border-neutral-300 rounded-full text-gray-700 hover:bg-[#fde68a] hover:text-emerald-600 hover:shadow-lg transition"
-                  onClick={e => e.stopPropagation()}
-                  title="Favorite"
-                  tabIndex={-1}
-                >
-                  <Heart size={17} />
-                </button>
-                <button
-                  className="p-1.5 bg-white shadow border border-neutral-300 rounded-full text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 hover:shadow-lg transition"
-                  onClick={e => e.stopPropagation()}
-                  title="Edit Tags"
-                  tabIndex={-1}
-                >
-                  <Pencil size={17} />
-                </button>
-              </div>
               {/* Filename Header */}
               <div className="px-5 pt-6 pb-0 flex flex-row items-center justify-between w-full">
                 <span className="font-bold text-[1.09rem] text-[#232A36] dark:text-[#ebf7fe] truncate max-w-[70%]">
@@ -218,7 +199,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
                   height: "210px",
                   objectFit: "cover",
                   borderRadius: "0.67rem",
-                  border: "1.5px solid #232A36",
+                  border: "1.2px solid #232A36",
                   background: "#dcdfe3",
                   boxShadow: "0 1.5px 8px 0 #c0c0c044",
                   display: "block",
