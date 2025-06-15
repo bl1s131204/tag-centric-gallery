@@ -124,16 +124,16 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
 
   // Main gallery layout and cards
   return (
-    <div className="flex flex-row w-full min-h-screen bg-[#f8f9fa] dark:bg-[#121212] transition-colors duration-200">
+    <div className="flex flex-row w-full min-h-screen bg-[#f5f5f8] dark:bg-[#18181b] transition-colors duration-200">
       {/* Sidebar */}
-      <div className="hidden md:flex">
+      <div className="hidden md:flex mr-4">
         <TagSidebar tags={tagSidebar} active={activeTag} onSelect={setActiveTags} />
       </div>
       {/* Main */}
       <div className="flex-1 min-h-screen flex flex-col px-2 md:px-8">
         <div className="flex items-center justify-between pt-10 pb-4">
-          <div className="text-2xl md:text-3xl font-semibold text-[#202f3c] dark:text-[#d6e3ef]">
-            Gallery
+          <div className="text-2xl md:text-3xl font-semibold text-[#232A36] dark:text-[#dbe7f6] tracking-tight">
+            Image Gallery
           </div>
           <div className="text-base font-medium text-gray-500 dark:text-gray-300">
             {visibleImages.length} image{visibleImages.length !== 1 ? "s" : ""} found
@@ -142,9 +142,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
         {/* Card grid */}
         <div
           className={cn(
-            "w-full",
-            "grid",
-            "gap-x-7 gap-y-9",
+            "w-full grid gap-x-10 gap-y-12",
             "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4",
             "justify-items-center pb-16"
           )}
@@ -156,90 +154,108 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
             <div
               key={img.filename}
               className={cn(
-                "bg-white dark:bg-[#181b20]",
-                "border-2 border-[#222] shadow-md",
+                "bg-white dark:bg-[#20232c]",
+                "border border-[#121212] dark:border-[#292632]",
+                "shadow-xl hover:shadow-2xl transition-shadow duration-150",
                 "rounded-2xl",
-                "flex flex-col group relative transition-all duration-200 cursor-pointer overflow-hidden",
-                "hover:shadow-lg hover:-translate-y-[2.5px]"
+                "flex flex-col group relative cursor-pointer overflow-hidden",
+                "hover:-translate-y-1.5",
+                "min-h-[382px] max-w-[330px] w-full"
               )}
               style={{
                 width: "100%",
-                maxWidth: 365,
-                minWidth: 270,
-                minHeight: 355,
+                maxWidth: 330,
+                minWidth: 255,
+                minHeight: 382,
                 margin: "0 auto",
                 display: "flex",
                 flexDirection: "column",
                 boxSizing: "border-box",
-                aspectRatio: "1.18 / 1", // closer to reference
+                aspectRatio: "0.93 / 1", // taller rectangle
+                borderWidth: "3.5px",
               }}
               tabIndex={0}
               onClick={() => openViewerAt(idx)}
               aria-label={img.title}
             >
+              {/* Quick actions */}
+              <div className="absolute top-0 right-0 flex gap-2 p-3 z-20">
+                <button
+                  className="p-1.5 bg-white shadow border border-neutral-300 rounded-full text-gray-700 hover:bg-[#fde68a] hover:text-emerald-600 hover:shadow-lg transition"
+                  onClick={e => e.stopPropagation()}
+                  title="Favorite"
+                  tabIndex={-1}
+                >
+                  <Heart size={17} />
+                </button>
+                <button
+                  className="p-1.5 bg-white shadow border border-neutral-300 rounded-full text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 hover:shadow-lg transition"
+                  onClick={e => e.stopPropagation()}
+                  title="Edit Tags"
+                  tabIndex={-1}
+                >
+                  <Pencil size={17} />
+                </button>
+              </div>
               {/* Filename Header */}
-              <div className="px-5 pt-5 flex flex-row items-center justify-between w-full">
-                <span className="font-bold text-[1.08rem] text-[#202f3c] dark:text-[#ebf7fe] truncate max-w-[65%]">
+              <div className="px-5 pt-6 pb-0 flex flex-row items-center justify-between w-full">
+                <span className="font-bold text-[1.09rem] text-[#232A36] dark:text-[#ebf7fe] truncate max-w-[70%]">
                   {img.filename}
                 </span>
-                {/* Card actions */}
-                <div className="flex gap-2 z-10">
-                  <button
-                    className="p-1.5 bg-black/75 dark:bg-[#2A67C8]/90 rounded-full text-white hover:bg-emerald-600/80 transition-shadow shadow-md"
-                    onClick={e => e.stopPropagation()}
-                  >
-                    <Heart size={16} />
-                  </button>
-                  <button
-                    className="p-1.5 bg-black/75 dark:bg-[#2A67C8]/90 rounded-full text-white hover:bg-gold transition-shadow shadow-md"
-                    onClick={e => e.stopPropagation()}
-                  >
-                    <Pencil size={16} />
-                  </button>
-                </div>
               </div>
               {/* Folder source */}
-              <div className="flex items-center gap-1 text-xs font-medium text-gray-500 pl-5 pb-1 pt-1 select-none">
-                <Folder size={15} className="mr-1 text-gray-400" />
+              <div className="flex items-center gap-1 text-xs font-semibold text-gray-400 pl-5 pb-0 pt-1 select-none">
+                <Folder size={15} className="mr-0.5 text-gray-300" />
                 Telegram Desktop
               </div>
-              {/* Image */}
+              {/* Image - boxed and inset */}
               <div
-                className="relative w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-200/70 to-gray-50 dark:from-[#252c39]/70 dark:to-[#161921]"
+                className="relative w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-100/70 to-gray-200 dark:from-[#282834]/80 dark:to-[#25252d]/100"
                 style={{
                   flex: 1,
                   width: "100%",
-                  minHeight: "150px",
-                  maxHeight: "240px",
-                  borderRadius: "0.7rem",
+                  minHeight: "180px",
+                  maxHeight: "230px",
                   margin: "0 auto",
                   boxSizing: "border-box",
-                  border: "2.5px solid #bbb",
+                  borderRadius: "1.05rem",
+                  border: "3.5px solid #171717",
+                  padding: "11px 0",
+                  background: "linear-gradient(112deg, #ececec 87%, #f8fafc 100%)",
+                  boxShadow:
+                    "0 4px 20px 0 rgba(48,60,78,0.06), 0 1px 9px 0 rgba(37,50,58,0.07)",
                 }}
               >
                 <img
                   src={img.url}
                   alt={img.title}
-                  className="w-full h-full object-cover object-center fade-in-img"
+                  className="w-full h-full object-cover rounded-lg transition-all fade-in-img"
                   draggable={false}
                   style={{
-                    width: "100%",
-                    height: "100%",
+                    width: "95%",
+                    height: "210px",
                     objectFit: "cover",
-                    borderRadius: "0.2rem",
+                    borderRadius: "0.67rem",
+                    border: "3.5px solid #232A36",
+                    background: "#dcdfe3",
+                    boxShadow: "0 1.5px 8px 0 #c0c0c044",
+                    display: "block",
                   }}
                 />
               </div>
               {/* Tag/Info section */}
-              <div className="px-5 pb-4 pt-3 w-full">
-                <div className="text-[1rem] font-semibold text-[#374958] dark:text-[#cde1ec] mb-0.5">Tags:</div>
-                <div className="flex flex-wrap gap-2 w-full min-h-[22px]">
+              <div className="px-5 pb-5 pt-4 w-full">
+                <div className="text-base font-semibold text-[#383F4F] dark:text-[#b8e1ff] mb-1">
+                  Tags
+                </div>
+                <div className="flex flex-wrap gap-2 w-full min-h-[22px] mb-1">
                   {img.tags.length > 0
                     ? img.tags.map(tag => (
                         <span
                           key={tag}
                           className={cn(
-                            "text-xs px-3 py-1 rounded-full font-medium border border-[#cfdbe9] bg-[#eef2f8] text-[#374958] dark:bg-[#252c39] dark:text-[#cde1ec] dark:border-[#283046]"
+                            "text-xs px-3 py-1 rounded-full font-medium border border-[#ccd4e1] bg-[#f6f8fa] text-[#3b5779] dark:bg-[#24282e] dark:text-[#c7daf7] dark:border-[#262830]",
+                            "hover:bg-emerald-50 hover:text-emerald-700 transition-colors cursor-pointer"
                           )}
                           onClick={e => {
                             e.stopPropagation();
@@ -252,7 +268,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
                     : <span className="text-xs text-gray-400">No tags found</span>
                   }
                 </div>
-                <div className="text-xs text-gray-400 mt-1">
+                <div className="text-xs text-gray-400 mt-0.5">
                   {img.tags.length} tag{img.tags.length !== 1 ? "s" : ""}
                 </div>
               </div>
