@@ -3,7 +3,6 @@ import React, { useState, useMemo } from "react";
 import { parseFiles } from "@/utils/tagUtils";
 import { TagSidebar } from "./TagSidebar";
 import { FullscreenViewer } from "./FullscreenViewer";
-import { GalleryManager } from "./GalleryManager";
 import { cn } from "@/lib/utils";
 
 /**
@@ -39,11 +38,6 @@ export const ImageGallery: React.FC = () => {
   const nextImg = () => setViewerIdx(i => i == null ? null : (i + 1) % visibleImages.length);
   const prevImg = () => setViewerIdx(i => i == null ? null : (i - 1 + visibleImages.length) % visibleImages.length);
 
-  // Handle move-to-virtual-folder
-  const onMove = (imgNames: string[], folder: string) => {
-    // Just demo: could use folders, but images stay in main gallery
-  };
-
   // File picker handler
   function handleFilePick(e: React.ChangeEvent<HTMLInputElement>) {
     if (!e.target.files) return;
@@ -61,8 +55,8 @@ export const ImageGallery: React.FC = () => {
         <input
           type="file"
           multiple
-          webkitdirectory="true"
-          directory="true"
+          // Use as any to pass webkitdirectory for directory upload
+          {...{ webkitdirectory: "true", directory: "true" } as any}
           className="mb-4"
           onChange={handleFilePick}
           accept="image/*"
@@ -98,7 +92,14 @@ export const ImageGallery: React.FC = () => {
               onClick={() => document.getElementById("sidebar-pop")?.classList.toggle("hidden")}
             >Tags</button>
             <label className="px-2">
-              <input type="file" multiple webkitdirectory="true" directory="true" onChange={handleFilePick} accept="image/*" className="hidden" />
+              <input
+                type="file"
+                multiple
+                {...{ webkitdirectory: "true", directory: "true" } as any}
+                onChange={handleFilePick}
+                accept="image/*"
+                className="hidden"
+              />
               <span className="cursor-pointer underline">Change Folder</span>
             </label>
           </div>
@@ -110,36 +111,41 @@ export const ImageGallery: React.FC = () => {
             document.getElementById("sidebar-pop")?.classList.add("hidden");
           }} />
         </div>
-        {/* Gallery Manager */}
-        <GalleryManager images={imageData} onMove={onMove} />
-        {/* Gallery grid */}
+        {/* Professional Gallery grid */}
+        <div className="mb-4 text-lg font-semibold text-muted-foreground text-right pr-2">
+          {visibleImages.length} image{visibleImages.length !== 1 ? "s" : ""} found{activeTag ? ` for: "${activeTag}"` : ""}
+        </div>
         <div className={cn(
-          "grid gap-6",
-          "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8"
+          "grid gap-8 md:gap-10",
+          "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
         )}>
           {visibleImages.map((img, idx) => (
             <div
               key={img.filename}
               className={cn(
-                "rounded-xl shadow-lg bg-card border p-2 flex flex-col items-center hover:scale-105 transition-transform cursor-pointer group",
-                ""
+                "rounded-2xl shadow-2xl bg-card border border-gray-200 dark:border-gray-600 p-4 flex flex-col items-center hover:scale-[1.025] hover:shadow-accent transition-all duration-150 cursor-pointer group",
               )}
               onClick={() => openViewerAt(idx)}
+              style={{ minHeight: 320 }}
             >
-              <div className="font-semibold text-base mb-2 truncate w-full text-center">{img.title}</div>
               <img
                 src={img.url}
                 alt={img.title}
-                className="w-full aspect-[4/3] object-contain rounded-lg mb-2 bg-gray-100"
+                className="w-full aspect-[4/3] object-contain rounded-xl mb-4 bg-gray-100"
                 draggable={false}
+                style={{ maxHeight: 260 }}
               />
-              <div className="flex flex-wrap gap-1 w-full justify-center mt-1">
+              <div className="font-bold text-lg mb-3 truncate w-full text-center tracking-tight">
+                {img.title}
+              </div>
+              <div className="flex flex-wrap gap-2 w-full justify-center mt-auto">
                 {img.tags.map(tag => (
                   <span
                     key={tag}
                     className={cn(
-                      "text-xs px-2 py-1 rounded-full font-mono cursor-pointer bg-badge hover:bg-accent text-badgeText border",
-                      tag === activeTag && "ring-2"
+                      "text-xs px-3 py-1 rounded-full font-semibold cursor-pointer transition-all duration-100",
+                      "bg-badge text-badgeText border hover:bg-accent focus:ring-2",
+                      tag === activeTag && "ring-2 ring-accent border-accent"
                     )}
                     onClick={e => { e.stopPropagation(); setActiveTag(tag); }}
                   >
