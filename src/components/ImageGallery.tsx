@@ -105,7 +105,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
   }
 
   return (
-    <div className="flex flex-row w-full min-h-screen bg-[#f5f5f8] dark:bg-[#18181b] transition-colors duration-200">
+    <div className="flex flex-row w-full min-h-screen bg-transparent transition-colors duration-200">
       <div className="hidden md:flex mr-4">
         <TagSidebar tags={tagSidebarData} active={activeTag} onSelect={setActiveTag} />
       </div>

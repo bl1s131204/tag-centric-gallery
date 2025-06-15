@@ -1,13 +1,13 @@
 
 import React, { useState } from "react";
-import { ThemeProvider, useTheme } from "@/theme/themeContext";
+import { useTheme } from "@/theme/themeContext";
 import { ImageGallery } from "@/components/ImageGallery";
 import { ThemeDropdown } from "@/components/ThemeDropdown";
 import { UserCircle, Search, Folder, Filter } from "lucide-react";
 import { HiddenAccess, HiddenFolderAccess } from "@/components/HiddenAccess";
 import { themes } from "@/theme/themes";
 
-const AppContent = () => {
+const Index = () => {
   const [showHidden, setShowHidden] = useState(false);
   const [specialFolderPath, setSpecialFolderPath] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -120,11 +120,4 @@ const AppContent = () => {
   );
 }
 
-const Index = () => {
-  return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
-  );
-};
 export default Index;
