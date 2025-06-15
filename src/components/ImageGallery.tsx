@@ -147,9 +147,9 @@ export const ImageGallery: React.FC = () => {
                 {img.title}
               </div>
               <div className="flex flex-wrap gap-2 w-full justify-center mt-auto">
-                {img.tags.map(tag => (
+                {img.tags.map((tag, i) => (
                   <span
-                    key={tag}
+                    key={tag + "-" + i}
                     className={cn(
                       "text-xs px-3 py-1 rounded-full font-semibold cursor-pointer transition-all duration-100",
                       "bg-badge text-badgeText border hover:bg-accent focus:ring-2",
