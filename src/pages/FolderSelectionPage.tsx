@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Upload } from "lucide-react";
+import { Plus } from "lucide-react";
 
 const FolderSelectionPage: React.FC = () => {
   // Handler for file/folder selection (not functional, just UI)
@@ -38,7 +38,7 @@ const FolderSelectionPage: React.FC = () => {
                   marginBottom: "18px"
                 }}
               >
-                <Upload size={20} className="mr-1" />
+                <Plus size={20} className="mr-1" />
                 Upload
               </button>
               <input
@@ -60,7 +60,7 @@ const FolderSelectionPage: React.FC = () => {
         {/* Illustration */}
         <div className="md:w-[420px] w-full flex justify-center items-center">
           <img
-            src="/lovable-uploads/e04365e0-20b1-4a36-a610-86fe9a17f640.png"
+            src="/lovable-uploads/3001983f-5ef2-4603-907e-d425d09e5600.png"
             alt="Upload Illustration"
             className="w-[90%] max-w-[440px] h-auto object-contain select-none pointer-events-none"
             draggable={false}
