@@ -1,5 +1,7 @@
+
 import React, { useState } from "react";
 import { toast } from "@/hooks/use-toast";
+import { ExternalLink } from "lucide-react";
 
 // Moved FOLDER_PATH out of constant for state editing
 const PASSWORD = "qazwsx";
@@ -65,10 +67,38 @@ export const HiddenFolderAccess: React.FC<{
   onFilesSelected,
 }) => {
   const [folderPath, setFolderPath] = useState("F:\\movie\\Telegram Desktop");
+  const [driveLink, setDriveLink] = useState("");
 
   const handleCopy = () => {
     navigator.clipboard.writeText(folderPath);
     toast({ title: "Copied!", description: "Folder path copied to clipboard." });
+  };
+
+  const handleOpenDriveLink = () => {
+    if (!driveLink.trim()) {
+      toast({ 
+        title: "Error", 
+        description: "Please enter a Google Drive link first.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    try {
+      // Validate if it's a proper URL
+      new URL(driveLink);
+      window.open(driveLink, '_blank');
+      toast({ 
+        title: "Opening Google Drive", 
+        description: "Google Drive folder opened in new tab." 
+      });
+    } catch (error) {
+      toast({ 
+        title: "Invalid URL", 
+        description: "Please enter a valid Google Drive link.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleFileSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,33 +108,64 @@ export const HiddenFolderAccess: React.FC<{
   };
 
   return (
-    <div className="fixed bottom-12 right-8 z-[999] bg-black/90 border border-neon-purple/50 rounded-xl p-5 shadow-lg flex flex-col gap-2 w-[360px] max-w-full">
+    <div className="fixed bottom-12 right-8 z-[999] bg-black/90 border border-neon-purple/50 rounded-xl p-5 shadow-lg flex flex-col gap-3 w-[360px] max-w-full">
       <div className="font-semibold text-gold">Special Folder Access:</div>
-      <p className="text-xs text-gray-400">
-        For special folders, manually enter the path and click "Open in Gallery". You will then be prompted to select that folder with the file picker.
-      </p>
-      <input
-        value={folderPath}
-        onChange={(e) => setFolderPath(e.target.value)}
-        className="rounded px-2 py-1 font-mono w-full mb-1 border bg-[#22252d] border-neon-purple/50 focus:outline-none focus:ring-2 focus:ring-neon-purple"
-        spellCheck={false}
-      />
-      <div className="flex gap-2">
+      
+      {/* Google Drive Section */}
+      <div className="space-y-2">
+        <p className="text-xs text-gray-400">
+          Open Google Drive folder directly:
+        </p>
+        <input
+          value={driveLink}
+          onChange={(e) => setDriveLink(e.target.value)}
+          placeholder="https://drive.google.com/drive/folders/..."
+          className="rounded px-2 py-1 font-mono w-full border bg-[#22252d] border-neon-purple/50 focus:outline-none focus:ring-2 focus:ring-neon-purple text-sm"
+          spellCheck={false}
+        />
         <button
-          className="bg-neon-purple/80 text-gold px-3 py-1 rounded-lg font-semibold flex-1"
-          onClick={handleCopy}
+          className="bg-blue-600 text-white px-3 py-1 rounded-lg font-semibold w-full flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors"
+          onClick={handleOpenDriveLink}
         >
-          Copy Path
-        </button>
-        <button
-          className="bg-emerald text-white px-3 py-1 rounded-lg font-semibold flex-1"
-          onClick={() => onOpenInGallery(folderPath)}
-        >
-          Open in Gallery
+          <ExternalLink size={16} />
+          Open in Google Drive
         </button>
       </div>
+
+      <div className="relative flex py-2 items-center">
+        <div className="flex-grow border-t border-neon-purple/30"></div>
+        <span className="flex-shrink mx-4 text-gray-400 text-sm">OR</span>
+        <div className="flex-grow border-t border-neon-purple/30"></div>
+      </div>
+
+      {/* Local Folder Section */}
+      <div className="space-y-2">
+        <p className="text-xs text-gray-400">
+          For special folders, manually enter the path and click "Open in Gallery". You will then be prompted to select that folder with the file picker.
+        </p>
+        <input
+          value={folderPath}
+          onChange={(e) => setFolderPath(e.target.value)}
+          className="rounded px-2 py-1 font-mono w-full border bg-[#22252d] border-neon-purple/50 focus:outline-none focus:ring-2 focus:ring-neon-purple"
+          spellCheck={false}
+        />
+        <div className="flex gap-2">
+          <button
+            className="bg-neon-purple/80 text-gold px-3 py-1 rounded-lg font-semibold flex-1"
+            onClick={handleCopy}
+          >
+            Copy Path
+          </button>
+          <button
+            className="bg-emerald text-white px-3 py-1 rounded-lg font-semibold flex-1"
+            onClick={() => onOpenInGallery(folderPath)}
+          >
+            Open in Gallery
+          </button>
+        </div>
+      </div>
       
-      <div className="relative flex py-3 items-center">
+      <div className="relative flex py-2 items-center">
           <div className="flex-grow border-t border-neon-purple/30"></div>
           <span className="flex-shrink mx-4 text-gray-400 text-sm">OR</span>
           <div className="flex-grow border-t border-neon-purple/30"></div>
