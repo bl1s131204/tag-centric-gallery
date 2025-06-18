@@ -1,9 +1,27 @@
 
 import React from "react";
 import { Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const FolderSelectionPage: React.FC = () => {
-  // Handler for file/folder selection (not functional, just UI)
+  const navigate = useNavigate();
+
+  const handleFilePick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.length) return;
+    
+    const files = Array.from(e.target.files);
+    // Store files in sessionStorage to pass to the gallery
+    sessionStorage.setItem('selectedFiles', JSON.stringify(files.map(file => ({
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      lastModified: file.lastModified
+    }))));
+    
+    // Navigate to the main gallery page
+    navigate('/');
+  };
+
   const handleInputClick = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     e.stopPropagation();
   };
@@ -45,14 +63,16 @@ const FolderSelectionPage: React.FC = () => {
                 type="file"
                 style={{ display: "none" }}
                 multiple
+                {...{ webkitdirectory: "true", directory: "true" } as any}
                 tabIndex={-1}
                 onClick={handleInputClick}
-                // onChange={handleFilePick} // Not implemented
+                onChange={handleFilePick}
+                accept="image/*"
               />
             </label>
             <div className="mt-6 w-full text-center">
-              <div className="font-bold text-[17px] text-white mb-1">Supported 3D files</div>
-              <div className="text-base text-gray-200 tracking-wide">DAE, OBJ, STL, 3DS, STEP</div>
+              <div className="font-bold text-[17px] text-white mb-1">Supported image files</div>
+              <div className="text-base text-gray-200 tracking-wide">JPG, PNG, GIF, WEBP, BMP</div>
             </div>
           </div>
         </div>

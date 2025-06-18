@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ImageGallery } from "@/components/ImageGallery";
 import { HiddenAccess, HiddenFolderAccess } from "@/components/HiddenAccess";
 import Header from "@/components/Header";
@@ -9,6 +9,30 @@ const Index = () => {
   const [specialFolderPath, setSpecialFolderPath] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+
+  // Check for files from folder selection page on component mount
+  useEffect(() => {
+    const storedFilesData = sessionStorage.getItem('selectedFiles');
+    if (storedFilesData) {
+      try {
+        const filesData = JSON.parse(storedFilesData);
+        // Convert stored file data back to File objects (this is a limitation, 
+        // but we'll work with what we can reconstruct)
+        const reconstructedFiles = filesData.map((fileData: any) => {
+          // Create a minimal File-like object for display purposes
+          return new File([], fileData.name, {
+            type: fileData.type,
+            lastModified: fileData.lastModified
+          });
+        });
+        setFiles(reconstructedFiles);
+        // Clear the stored data
+        sessionStorage.removeItem('selectedFiles');
+      } catch (error) {
+        console.error('Error loading files from storage:', error);
+      }
+    }
+  }, []);
 
   // Handler for opening folder via path
   const handleOpenInGallery = (folderPath: string) => {
