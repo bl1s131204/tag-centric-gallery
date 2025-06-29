@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Plus } from "lucide-react";
+import { Plus, Upload, FolderOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const FolderSelectionPage: React.FC = () => {
@@ -10,7 +10,6 @@ const FolderSelectionPage: React.FC = () => {
     if (!e.target.files?.length) return;
     
     const files = Array.from(e.target.files);
-    // Store files in sessionStorage to pass to the gallery
     sessionStorage.setItem('selectedFiles', JSON.stringify(files.map(file => ({
       name: file.name,
       size: file.size,
@@ -18,7 +17,6 @@ const FolderSelectionPage: React.FC = () => {
       lastModified: file.lastModified
     }))));
     
-    // Navigate to the main gallery page
     navigate('/');
   };
 
@@ -27,68 +25,93 @@ const FolderSelectionPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center items-center bg-transparent relative py-14">
-      <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-start justify-center gap-7 md:gap-24 px-4 md:px-0">
-        {/* Upload/Select folder card */}
-        <div className="flex-1 max-w-[470px] w-full flex flex-col items-center md:items-start">
-          <h1 className="text-2xl font-bold text-gray-100 mb-6 ml-2">Upload file</h1>
-          <div
-            className="w-full min-h-[420px] rounded-xl bg-slate-900/60 backdrop-blur-md flex flex-col items-center justify-center gap-4"
-            style={{
-              border: "2px dashed #CBD6E2", // #CBD6E2 is a subtle soft blue-grey
-              boxSizing: "border-box",
-              padding: "38px 16px"
-            }}
-          >
-            <span className="text-gray-300 text-base mb-3">Submit files for inquiry</span>
-            <p className="text-xl font-bold text-white mb-2">Drag and Drop files here</p>
-            <span className="text-gray-300 font-normal mb-0.5">OR</span>
-            <label
-              htmlFor="file-upload"
-              className="mx-auto"
+    <div className="min-h-screen w-full flex flex-col justify-center items-center relative py-16">
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,_rgba(120,119,198,0.15),_transparent_50%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,_rgba(255,69,126,0.1),_transparent_50%)] pointer-events-none" />
+      
+      <div className="relative w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-20 px-6">
+        {/* Upload Section */}
+        <div className="flex-1 max-w-[520px] w-full">
+          <div className="text-center lg:text-left mb-8">
+            <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4 font-playfair">
+              Upload Your Images
+            </h1>
+            <p className="text-xl text-gray-300 leading-relaxed">
+              Select a folder from your device to view and organize your image collection
+            </p>
+          </div>
+
+          <div className="relative group">
+            <div
+              className="w-full min-h-[460px] rounded-2xl backdrop-blur-xl flex flex-col items-center justify-center gap-6 p-8 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+              style={{
+                background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)",
+                border: "2px dashed rgba(255,255,255,0.3)",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)"
+              }}
             >
-              <button
-                type="button"
-                className="flex flex-row items-center gap-2 px-8 py-3 rounded-md bg-[#fc6820] text-white font-semibold text-lg shadow hover:bg-[#fa5b17] transition"
-                style={{
-                  boxShadow: "0 2px 8px #fc68203c",
-                  marginBottom: "18px"
-                }}
-              >
-                <Plus size={20} className="mr-1" />
-                Upload
-              </button>
-              <input
-                id="file-upload"
-                type="file"
-                style={{ display: "none" }}
-                multiple
-                {...{ webkitdirectory: "true", directory: "true" } as any}
-                tabIndex={-1}
-                onClick={handleInputClick}
-                onChange={handleFilePick}
-                accept="image/*"
-              />
-            </label>
-            <div className="mt-6 w-full text-center">
-              <div className="font-bold text-[17px] text-white mb-1">Supported image files</div>
-              <div className="text-base text-gray-200 tracking-wide">JPG, PNG, GIF, WEBP, BMP</div>
+              <div className="relative">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-brand-pink to-purple-600 flex items-center justify-center shadow-lg">
+                  <FolderOpen size={32} className="text-white" />
+                </div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center">
+                  <Plus size={16} className="text-white" />
+                </div>
+              </div>
+
+              <div className="text-center space-y-4">
+                <h3 className="text-2xl font-bold text-white">
+                  Drag & Drop Your Folder
+                </h3>
+                <p className="text-gray-300 text-lg">
+                  or click to browse your files
+                </p>
+              </div>
+
+              <label htmlFor="file-upload" className="cursor-pointer">
+                <div className="flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-brand-pink to-purple-600 text-white font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105">
+                  <Upload size={20} />
+                  Choose Folder
+                </div>
+                <input
+                  id="file-upload"
+                  type="file"
+                  style={{ display: "none" }}
+                  multiple
+                  {...{ webkitdirectory: "true", directory: "true" } as any}
+                  tabIndex={-1}
+                  onClick={handleInputClick}
+                  onChange={handleFilePick}
+                  accept="image/*"
+                />
+              </label>
+
+              <div className="mt-8 p-6 rounded-xl bg-black/20 backdrop-blur-sm border border-white/10">
+                <div className="text-center">
+                  <div className="font-bold text-lg text-white mb-2">Supported Formats</div>
+                  <div className="text-gray-300 tracking-wide">JPG • PNG • GIF • WEBP • BMP • SVG</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
         {/* Illustration */}
-        <div className="md:w-[420px] w-full flex justify-center items-center">
-          <img
-            src="/lovable-uploads/3001983f-5ef2-4603-907e-d425d09e5600.png"
-            alt="Upload Illustration"
-            className="w-[90%] max-w-[440px] h-auto object-contain select-none pointer-events-none"
-            draggable={false}
-            style={{
-              background: "transparent",
-              userSelect: "none",
-              marginTop: "44px"
-            }}
-          />
+        <div className="flex-1 max-w-[480px] w-full flex justify-center items-center">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-pink/20 to-purple-600/20 rounded-3xl blur-3xl" />
+            <img
+              src="/lovable-uploads/3001983f-5ef2-4603-907e-d425d09e5600.png"
+              alt="Upload Illustration"
+              className="relative w-full h-auto object-contain select-none pointer-events-none rounded-2xl"
+              draggable={false}
+              style={{
+                filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.3))",
+                maxWidth: "440px"
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>

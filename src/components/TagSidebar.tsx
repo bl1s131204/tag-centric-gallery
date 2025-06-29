@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/theme/themeContext";
 import { themes } from "@/theme/themes";
+import { Search, Filter, X } from "lucide-react";
 
 type TagSidebarProps = {
   tags: { name: string; count: number }[];
   active: string | null;
   onSelect: (tag: string | null) => void;
 };
+
 export const TagSidebar: React.FC<TagSidebarProps> = ({ tags, active, onSelect }) => {
   const [search, setSearch] = useState("");
   const { theme } = useTheme();
@@ -17,52 +19,103 @@ export const TagSidebar: React.FC<TagSidebarProps> = ({ tags, active, onSelect }
   const filtered = tags.filter((t) =>
     t.name.toLowerCase().includes(search.toLowerCase())
   );
+
   return (
     <aside
-      className={`sticky top-[70px] h-[calc(100vh-70px)] min-w-[220px] max-w-[280px] p-4 flex flex-col overflow-y-auto z-40 border-r nav-blur`}
+      className="sticky top-[70px] h-[calc(100vh-70px)] min-w-[280px] max-w-[320px] flex flex-col overflow-hidden z-40 border-r border-white/10"
       style={{
-        transition: "left 0.2s",
-        borderColor: "rgba(130, 140, 160, 0.2)",
-        background: "rgba(28, 37, 60, 0.75)",
+        background: "linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 100%)",
+        backdropFilter: "blur(20px)"
       }}
     >
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="font-bold text-lg text-white">Filter by Tags</h3>
-      </div>
-      <input
-        className={`w-full px-3 py-2 mb-4 rounded-lg bg-black/20 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2`}
-        style={{ '--tw-ring-color': themeColors.accent } as React.CSSProperties}
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-        placeholder="Search tags..."
-      />
-      <button
-        className={cn(
-          "mb-2 px-3 py-2 text-left w-full rounded-md font-semibold transition-colors",
-          !active ? "" : `hover:bg-white/10`
-        )}
-        style={!active ? { backgroundColor: themeColors.accent, color: themeColors.accentText } : { color: 'white' }}
-        onClick={() => onSelect(null)}
-      >
-        Show All
-      </button>
-      <ul className="space-y-1">
-        {filtered.map(tag => (
-          <li key={tag.name}>
+      {/* Header */}
+      <div className="p-6 border-b border-white/10">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-pink to-purple-600 flex items-center justify-center">
+            <Filter size={20} className="text-white" />
+          </div>
+          <h3 className="font-bold text-xl text-white">Filter Tags</h3>
+        </div>
+
+        {/* Search */}
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+          <input
+            className="w-full pl-10 pr-10 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-pink focus:border-transparent transition-all"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Search tags..."
+          />
+          {search && (
             <button
-              className={cn(
-                "w-full text-left px-3 py-1.5 rounded-md flex justify-between items-center transition-colors",
-                active !== tag.name && `hover:bg-white/10`
-              )}
-              style={active === tag.name ? { backgroundColor: themeColors.accent, color: themeColors.accentText } : { color: 'white' }}
-              onClick={() => onSelect(tag.name)}
+              onClick={() => setSearch("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
             >
-              <span>{tag.name}</span>
-              <span className={`text-xs font-mono px-2 py-0.5 rounded-md ${themeColors.badge} ${themeColors.badgeText}`}>{tag.count}</span>
+              <X size={16} />
             </button>
-          </li>
-        ))}
-      </ul>
+          )}
+        </div>
+      </div>
+
+      {/* Tags List */}
+      <div className="flex-1 overflow-y-auto p-6 space-y-2">
+        {/* Show All Button */}
+        <button
+          className={cn(
+            "w-full px-4 py-3 text-left rounded-xl font-semibold transition-all duration-200 group",
+            !active 
+              ? "bg-gradient-to-r from-brand-pink to-purple-600 text-white shadow-lg"
+              : "hover:bg-white/10 text-gray-300 hover:text-white"
+          )}
+          onClick={() => onSelect(null)}
+        >
+          <div className="flex items-center justify-between">
+            <span>Show All Images</span>
+            <div className={cn(
+              "px-2 py-1 rounded-lg text-xs font-mono",
+              !active 
+                ? "bg-white/20 text-white"
+                : "bg-gray-700/50 text-gray-400 group-hover:bg-gray-600/50 group-hover:text-gray-300"
+            )}>
+              {tags.reduce((sum, tag) => sum + tag.count, 0)}
+            </div>
+          </div>
+        </button>
+
+        {/* Tag List */}
+        {filtered.length > 0 ? (
+          <div className="space-y-1">
+            {filtered.map(tag => (
+              <button
+                key={tag.name}
+                className={cn(
+                  "w-full px-4 py-3 text-left rounded-xl transition-all duration-200 group",
+                  active === tag.name
+                    ? "bg-gradient-to-r from-brand-pink to-purple-600 text-white shadow-lg"
+                    : "hover:bg-white/10 text-gray-300 hover:text-white"
+                )}
+                onClick={() => onSelect(tag.name)}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium">{tag.name}</span>
+                  <div className={cn(
+                    "px-2 py-1 rounded-lg text-xs font-mono",
+                    active === tag.name
+                      ? "bg-white/20 text-white"
+                      : "bg-gray-700/50 text-gray-400 group-hover:bg-gray-600/50 group-hover:text-gray-300"
+                  )}>
+                    {tag.count}
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-8">
+            <div className="text-gray-500 text-sm">No tags found</div>
+          </div>
+        )}
+      </div>
     </aside>
   );
 };
