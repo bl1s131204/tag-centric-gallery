@@ -14,20 +14,17 @@ export const GalleryGrid: React.FC<GalleryGridProps> = ({ images, onImageClick, 
   return (
     <div
       className={cn(
-        "w-full grid gap-8",
-        "grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4",
-        "justify-items-center pb-20 px-4"
+        "w-full grid gap-6",
+        "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5",
+        "justify-items-center pb-20"
       )}
-      style={{
-        alignItems: "start",
-      }}
     >
       {images.map((img, idx) => (
         <div
           key={img.filename}
-          className="w-full max-w-[400px] transform transition-all duration-500"
+          className="w-full max-w-[300px] transform transition-all duration-500"
           style={{
-            animationDelay: `${idx * 100}ms`,
+            animationDelay: `${idx * 50}ms`,
             animation: "fadeInUp 0.6s ease-out forwards"
           }}
         >

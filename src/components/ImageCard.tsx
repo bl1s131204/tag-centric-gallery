@@ -16,11 +16,12 @@ export const ImageCard: React.FC<ImageCardProps> = ({ image, onClick, onTagClick
       className={cn(
         "group relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300",
         "hover:scale-[1.02] hover:shadow-2xl hover:-translate-y-2",
-        "bg-white/10 backdrop-blur-sm border border-white/20",
-        "min-h-[400px] max-w-[380px] w-full"
+        "border border-white/20",
+        "w-full aspect-[4/5]"
       )}
       style={{
         background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)",
+        backdropFilter: "blur(20px)",
         boxShadow: "0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.1)"
       }}
       tabIndex={0}
@@ -28,11 +29,11 @@ export const ImageCard: React.FC<ImageCardProps> = ({ image, onClick, onTagClick
       aria-label={image.title}
     >
       {/* Image Container */}
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden h-[60%]">
         <img
           src={image.url}
           alt={image.title}
-          className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           draggable={false}
         />
         
@@ -48,16 +49,12 @@ export const ImageCard: React.FC<ImageCardProps> = ({ image, onClick, onTagClick
       </div>
 
       {/* Content */}
-      <div className="p-6 space-y-4">
+      <div className="p-4 h-[40%] flex flex-col justify-between">
         {/* Header */}
         <div className="space-y-2">
-          <h3 className="font-bold text-xl text-white truncate">
+          <h3 className="font-bold text-lg text-white truncate">
             {image.filename}
           </h3>
-          <div className="flex items-center gap-2 text-sm text-gray-300">
-            <Folder size={16} className="text-brand-pink" />
-            <span>Telegram Desktop</span>
-          </div>
         </div>
 
         {/* Tags Section */}
