@@ -14,21 +14,29 @@ export const GalleryGrid: React.FC<GalleryGridProps> = ({ images, onImageClick, 
   return (
     <div
       className={cn(
-        "w-full grid gap-x-[0.2cm] gap-y-[0.8cm]",
-        "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3",
-        "justify-items-center pb-16"
+        "w-full grid gap-8",
+        "grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4",
+        "justify-items-center pb-20 px-4"
       )}
       style={{
         alignItems: "start",
       }}
     >
       {images.map((img, idx) => (
-        <ImageCard
+        <div
           key={img.filename}
-          image={img}
-          onClick={() => onImageClick(idx)}
-          onTagClick={onTagClick}
-        />
+          className="w-full max-w-[400px] transform transition-all duration-500"
+          style={{
+            animationDelay: `${idx * 100}ms`,
+            animation: "fadeInUp 0.6s ease-out forwards"
+          }}
+        >
+          <ImageCard
+            image={img}
+            onClick={() => onImageClick(idx)}
+            onTagClick={onTagClick}
+          />
+        </div>
       ))}
     </div>
   );
