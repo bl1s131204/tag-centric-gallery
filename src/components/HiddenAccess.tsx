@@ -32,22 +32,33 @@ export const HiddenAccess: React.FC<{ onReveal: () => void; show: boolean }> = (
     );
   if (!unlocked) return null;
   return (
-    <div className="fixed bottom-6 right-8 z-[999] flex flex-col gap-2 bg-black/90 rounded-xl p-4 shadow-lg border border-neon-purple/50">
-      <span className="font-bold text-sm text-gold">Unlock tool (password required):</span>
+    <div className="fixed bottom-6 right-8 z-[999] flex flex-col gap-4 p-6 rounded-2xl border border-purple-500/30 shadow-2xl"
+         style={{
+           background: "linear-gradient(135deg, rgba(128,0,255,0.1) 0%, rgba(0,0,0,0.9) 100%)",
+           backdropFilter: "blur(20px)"
+         }}>
+      <div className="flex items-center gap-3">
+        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+          <span className="text-white text-sm">🔓</span>
+        </div>
+        <span className="font-bold text-base text-gold">Unlock tool</span>
+      </div>
+      
       <input
-        className="rounded border px-2 py-1 font-mono bg-[#22252d] border-neon-purple/50 focus:outline-none focus:ring-2 focus:ring-neon-purple"
-        placeholder="Password"
+        className="rounded-xl border px-4 py-3 font-mono bg-black/50 border-purple-500/50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+        placeholder="Enter password"
         type="password"
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
+      
       <button
-        className="bg-neon-purple text-gold px-3 py-1 rounded-lg font-semibold"
+        className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-3 rounded-xl font-semibold hover:scale-105 transition-transform duration-200 shadow-lg"
         onClick={() => {
           if (input === PASSWORD) onReveal();
         }}
       >
-        Unlock
+        Unlock Access
       </button>
     </div>
   );
@@ -108,56 +119,79 @@ export const HiddenFolderAccess: React.FC<{
   };
 
   return (
-    <div className="fixed bottom-12 right-8 z-[999] bg-black/90 border border-neon-purple/50 rounded-xl p-5 shadow-lg flex flex-col gap-3 w-[360px] max-w-full">
-      <div className="font-semibold text-gold">Special Folder Access:</div>
+    <div className="fixed bottom-20 right-8 z-[999] rounded-2xl p-6 shadow-2xl flex flex-col gap-6 w-[400px] max-w-[calc(100vw-2rem)] border border-purple-500/30"
+         style={{
+           background: "linear-gradient(135deg, rgba(128,0,255,0.1) 0%, rgba(0,0,0,0.95) 100%)",
+           backdropFilter: "blur(20px)"
+         }}>
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+          <span className="text-white text-lg">🎯</span>
+        </div>
+        <h3 className="font-bold text-xl text-gold">Special Folder Access</h3>
+      </div>
       
       {/* Google Drive Section */}
-      <div className="space-y-2">
-        <p className="text-xs text-gray-400">
-          Open Google Drive folder directly:
-        </p>
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-lg bg-blue-600 flex items-center justify-center">
+            <ExternalLink size={12} className="text-white" />
+          </div>
+          <h4 className="text-white font-semibold">Google Drive Integration</h4>
+        </div>
+        
         <input
           value={driveLink}
           onChange={(e) => setDriveLink(e.target.value)}
           placeholder="https://drive.google.com/drive/folders/..."
-          className="rounded px-2 py-1 font-mono w-full border bg-[#22252d] border-neon-purple/50 focus:outline-none focus:ring-2 focus:ring-neon-purple text-sm"
+          className="rounded-xl px-4 py-3 font-mono w-full border bg-black/50 border-blue-500/50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm"
           spellCheck={false}
         />
+        
         <button
-          className="bg-blue-600 text-white px-3 py-1 rounded-lg font-semibold w-full flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors"
+          className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-3 rounded-xl font-semibold w-full flex items-center justify-center gap-3 hover:scale-105 transition-transform duration-200 shadow-lg"
           onClick={handleOpenDriveLink}
         >
-          <ExternalLink size={16} />
+          <ExternalLink size={18} />
           Open in Google Drive
         </button>
       </div>
 
       <div className="relative flex py-2 items-center">
-        <div className="flex-grow border-t border-neon-purple/30"></div>
-        <span className="flex-shrink mx-4 text-gray-400 text-sm">OR</span>
-        <div className="flex-grow border-t border-neon-purple/30"></div>
+        <div className="flex-grow border-t border-purple-500/30"></div>
+        <span className="flex-shrink mx-4 text-gray-400 text-sm font-medium">OR</span>
+        <div className="flex-grow border-t border-purple-500/30"></div>
       </div>
 
       {/* Local Folder Section */}
-      <div className="space-y-2">
-        <p className="text-xs text-gray-400">
-          For special folders, manually enter the path and click "Open in Gallery". You will then be prompted to select that folder with the file picker.
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-lg bg-purple-600 flex items-center justify-center">
+            <span className="text-white text-sm">📁</span>
+          </div>
+          <h4 className="text-white font-semibold">Local Folder Path</h4>
+        </div>
+        
+        <p className="text-xs text-gray-400 leading-relaxed">
+          Enter a folder path and click "Open in Gallery" to be prompted to select that folder with the file picker.
         </p>
+        
         <input
           value={folderPath}
           onChange={(e) => setFolderPath(e.target.value)}
-          className="rounded px-2 py-1 font-mono w-full border bg-[#22252d] border-neon-purple/50 focus:outline-none focus:ring-2 focus:ring-neon-purple"
+          className="rounded-xl px-4 py-3 font-mono w-full border bg-black/50 border-purple-500/50 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
           spellCheck={false}
         />
-        <div className="flex gap-2">
+        
+        <div className="grid grid-cols-2 gap-3">
           <button
-            className="bg-neon-purple/80 text-gold px-3 py-1 rounded-lg font-semibold flex-1"
+            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-3 rounded-xl font-semibold hover:scale-105 transition-transform duration-200 shadow-lg"
             onClick={handleCopy}
           >
             Copy Path
           </button>
           <button
-            className="bg-emerald text-white px-3 py-1 rounded-lg font-semibold flex-1"
+            className="bg-gradient-to-r from-emerald to-teal-600 text-white px-4 py-3 rounded-xl font-semibold hover:scale-105 transition-transform duration-200 shadow-lg"
             onClick={() => onOpenInGallery(folderPath)}
           >
             Open in Gallery
@@ -166,15 +200,14 @@ export const HiddenFolderAccess: React.FC<{
       </div>
       
       <div className="relative flex py-2 items-center">
-          <div className="flex-grow border-t border-neon-purple/30"></div>
-          <span className="flex-shrink mx-4 text-gray-400 text-sm">OR</span>
-          <div className="flex-grow border-t border-neon-purple/30"></div>
+        <div className="flex-grow border-t border-purple-500/30"></div>
+        <span className="flex-shrink mx-4 text-gray-400 text-sm font-medium">OR</span>
+        <div className="flex-grow border-t border-purple-500/30"></div>
       </div>
 
       <label htmlFor="direct-folder-upload" className="w-full">
-        <div
-          className="bg-sky-500 text-white px-3 py-2 rounded-lg font-semibold flex-1 text-center cursor-pointer w-full hover:bg-sky-600 transition-colors"
-        >
+        <div className="bg-gradient-to-r from-sky-500 to-cyan-600 text-white px-4 py-3 rounded-xl font-semibold text-center cursor-pointer w-full hover:scale-105 transition-transform duration-200 shadow-lg flex items-center justify-center gap-3">
+          <span className="text-lg">📂</span>
           Select Folder Directly
         </div>
         <input
@@ -189,10 +222,10 @@ export const HiddenFolderAccess: React.FC<{
       </label>
 
       <button
-        className="text-xs underline text-gold mt-2"
+        className="text-sm text-gold hover:text-yellow-300 transition-colors mt-2 underline self-center"
         onClick={onClose}
       >
-        Hide
+        Hide Panel
       </button>
     </div>
   );

@@ -105,11 +105,20 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
   }
 
   return (
-    <div className="flex flex-row w-full min-h-screen bg-transparent transition-colors duration-200">
-      <div className="hidden md:flex mr-4">
+    <div className="flex flex-row w-full min-h-screen relative">
+      {/* Background gradient */}
+      <div 
+        className="fixed inset-0 -z-10"
+        style={{
+          background: "linear-gradient(135deg, rgba(11,11,11,1) 0%, rgba(22,22,28,1) 50%, rgba(11,11,11,1) 100%)",
+        }}
+      />
+      
+      <div className="hidden lg:flex">
         <TagSidebar tags={tagSidebarData} active={activeTag} onSelect={setActiveTag} />
       </div>
-      <div className="flex-1 min-h-screen flex flex-col px-2 md:px-8">
+      
+      <div className="flex-1 min-h-screen flex flex-col px-4 lg:px-8 xl:px-12">
         <GalleryHeader imageCount={visibleImages.length} />
         <GalleryGrid
           images={visibleImages}
