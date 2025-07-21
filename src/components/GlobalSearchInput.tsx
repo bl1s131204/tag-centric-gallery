@@ -9,15 +9,15 @@ type GlobalSearchInputProps = {
 
 export const GlobalSearchInput: React.FC<GlobalSearchInputProps> = ({ value, onChange }) => {
   return (
-    <div className="relative w-full md:w-80 lg:w-96">
-      <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+    <div className="input-group w-full md:w-80 lg:w-96">
+      <Search className="input-icon" size={18} />
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Search images..."
-        className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-pink focus:border-transparent transition-all duration-200 backdrop-blur-sm"
+        placeholder="Search images, tags, or folders..."
+        className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-white/5 backdrop-blur-sm border border-medium text-neutral-50 placeholder-neutral-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all font-inter"
         style={{
-          boxShadow: "0 4px 16px rgba(0,0,0,0.1)"
+          boxShadow: "0 2px 8px hsla(220, 63%, 6%, 0.1)"
         }}
       />
     </div>

@@ -53,7 +53,7 @@ const Index = () => {
   return (
     <>
       <Header searchTerm={searchTerm} onSearchChange={setSearchTerm} />
-      <main className="pt-[70px] min-h-screen transition-all duration-300">
+      <main className="pt-16 min-h-screen transition-all duration-200 bg-neutral-900">
         <ImageGallery
           files={files}
           onFilesChange={handleFilesSelected}

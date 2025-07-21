@@ -7,25 +7,27 @@ type GalleryHeaderProps = {
 
 export const GalleryHeader: React.FC<GalleryHeaderProps> = ({ imageCount }) => {
   return (
-    <div className="flex items-center justify-between pt-12 pb-8">
-      <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-pink to-purple-600 flex items-center justify-center">
-          <span className="text-white text-xl">🖼️</span>
+    <div className="flex items-center justify-between pt-16 pb-8 animate-fade-in-up">
+      <div className="flex items-center gap-6">
+        <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 flex items-center justify-center shadow-large">
+          <div className="text-2xl">🎨</div>
         </div>
-        <div>
-          <h1 className="text-3xl md:text-4xl font-bold text-white font-playfair tracking-tight">
+        <div className="space-y-2">
+          <h1 className="section-title text-4xl md:text-5xl font-bold font-inter">
             Image Gallery
           </h1>
-          <p className="text-gray-400 text-sm mt-1">Explore your image collection</p>
+          <p className="text-neutral-400 text-base font-medium">
+            Discover and organize your visual collection
+          </p>
         </div>
       </div>
       
-      <div className="text-right">
-        <div className="text-2xl font-bold text-white">
+      <div className="text-right space-y-1">
+        <div className="text-3xl font-bold text-neutral-50 font-mono tracking-tight">
           {imageCount.toLocaleString()}
         </div>
-        <div className="text-sm text-gray-400">
-          image{imageCount !== 1 ? "s" : ""} found
+        <div className="status-badge">
+          {imageCount === 1 ? "1 image" : `${imageCount} images`}
         </div>
       </div>
     </div>

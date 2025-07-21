@@ -21,27 +21,25 @@ export const TagSidebar: React.FC<TagSidebarProps> = ({ tags, active, onSelect }
   );
 
   return (
-    <aside
-      className="sticky top-[70px] h-[calc(100vh-70px)] min-w-[280px] max-w-[320px] flex flex-col overflow-hidden z-40 border-r border-white/10"
-      style={{
-        background: "linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 100%)",
-        backdropFilter: "blur(20px)"
-      }}
-    >
+    <aside className="sticky top-16 h-[calc(100vh-64px)] min-w-[300px] max-w-[320px] flex flex-col overflow-hidden z-40 border-r border-medium bg-neutral-900/50 backdrop-professional animate-slide-in-right">
+      <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/80 to-neutral-900/60" />
       {/* Header */}
-      <div className="p-6 border-b border-white/10">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-pink to-purple-600 flex items-center justify-center">
-            <Filter size={20} className="text-white" />
+      <div className="relative p-6 border-b border-medium">
+        <div className="flex items-center gap-4 mb-6">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center shadow-medium">
+            <Filter size={22} className="text-white" />
           </div>
-          <h3 className="font-bold text-xl text-white">Filter Tags</h3>
+          <div>
+            <h3 className="font-bold text-xl text-neutral-50 font-inter">Filter Tags</h3>
+            <p className="text-sm text-neutral-400 mt-0.5">Organize your collection</p>
+          </div>
         </div>
 
         {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+        <div className="input-group">
+          <Search className="input-icon" size={18} />
           <input
-            className="w-full pl-10 pr-10 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-pink focus:border-transparent transition-all"
+            className="w-full pl-10 pr-10 py-3 rounded-xl bg-white/5 border border-medium text-neutral-50 placeholder-neutral-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all font-inter"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search tags..."
@@ -49,7 +47,7 @@ export const TagSidebar: React.FC<TagSidebarProps> = ({ tags, active, onSelect }
           {search && (
             <button
               onClick={() => setSearch("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-200 transition-colors focus-ring rounded p-1"
             >
               <X size={16} />
             </button>
@@ -58,24 +56,24 @@ export const TagSidebar: React.FC<TagSidebarProps> = ({ tags, active, onSelect }
       </div>
 
       {/* Tags List */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-2">
+      <div className="relative flex-1 overflow-y-auto p-6 space-y-3">
         {/* Show All Button */}
         <button
           className={cn(
-            "w-full px-4 py-3 text-left rounded-xl font-semibold transition-all duration-200 group",
+            "w-full px-5 py-4 text-left rounded-xl font-semibold transition-all duration-200 group focus-ring",
             !active 
-              ? "bg-gradient-to-r from-brand-pink to-purple-600 text-white shadow-lg"
-              : "hover:bg-white/10 text-gray-300 hover:text-white"
+              ? "bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-medium hover-lift"
+              : "bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-medium hover:border-strong"
           )}
           onClick={() => onSelect(null)}
         >
           <div className="flex items-center justify-between">
-            <span>Show All Images</span>
+            <span className="font-inter">Show All Images</span>
             <div className={cn(
-              "px-2 py-1 rounded-lg text-xs font-mono",
+              "px-3 py-1.5 rounded-lg text-xs font-mono font-semibold",
               !active 
                 ? "bg-white/20 text-white"
-                : "bg-gray-700/50 text-gray-400 group-hover:bg-gray-600/50 group-hover:text-gray-300"
+                : "bg-neutral-800/50 text-neutral-400 group-hover:bg-neutral-700/50 group-hover:text-neutral-300"
             )}>
               {tags.reduce((sum, tag) => sum + tag.count, 0)}
             </div>
@@ -84,25 +82,26 @@ export const TagSidebar: React.FC<TagSidebarProps> = ({ tags, active, onSelect }
 
         {/* Tag List */}
         {filtered.length > 0 ? (
-          <div className="space-y-1">
-            {filtered.map(tag => (
+          <div className="space-y-2">
+            {filtered.map((tag, index) => (
               <button
                 key={tag.name}
                 className={cn(
-                  "w-full px-4 py-3 text-left rounded-xl transition-all duration-200 group",
+                  "w-full px-5 py-4 text-left rounded-xl transition-all duration-200 group focus-ring animate-fade-in",
                   active === tag.name
-                    ? "bg-gradient-to-r from-brand-pink to-purple-600 text-white shadow-lg"
-                    : "hover:bg-white/10 text-gray-300 hover:text-white"
+                    ? "bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-medium hover-lift"
+                    : "bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-medium hover:border-strong"
                 )}
                 onClick={() => onSelect(tag.name)}
+                style={{ animationDelay: `${index * 50}ms` }}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-medium">{tag.name}</span>
+                  <span className="font-medium font-inter truncate mr-3">{tag.name}</span>
                   <div className={cn(
-                    "px-2 py-1 rounded-lg text-xs font-mono",
+                    "px-3 py-1.5 rounded-lg text-xs font-mono font-semibold shrink-0",
                     active === tag.name
                       ? "bg-white/20 text-white"
-                      : "bg-gray-700/50 text-gray-400 group-hover:bg-gray-600/50 group-hover:text-gray-300"
+                      : "bg-neutral-800/50 text-neutral-400 group-hover:bg-neutral-700/50 group-hover:text-neutral-300"
                   )}>
                     {tag.count}
                   </div>
@@ -111,8 +110,9 @@ export const TagSidebar: React.FC<TagSidebarProps> = ({ tags, active, onSelect }
             ))}
           </div>
         ) : (
-          <div className="text-center py-8">
-            <div className="text-gray-500 text-sm">No tags found</div>
+          <div className="text-center py-12">
+            <div className="text-neutral-500 text-sm font-medium">No tags found</div>
+            <p className="text-neutral-600 text-xs mt-1">Try a different search term</p>
           </div>
         )}
       </div>
