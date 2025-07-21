@@ -31,17 +31,17 @@ export const themes: Record<ThemeName, Theme> = {
     className: "theme-light",
     fontFamily: "'Inter', sans-serif",
     colors: {
-      bg: "bg-white",
-      card: "bg-[#f9f9f9]",
-      text: "text-[#181818]",
+      bg: "bg-gradient-to-br from-gray-50 to-white",
+      card: "bg-white border border-gray-200/60",
+      text: "text-gray-900",
       accent: "#0077ff",
       accentText: "#fff",
-      primary: "#f9f9f9",
-      primaryText: "#181818",
+      primary: "#f8fafc",
+      primaryText: "#1e293b",
       badge: "bg-blue-100",
-      badgeText: "text-blue-700",
-      sidebar: "bg-white/90 backdrop-blur-sm",
-      shadow: "shadow-md shadow-gray-200/60"
+      badgeText: "text-blue-800",
+      sidebar: "bg-white/95 backdrop-blur-sm border-r border-gray-200",
+      shadow: "shadow-lg shadow-gray-200/40"
     }
   },
   dark: {
@@ -49,17 +49,17 @@ export const themes: Record<ThemeName, Theme> = {
     className: "theme-dark",
     fontFamily: "'Inter', sans-serif",
     colors: {
-      bg: "bg-[#23273a]",
-      card: "bg-[#1b1b24]",
-      text: "text-white",
-      accent: "#FFD700",
-      accentText: "#151515",
-      primary: "#1b1b24",
-      primaryText: "#ffffff",
-      badge: "bg-yellow-600/20",
-      badgeText: "text-yellow-200",
-      sidebar: "bg-[#212229]/80 backdrop-blur-md",
-      shadow: "shadow-lg shadow-yellow-200/20"
+      bg: "bg-gradient-to-br from-gray-900 to-gray-800",
+      card: "bg-gray-800/90 border border-gray-700/60",
+      text: "text-gray-100",
+      accent: "#3b82f6",
+      accentText: "#ffffff",
+      primary: "#1f2937",
+      primaryText: "#f9fafb",
+      badge: "bg-blue-600/20",
+      badgeText: "text-blue-300",
+      sidebar: "bg-gray-900/95 backdrop-blur-sm border-r border-gray-700",
+      shadow: "shadow-lg shadow-black/40"
     }
   },
   luxuryGold: {
@@ -67,17 +67,17 @@ export const themes: Record<ThemeName, Theme> = {
     className: "theme-luxury-gold",
     fontFamily: "'Playfair Display', serif",
     colors: {
-      bg: "bg-gradient-to-br from-[#222215] to-[#443319]",
-      card: "bg-[#2b2516]/90 border border-[#FFD70044]",
-      text: "text-[#fff8e1]",
-      accent: "#FFD700",
-      accentText: "#2b2516",
-      primary: "#FFD700",
-      primaryText: "#2b2516",
-      badge: "bg-yellow-200",
-      badgeText: "text-yellow-900",
-      sidebar: "bg-[#2b2516]/90 backdrop-blur",
-      shadow: "shadow-lg shadow-yellow-200/30"
+      bg: "bg-gradient-to-br from-amber-950 via-yellow-900 to-amber-800",
+      card: "bg-amber-900/20 border border-amber-600/30 backdrop-blur-sm",
+      text: "text-amber-50",
+      accent: "#fbbf24",
+      accentText: "#451a03",
+      primary: "#f59e0b",
+      primaryText: "#451a03",
+      badge: "bg-amber-200/20",
+      badgeText: "text-amber-200",
+      sidebar: "bg-amber-950/90 backdrop-blur border-r border-amber-800/50",
+      shadow: "shadow-lg shadow-amber-600/20"
     }
   },
   cyberpunkNeon: {
@@ -85,17 +85,17 @@ export const themes: Record<ThemeName, Theme> = {
     className: "theme-cyberpunk-neon",
     fontFamily: "'Poppins', sans-serif",
     colors: {
-      bg: "bg-gradient-to-br from-[#0F0326] to-[#2DE2E6]",
-      card: "bg-black/80 border border-[#FF00FF]",
-      text: "text-white",
-      accent: "#00FFF9",
-      accentText: "#28003d",
-      primary: "#FF00FF",
-      primaryText: "#FFFFFF",
-      badge: "bg-fuchsia-600/30",
-      badgeText: "text-fuchsia-200",
-      sidebar: "bg-black/90 backdrop-blur-sm",
-      shadow: "shadow-xl shadow-cyan-400/25",
+      bg: "bg-gradient-to-br from-violet-950 via-purple-900 to-fuchsia-900",
+      card: "bg-black/60 border border-fuchsia-500/50 backdrop-blur-sm",
+      text: "text-cyan-100",
+      accent: "#06b6d4",
+      accentText: "#0c0a09",
+      primary: "#d946ef",
+      primaryText: "#fdf4ff",
+      badge: "bg-fuchsia-600/20",
+      badgeText: "text-fuchsia-300",
+      sidebar: "bg-black/80 backdrop-blur border-r border-fuchsia-500/30",
+      shadow: "shadow-lg shadow-fuchsia-500/25",
     }
   },
   glass: {
@@ -103,17 +103,17 @@ export const themes: Record<ThemeName, Theme> = {
     className: "theme-glass",
     fontFamily: "'Poppins', sans-serif",
     colors: {
-      bg: "bg-gradient-to-br from-white/75 to-blue-100/60",
-      card: "bg-white/30 backdrop-blur-lg border border-white/40",
-      text: "text-[#15192B]",
-      accent: "#7EC8E3",
-      accentText: "#fff",
-      primary: "rgba(255,255,255,0.2)",
-      primaryText: "#15192B",
-      badge: "bg-blue-100/80",
+      bg: "bg-gradient-to-br from-blue-50/80 via-white/90 to-cyan-50/80",
+      card: "bg-white/40 backdrop-blur-xl border border-white/60",
+      text: "text-slate-800",
+      accent: "#0ea5e9",
+      accentText: "#ffffff",
+      primary: "#e0f2fe",
+      primaryText: "#0f172a",
+      badge: "bg-blue-100/60",
       badgeText: "text-blue-800",
-      sidebar: "bg-white/50 backdrop-blur-xl",
-      shadow: "shadow-xl shadow-blue-200/20"
+      sidebar: "bg-white/60 backdrop-blur-xl border-r border-white/40",
+      shadow: "shadow-lg shadow-blue-200/30"
     }
   }
 };

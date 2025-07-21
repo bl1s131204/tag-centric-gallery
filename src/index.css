@@ -16,11 +16,55 @@
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-feature-settings: "cv03", "cv04", "cv11";
-    background: hsl(222, 84%, 5%);
-    color: hsl(210, 40%, 98%);
     line-height: 1.6;
     letter-spacing: -0.011em;
     overflow-x: hidden;
+  }
+
+  /* Theme-specific styles */
+  .theme-light {
+    --background: 250 250 250;
+    --foreground: 24 24 27;
+    --card: 255 255 255;
+    --card-foreground: 24 24 27;
+    --primary: 59 130 246;
+    --primary-foreground: 248 250 252;
+  }
+
+  .theme-dark {
+    --background: 17 24 39;
+    --foreground: 249 250 251;
+    --card: 31 41 55;
+    --card-foreground: 249 250 251;
+    --primary: 59 130 246;
+    --primary-foreground: 255 255 255;
+  }
+
+  .theme-luxury-gold {
+    --background: 69 26 3;
+    --foreground: 255 248 225;
+    --card: 146 64 14;
+    --card-foreground: 255 248 225;
+    --primary: 245 158 11;
+    --primary-foreground: 69 26 3;
+  }
+
+  .theme-cyberpunk-neon {
+    --background: 46 16 101;
+    --foreground: 224 242 254;
+    --card: 0 0 0;
+    --card-foreground: 224 242 254;
+    --primary: 217 70 239;
+    --primary-foreground: 253 244 255;
+  }
+
+  .theme-glass {
+    --background: 248 250 252;
+    --foreground: 15 23 42;
+    --card: 255 255 255;
+    --card-foreground: 15 23 42;
+    --primary: 14 165 233;
+    --primary-foreground: 255 255 255;
   }
 
   /* Professional Typography */
