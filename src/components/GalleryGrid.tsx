@@ -15,7 +15,7 @@ export const GalleryGrid: React.FC<GalleryGridProps> = ({ images, onImageClick, 
     <div className="w-full px-6 sm:px-8 lg:px-12">
       <div
         className={cn(
-          "grid grid-cols-4 gap-6 max-w-full mx-auto",
+          "grid grid-cols-3 gap-6 w-full mx-auto",
           "pb-24"
         )}
       >
