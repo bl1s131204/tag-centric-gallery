@@ -32,19 +32,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<ThemeName>(getInitialTheme);
   
   useEffect(() => {
-    // Apply theme to document root
-    document.documentElement.className = themes[theme].className;
+    // Apply theme class to document root
+    document.documentElement.className = `${themes[theme].className} transition-colors duration-300`;
+    
+    // Apply font family
     document.documentElement.style.fontFamily = themes[theme].fontFamily;
     
     // Persist theme
     setTheme(theme);
   }, [theme]);
+
   return (
     <ThemeCtx.Provider value={{ theme, setTheme: setThemeState }}>
-      <div 
-        className={`min-h-screen transition-all duration-300 ${themes[theme].className} ${themes[theme].colors.bg} ${themes[theme].colors.text}`}
-        style={{ fontFamily: themes[theme].fontFamily }}
-      >
+      <div className={`min-h-screen ${themes[theme].className} bg-background text-foreground transition-all duration-300`}>
         {children}
       </div>
     </ThemeCtx.Provider>

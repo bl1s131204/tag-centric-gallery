@@ -2,7 +2,7 @@
 export type ThemeName =
   | "light"
   | "dark"
-  | "luxuryGold"
+  | "luxuryGold" 
   | "cyberpunkNeon"
   | "glass";
 
@@ -10,110 +10,164 @@ interface Theme {
   label: string;
   className: string;
   fontFamily: string;
+  description: string;
   colors: {
-    bg: string;
-    card: string;
+    primary: string;
+    secondary: string;
+    accent: string;
+    background: string;
+    surface: string;
     text: string;
-    accent: string; // hex
-    accentText: string; // hex
-    primary: string; // hex, for card bg etc
-    primaryText: string; // hex
-    badge: string;
-    badgeText: string;
-    sidebar: string;
+    textSecondary: string;
+    border: string;
     shadow: string;
+  };
+  gradients: {
+    primary: string;
+    secondary: string;
+    background: string;
+  };
+  effects: {
+    blur: string;
+    glow: string;
+    elevation: string;
   };
 }
 
 export const themes: Record<ThemeName, Theme> = {
   light: {
-    label: "Light",
+    label: "Light Mode",
     className: "theme-light",
-    fontFamily: "'Inter', sans-serif",
+    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+    description: "Clean and minimal light theme",
     colors: {
-      bg: "bg-gradient-to-br from-gray-50 to-white",
-      card: "bg-white border border-gray-200/60",
-      text: "text-gray-900",
-      accent: "#0077ff",
-      accentText: "#fff",
-      primary: "#f8fafc",
-      primaryText: "#1e293b",
-      badge: "bg-blue-100",
-      badgeText: "text-blue-800",
-      sidebar: "bg-white/95 backdrop-blur-sm border-r border-gray-200",
-      shadow: "shadow-lg shadow-gray-200/40"
+      primary: "hsl(210, 100%, 50%)",
+      secondary: "hsl(210, 40%, 95%)",
+      accent: "hsl(210, 100%, 60%)",
+      background: "hsl(0, 0%, 100%)",
+      surface: "hsl(0, 0%, 100%)",
+      text: "hsl(240, 10%, 3.9%)",
+      textSecondary: "hsl(210, 25%, 35%)",
+      border: "hsl(210, 40%, 90%)",
+      shadow: "hsl(210, 40%, 20% / 0.1)"
+    },
+    gradients: {
+      primary: "linear-gradient(135deg, hsl(210, 100%, 50%) 0%, hsl(210, 100%, 60%) 100%)",
+      secondary: "linear-gradient(135deg, hsl(210, 40%, 95%) 0%, hsl(210, 40%, 98%) 100%)",
+      background: "linear-gradient(135deg, hsl(210, 40%, 98%) 0%, hsl(0, 0%, 100%) 100%)"
+    },
+    effects: {
+      blur: "blur(16px)",
+      glow: "0 0 20px hsl(210, 100%, 50% / 0.2)",
+      elevation: "0 4px 16px hsl(210, 40%, 20% / 0.12)"
     }
   },
   dark: {
-    label: "Dark",
+    label: "Dark Mode", 
     className: "theme-dark",
-    fontFamily: "'Inter', sans-serif",
+    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+    description: "Sleek dark theme for low-light environments",
     colors: {
-      bg: "bg-gradient-to-br from-gray-900 to-gray-800",
-      card: "bg-gray-800/90 border border-gray-700/60",
-      text: "text-gray-100",
-      accent: "#3b82f6",
-      accentText: "#ffffff",
-      primary: "#1f2937",
-      primaryText: "#f9fafb",
-      badge: "bg-blue-600/20",
-      badgeText: "text-blue-300",
-      sidebar: "bg-gray-900/95 backdrop-blur-sm border-r border-gray-700",
-      shadow: "shadow-lg shadow-black/40"
+      primary: "hsl(210, 100%, 60%)",
+      secondary: "hsl(240, 5%, 15%)",
+      accent: "hsl(210, 100%, 70%)",
+      background: "hsl(240, 10%, 3.9%)",
+      surface: "hsl(240, 10%, 7%)",
+      text: "hsl(0, 0%, 98%)",
+      textSecondary: "hsl(240, 5%, 50%)",
+      border: "hsl(240, 5%, 15%)",
+      shadow: "hsl(0, 0%, 0% / 0.3)"
+    },
+    gradients: {
+      primary: "linear-gradient(135deg, hsl(210, 100%, 60%) 0%, hsl(210, 100%, 70%) 100%)",
+      secondary: "linear-gradient(135deg, hsl(240, 5%, 15%) 0%, hsl(240, 5%, 20%) 100%)",
+      background: "linear-gradient(135deg, hsl(240, 10%, 3.9%) 0%, hsl(240, 10%, 7%) 100%)"
+    },
+    effects: {
+      blur: "blur(20px)",
+      glow: "0 0 30px hsl(210, 100%, 60% / 0.3)",
+      elevation: "0 8px 32px hsl(0, 0%, 0% / 0.4)"
     }
   },
   luxuryGold: {
     label: "Luxury Gold",
-    className: "theme-luxury-gold",
-    fontFamily: "'Playfair Display', serif",
+    className: "theme-luxury-gold", 
+    fontFamily: "'Playfair Display', Georgia, serif",
+    description: "Elegant gold theme with premium feel",
     colors: {
-      bg: "bg-gradient-to-br from-amber-950 via-yellow-900 to-amber-800",
-      card: "bg-amber-900/20 border border-amber-600/30 backdrop-blur-sm",
-      text: "text-amber-50",
-      accent: "#fbbf24",
-      accentText: "#451a03",
-      primary: "#f59e0b",
-      primaryText: "#451a03",
-      badge: "bg-amber-200/20",
-      badgeText: "text-amber-200",
-      sidebar: "bg-amber-950/90 backdrop-blur border-r border-amber-800/50",
-      shadow: "shadow-lg shadow-amber-600/20"
+      primary: "hsl(45, 100%, 55%)",
+      secondary: "hsl(30, 40%, 15%)",
+      accent: "hsl(45, 100%, 65%)",
+      background: "hsl(30, 100%, 4%)",
+      surface: "hsl(30, 40%, 8%)",
+      text: "hsl(45, 100%, 85%)",
+      textSecondary: "hsl(45, 50%, 60%)",
+      border: "hsl(30, 40%, 20%)",
+      shadow: "hsl(45, 100%, 30% / 0.3)"
+    },
+    gradients: {
+      primary: "linear-gradient(135deg, hsl(45, 100%, 55%) 0%, hsl(45, 100%, 65%) 100%)",
+      secondary: "linear-gradient(135deg, hsl(30, 40%, 15%) 0%, hsl(30, 40%, 20%) 100%)",
+      background: "linear-gradient(135deg, hsl(30, 100%, 4%) 0%, hsl(30, 40%, 8%) 100%)"
+    },
+    effects: {
+      blur: "blur(24px)",
+      glow: "0 0 40px hsl(45, 100%, 55% / 0.4)",
+      elevation: "0 8px 32px hsl(45, 100%, 30% / 0.3)"
     }
   },
   cyberpunkNeon: {
     label: "Cyberpunk Neon",
     className: "theme-cyberpunk-neon",
-    fontFamily: "'Poppins', sans-serif",
+    fontFamily: "'Poppins', 'Roboto', sans-serif",
+    description: "Futuristic neon theme with cyberpunk aesthetics",
     colors: {
-      bg: "bg-gradient-to-br from-violet-950 via-purple-900 to-fuchsia-900",
-      card: "bg-black/60 border border-fuchsia-500/50 backdrop-blur-sm",
-      text: "text-cyan-100",
-      accent: "#06b6d4",
-      accentText: "#0c0a09",
-      primary: "#d946ef",
-      primaryText: "#fdf4ff",
-      badge: "bg-fuchsia-600/20",
-      badgeText: "text-fuchsia-300",
-      sidebar: "bg-black/80 backdrop-blur border-r border-fuchsia-500/30",
-      shadow: "shadow-lg shadow-fuchsia-500/25",
+      primary: "hsl(285, 100%, 65%)",
+      secondary: "hsl(280, 50%, 15%)",
+      accent: "hsl(195, 100%, 55%)",
+      background: "hsl(270, 100%, 5%)",
+      surface: "hsl(280, 50%, 8%)",
+      text: "hsl(280, 100%, 85%)",
+      textSecondary: "hsl(280, 30%, 60%)",
+      border: "hsl(280, 50%, 20%)",
+      shadow: "hsl(285, 100%, 50% / 0.4)"
+    },
+    gradients: {
+      primary: "linear-gradient(135deg, hsl(285, 100%, 65%) 0%, hsl(195, 100%, 55%) 100%)",
+      secondary: "linear-gradient(135deg, hsl(280, 50%, 15%) 0%, hsl(280, 50%, 20%) 100%)",
+      background: "linear-gradient(135deg, hsl(270, 100%, 5%) 0%, hsl(280, 50%, 8%) 100%)"
+    },
+    effects: {
+      blur: "blur(20px)",
+      glow: "0 0 50px hsl(285, 100%, 65% / 0.5)",
+      elevation: "0 8px 32px hsl(285, 100%, 50% / 0.4)"
     }
   },
   glass: {
-    label: "Glass",
+    label: "Glass Morphism",
     className: "theme-glass",
-    fontFamily: "'Poppins', sans-serif",
+    fontFamily: "'Poppins', 'Roboto', sans-serif", 
+    description: "Modern glass morphism with transparency effects",
     colors: {
-      bg: "bg-gradient-to-br from-blue-50/80 via-white/90 to-cyan-50/80",
-      card: "bg-white/40 backdrop-blur-xl border border-white/60",
-      text: "text-slate-800",
-      accent: "#0ea5e9",
-      accentText: "#ffffff",
-      primary: "#e0f2fe",
-      primaryText: "#0f172a",
-      badge: "bg-blue-100/60",
-      badgeText: "text-blue-800",
-      sidebar: "bg-white/60 backdrop-blur-xl border-r border-white/40",
-      shadow: "shadow-lg shadow-blue-200/30"
+      primary: "hsl(200, 100%, 50%)",
+      secondary: "hsl(210, 40%, 93%)",
+      accent: "hsl(200, 100%, 60%)",
+      background: "hsl(210, 40%, 98%)",
+      surface: "hsl(0, 0%, 100% / 0.8)",
+      text: "hsl(210, 40%, 15%)",
+      textSecondary: "hsl(210, 25%, 35%)",
+      border: "hsl(210, 40%, 85% / 0.6)",
+      shadow: "hsl(200, 100%, 30% / 0.2)"
+    },
+    gradients: {
+      primary: "linear-gradient(135deg, hsl(200, 100%, 50%) 0%, hsl(200, 100%, 60%) 100%)",
+      secondary: "linear-gradient(135deg, hsl(210, 40%, 93%) 0%, hsl(210, 40%, 98%) 100%)",
+      background: "linear-gradient(135deg, hsl(210, 40%, 98%) 0%, hsl(200, 50%, 96%) 100%)"
+    },
+    effects: {
+      blur: "blur(20px)",
+      glow: "0 0 30px hsl(200, 100%, 50% / 0.3)",
+      elevation: "0 8px 32px hsl(200, 100%, 30% / 0.15)"
     }
   }
 };
