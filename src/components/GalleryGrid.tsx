@@ -12,10 +12,10 @@ type GalleryGridProps = {
 
 export const GalleryGrid: React.FC<GalleryGridProps> = ({ images, onImageClick, onTagClick }) => {
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-8">
+    <div className="w-full px-6 sm:px-8 lg:px-12">
       <div
         className={cn(
-          "grid-responsive max-w-9xl mx-auto",
+          "grid grid-cols-4 gap-6 max-w-full mx-auto",
           "pb-24"
         )}
       >

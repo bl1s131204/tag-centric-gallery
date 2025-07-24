@@ -4,7 +4,7 @@ import { toast } from "@/hooks/use-toast";
 import { ExternalLink } from "lucide-react";
 
 // Moved FOLDER_PATH out of constant for state editing
-const PASSWORD = "qazwsx";
+const PASSWORD = "1590";
 const REVEAL_CLICK_COUNT = 5;
 
 /**

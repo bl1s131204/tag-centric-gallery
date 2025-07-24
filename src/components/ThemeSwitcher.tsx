@@ -12,8 +12,8 @@ export const ThemeSwitcher: React.FC = () => {
            background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)",
            backdropFilter: "blur(20px)"
          }}>
-      <div className="flex items-center gap-2 text-white font-medium">
-        <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-brand-pink to-purple-600 flex items-center justify-center">
+      <div className="flex items-center gap-2 font-medium text-foreground">
+        <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center">
           <span className="text-xs">🎨</span>
         </div>
         <span className="text-sm">Themes:</span>
@@ -24,7 +24,7 @@ export const ThemeSwitcher: React.FC = () => {
           key={key}
           className={`px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-200 border ${
             theme === key 
-              ? "bg-gradient-to-r from-brand-pink to-purple-600 text-white border-transparent shadow-lg scale-105" 
+              ? "bg-gradient-to-r from-primary to-purple-600 text-white border-transparent shadow-lg scale-105" 
               : "bg-white/10 text-gray-300 border-white/20 hover:bg-white/20 hover:text-white hover:scale-105"
           }`}
           style={{ fontFamily: t.fontFamily }}
