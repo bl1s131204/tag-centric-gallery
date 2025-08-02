@@ -32,9 +32,6 @@ export const FolderCard: React.FC<FolderCardProps> = ({
   className,
 }) => {
   const { theme } = useTheme();
-  const themeColors = themes[theme].colors;
-  // Accent glow color
-  const accent = themeColors.accent;
   return (
     <div
       className={cn(

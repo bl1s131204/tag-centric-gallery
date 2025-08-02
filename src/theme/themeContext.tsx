@@ -1,52 +1,60 @@
-
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { themes, ThemeName } from "./themes";
-import { getTheme, setTheme } from "@/utils/localPersistence";
 
-// Type for theme ctx
-interface ThemeCtxValue {
+interface ThemeContextValue {
   theme: ThemeName;
   setTheme: (theme: ThemeName) => void;
 }
-const ThemeCtx = createContext<ThemeCtxValue | undefined>(undefined);
+
+const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 export function useTheme() {
-  const ctx = useContext(ThemeCtx);
-  if (!ctx) throw new Error("ThemeCtx not found");
-  return ctx;
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
 }
 
-// Validate theme from storage
-function getInitialTheme(): ThemeName {
-  const stored = getTheme();
-  // Only use if it matches allowed themes
-  if (stored && typeof stored === "string" && Object.keys(themes).includes(stored)) {
-    return stored as ThemeName;
+function getStoredTheme(): ThemeName {
+  try {
+    const stored = localStorage.getItem("gallery_theme");
+    if (stored && Object.keys(themes).includes(stored)) {
+      return stored as ThemeName;
+    }
+  } catch (error) {
+    console.warn("Failed to get stored theme:", error);
   }
-  // Default to the light theme
   return "light";
 }
 
-// Provider
+function storeTheme(theme: ThemeName) {
+  try {
+    localStorage.setItem("gallery_theme", theme);
+  } catch (error) {
+    console.warn("Failed to store theme:", error);
+  }
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeName>(getInitialTheme);
-  
+  const [theme, setThemeState] = useState<ThemeName>(getStoredTheme);
+
+  const setTheme = (newTheme: ThemeName) => {
+    setThemeState(newTheme);
+    storeTheme(newTheme);
+  };
+
   useEffect(() => {
-    // Apply theme class to document root
-    document.documentElement.className = `${themes[theme].className} transition-colors duration-300`;
-    
-    // Apply font family
-    document.documentElement.style.fontFamily = themes[theme].fontFamily;
-    
-    // Persist theme
-    setTheme(theme);
+    // Apply theme class to document
+    const themeClass = themes[theme].className;
+    document.documentElement.className = themeClass;
   }, [theme]);
 
   return (
-    <ThemeCtx.Provider value={{ theme, setTheme: setThemeState }}>
-      <div className={`min-h-screen ${themes[theme].className} bg-background text-foreground transition-all duration-300`}>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <div className="min-h-screen transition-colors duration-300">
         {children}
       </div>
-    </ThemeCtx.Provider>
+    </ThemeContext.Provider>
   );
 }

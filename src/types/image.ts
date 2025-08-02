@@ -4,4 +4,7 @@ export type Image = {
   url: string;
   title: string;
   tags: string[];
+  size?: string;
+  dateAdded?: string | number;
+  lastModified?: string | number;
 };

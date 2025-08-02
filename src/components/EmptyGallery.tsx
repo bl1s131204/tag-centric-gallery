@@ -12,7 +12,6 @@ type EmptyGalleryProps = {
 
 export const EmptyGallery: React.FC<EmptyGalleryProps> = ({ onFilePick, specialBanner, specialFolderPath }) => {
   const { theme } = useTheme();
-  const themeColors = themes[theme].colors;
 
   return (
     <div className="min-h-[calc(100vh-70px)] w-full flex flex-col justify-center items-center relative py-20">

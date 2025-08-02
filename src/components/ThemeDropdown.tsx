@@ -11,21 +11,20 @@ export const ThemeDropdown: React.FC = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="text-gray-300 hover:text-white hover:bg-gray-800 rounded-full">
+        <Button variant="ghost" size="icon" className="text-foreground hover:text-foreground hover:bg-muted rounded-full">
           <Palette className="w-5 h-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-[#23283a] shadow-xl border-gold min-w-[180px] z-50 rounded-xl mt-2">
+      <DropdownMenuContent className="bg-card shadow-xl border min-w-[180px] z-50 rounded-xl mt-2">
         {Object.entries(themes).map(([key, t]) => (
           <DropdownMenuItem
             key={key}
             onClick={() => setTheme(key as ThemeName)}
-            className={`transition font-poppins px-3 py-2 rounded flex items-center gap-2 ${
-              theme === key ? "font-bold bg-emerald/80 text-[#171616] shadow" : "text-white"
+            className={`transition font-inter px-3 py-2 rounded flex items-center gap-2 ${
+              theme === key ? "font-bold bg-accent text-accent-foreground shadow" : "text-foreground"
             }`}
-            style={{ fontFamily: t.fontFamily }}
           >
-            <span className="w-4 h-4 rounded-full block bg-gradient-to-br from-gold to-emerald mr-2 shadow" />
+            <span className="w-4 h-4 rounded-full block bg-gradient-to-br from-primary to-accent mr-2 shadow" />
             {t.label}
           </DropdownMenuItem>
         ))}

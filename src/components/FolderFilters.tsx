@@ -26,7 +26,6 @@ export const FolderFilters: React.FC<FolderFiltersProps> = ({
   onViewChange,
 }) => {
   const { theme } = useTheme();
-  const themeColors = themes[theme].colors;
   return (
     <div className="flex flex-wrap items-center gap-4 w-full mb-8 p-6 rounded-2xl border border-white/10"
          style={{

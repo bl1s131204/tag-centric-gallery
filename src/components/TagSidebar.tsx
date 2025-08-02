@@ -14,7 +14,6 @@ type TagSidebarProps = {
 export const TagSidebar: React.FC<TagSidebarProps> = ({ tags, active, onSelect }) => {
   const [search, setSearch] = useState("");
   const { theme } = useTheme();
-  const themeColors = themes[theme].colors;
 
   const filtered = tags.filter((t) =>
     t.name.toLowerCase().includes(search.toLowerCase())

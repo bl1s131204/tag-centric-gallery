@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { ThemeDropdown } from "@/components/ThemeDropdown";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { GlobalSearchInput } from "./GlobalSearchInput";
 import { Menu, X, Sparkles } from "lucide-react";
 
@@ -33,7 +33,7 @@ const Header = ({ searchTerm, onSearchChange }: HeaderProps) => {
           {searchTerm !== undefined && onSearchChange && (
             <GlobalSearchInput value={searchTerm} onChange={onSearchChange} />
           )}
-          <ThemeDropdown />
+          <ThemeSwitcher />
         </div>
 
         {/* Mobile Menu Button */}
@@ -56,7 +56,7 @@ const Header = ({ searchTerm, onSearchChange }: HeaderProps) => {
               </div>
             )}
             <div className="flex justify-center animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-              <ThemeDropdown />
+              <ThemeSwitcher />
             </div>
           </div>
         </div>
