@@ -52,16 +52,16 @@
 
 /* ==================== GOLD THEME ==================== */
 .theme-gold {
-  --background: 50 60% 98%;
-  --foreground: 30 40% 12%;
-  --card: 48 100% 92%;
-  --card-foreground: 30 40% 12%;
-  --popover: 50 60% 98%;
-  --popover-foreground: 30 40% 12%;
-  --primary: 45 100% 42%;
-  --primary-foreground: 50 60% 98%;
-  --secondary: 40 50% 18%;
-  --secondary-foreground: 50 60% 98%;
+  --background: 50 40% 98%;
+  --foreground: 25 25% 15%;
+  --card: 48 50% 96%;
+  --card-foreground: 25 25% 15%;
+  --popover: 50 40% 98%;
+  --popover-foreground: 25 25% 15%;
+  --primary: 43 96% 56%;
+  --primary-foreground: 50 40% 98%;
+  --secondary: 30 30% 20%;
+  --secondary-foreground: 50 40% 98%;
   --muted: 48 100% 92%;
   --muted-foreground: 40 50% 18%;
   --accent: 45 100% 42%;

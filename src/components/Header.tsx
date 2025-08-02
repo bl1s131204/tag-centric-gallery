@@ -2,14 +2,18 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { GlobalSearchInput } from "./GlobalSearchInput";
+import { SortControls, SortCriteria, SortDirection } from "./SortControls";
 import { Menu, X, Sparkles } from "lucide-react";
 
 type HeaderProps = {
   searchTerm?: string;
   onSearchChange?: (value: string) => void;
+  sortBy?: SortCriteria;
+  sortDirection?: SortDirection;
+  onSortChange?: (criteria: SortCriteria, direction: SortDirection) => void;
 };
 
-const Header = ({ searchTerm, onSearchChange }: HeaderProps) => {
+const Header = ({ searchTerm, onSearchChange, sortBy, sortDirection, onSortChange }: HeaderProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -29,9 +33,16 @@ const Header = ({ searchTerm, onSearchChange }: HeaderProps) => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-4">
           {searchTerm !== undefined && onSearchChange && (
             <GlobalSearchInput value={searchTerm} onChange={onSearchChange} />
+          )}
+          {sortBy && sortDirection && onSortChange && (
+            <SortControls
+              sortBy={sortBy}
+              sortDirection={sortDirection}
+              onSortChange={onSortChange}
+            />
           )}
           <ThemeSwitcher />
         </div>
