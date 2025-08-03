@@ -30,116 +30,246 @@
 /* ==================== LIGHT THEME ==================== */
 .theme-light {
   --background: 0 0% 100%;
-  --foreground: 26 26% 10%;
-  --card: 0 0% 97%;
-  --card-foreground: 26 26% 10%;
+  --foreground: 222 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 84% 4.9%;
   --popover: 0 0% 100%;
-  --popover-foreground: 26 26% 10%;
-  --primary: 199 100% 40%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 34 34% 33%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 0 0% 97%;
-  --muted-foreground: 34 34% 33%;
-  --accent: 199 100% 40%;
-  --accent-foreground: 0 0% 98%;
+  --popover-foreground: 222 84% 4.9%;
+  --primary: 207 90% 54%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222 47% 11%;
   --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 87%;
-  --input: 0 0% 87%;
-  --ring: 199 100% 40%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 207 90% 54%;
+  
+  /* Enhanced semantic tokens */
+  --success: 142 76% 36%;
+  --success-foreground: 355 100% 97%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 48 96% 89%;
+  --info: 199 89% 48%;
+  --info-foreground: 210 40% 98%;
+  
+  /* Text hierarchy */
+  --text-primary: 222 84% 4.9%;
+  --text-secondary: 215 16% 47%;
+  --text-tertiary: 215 20% 65%;
+  --text-inverse: 210 40% 98%;
+  
+  /* Surface colors */
+  --surface-primary: 0 0% 100%;
+  --surface-secondary: 210 40% 96%;
+  --surface-tertiary: 214 32% 91%;
+  --surface-overlay: 222 84% 4.9%;
+  
+  /* Interactive states */
+  --hover-light: 210 40% 94%;
+  --hover-medium: 214 32% 89%;
+  --active: 207 90% 49%;
+  --focus: 207 90% 54%;
 }
 
 /* ==================== GOLD THEME ==================== */
 .theme-gold {
-  --background: 50 40% 98%;
-  --foreground: 25 25% 15%;
-  --card: 48 50% 96%;
-  --card-foreground: 25 25% 15%;
-  --popover: 50 40% 98%;
-  --popover-foreground: 25 25% 15%;
-  --primary: 43 96% 56%;
-  --primary-foreground: 50 40% 98%;
-  --secondary: 30 30% 20%;
-  --secondary-foreground: 50 40% 98%;
-  --muted: 48 100% 92%;
-  --muted-foreground: 40 50% 18%;
-  --accent: 45 100% 42%;
-  --accent-foreground: 50 60% 98%;
+  --background: 48 46% 98%;
+  --foreground: 27 32% 16%;
+  --card: 48 46% 96%;
+  --card-foreground: 27 32% 16%;
+  --popover: 48 46% 98%;
+  --popover-foreground: 27 32% 16%;
+  --primary: 45 93% 47%;
+  --primary-foreground: 48 46% 98%;
+  --secondary: 47 77% 90%;
+  --secondary-foreground: 27 32% 16%;
+  --muted: 47 77% 90%;
+  --muted-foreground: 27 16% 44%;
+  --accent: 47 77% 88%;
+  --accent-foreground: 27 32% 16%;
   --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 45 50% 78%;
-  --input: 45 50% 78%;
-  --ring: 45 100% 42%;
+  --destructive-foreground: 48 46% 98%;
+  --border: 47 50% 85%;
+  --input: 47 50% 85%;
+  --ring: 45 93% 47%;
+  
+  /* Enhanced semantic tokens */
+  --success: 120 60% 35%;
+  --success-foreground: 48 46% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 48 96% 89%;
+  --info: 199 89% 48%;
+  --info-foreground: 48 46% 98%;
+  
+  /* Text hierarchy */
+  --text-primary: 27 32% 16%;
+  --text-secondary: 27 16% 44%;
+  --text-tertiary: 27 12% 58%;
+  --text-inverse: 48 46% 98%;
+  
+  /* Surface colors */
+  --surface-primary: 48 46% 98%;
+  --surface-secondary: 47 77% 92%;
+  --surface-tertiary: 47 50% 87%;
+  --surface-overlay: 27 32% 16%;
+  
+  /* Interactive states */
+  --hover-light: 47 77% 94%;
+  --hover-medium: 47 50% 89%;
+  --active: 45 93% 42%;
+  --focus: 45 93% 47%;
 }
 
 /* ==================== DARK THEME ==================== */
 .theme-dark {
-  --background: 0 0% 7%;
-  --foreground: 0 0% 88%;
-  --card: 0 0% 12%;
-  --card-foreground: 0 0% 88%;
-  --popover: 0 0% 7%;
-  --popover-foreground: 0 0% 88%;
-  --primary: 207 100% 68%;
-  --primary-foreground: 0 0% 7%;
-  --secondary: 0 0% 69%;
-  --secondary-foreground: 0 0% 7%;
-  --muted: 0 0% 12%;
-  --muted-foreground: 0 0% 69%;
-  --accent: 207 100% 68%;
-  --accent-foreground: 0 0% 7%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 20%;
-  --input: 0 0% 20%;
-  --ring: 207 100% 68%;
+  --background: 222 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 217 91% 60%;
+  --primary-foreground: 222 84% 4.9%;
+  --secondary: 217 32% 17%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217 32% 17%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 217 32% 17%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217 32% 17%;
+  --input: 217 32% 17%;
+  --ring: 217 91% 60%;
+  
+  /* Enhanced semantic tokens */
+  --success: 142 71% 45%;
+  --success-foreground: 210 40% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 222 84% 4.9%;
+  --info: 199 89% 48%;
+  --info-foreground: 210 40% 98%;
+  
+  /* Text hierarchy */
+  --text-primary: 210 40% 98%;
+  --text-secondary: 215 20% 65%;
+  --text-tertiary: 215 16% 47%;
+  --text-inverse: 222 84% 4.9%;
+  
+  /* Surface colors */
+  --surface-primary: 222 84% 4.9%;
+  --surface-secondary: 217 32% 17%;
+  --surface-tertiary: 215 25% 27%;
+  --surface-overlay: 210 40% 98%;
+  
+  /* Interactive states */
+  --hover-light: 217 32% 20%;
+  --hover-medium: 215 25% 30%;
+  --active: 217 91% 55%;
+  --focus: 217 91% 60%;
 }
 
 /* ==================== NEON THEME ==================== */
 .theme-neon {
-  --background: 0 0% 5%;
-  --foreground: 104 100% 57%;
-  --card: 0 0% 10%;
-  --card-foreground: 104 100% 57%;
-  --popover: 0 0% 5%;
-  --popover-foreground: 104 100% 57%;
-  --primary: 180 100% 50%;
-  --primary-foreground: 0 0% 5%;
-  --secondary: 300 100% 50%;
-  --secondary-foreground: 0 0% 5%;
-  --muted: 0 0% 10%;
-  --muted-foreground: 300 100% 50%;
+  --background: 240 10% 3.9%;
+  --foreground: 120 100% 70%;
+  --card: 240 10% 6%;
+  --card-foreground: 120 100% 70%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 120 100% 70%;
+  --primary: 180 100% 60%;
+  --primary-foreground: 240 10% 3.9%;
+  --secondary: 300 100% 70%;
+  --secondary-foreground: 240 10% 3.9%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
   --accent: 180 100% 50%;
-  --accent-foreground: 0 0% 5%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 27%;
-  --input: 0 0% 27%;
-  --ring: 180 100% 50%;
+  --accent-foreground: 240 10% 3.9%;
+  --destructive: 0 100% 60%;
+  --destructive-foreground: 120 100% 70%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 180 100% 60%;
+  
+  /* Enhanced semantic tokens */
+  --success: 120 100% 50%;
+  --success-foreground: 240 10% 3.9%;
+  --warning: 60 100% 50%;
+  --warning-foreground: 240 10% 3.9%;
+  --info: 200 100% 50%;
+  --info-foreground: 240 10% 3.9%;
+  
+  /* Text hierarchy */
+  --text-primary: 120 100% 70%;
+  --text-secondary: 300 100% 70%;
+  --text-tertiary: 240 5% 64.9%;
+  --text-inverse: 240 10% 3.9%;
+  
+  /* Surface colors */
+  --surface-primary: 240 10% 3.9%;
+  --surface-secondary: 240 10% 6%;
+  --surface-tertiary: 240 3.7% 15.9%;
+  --surface-overlay: 120 100% 70%;
+  
+  /* Interactive states */
+  --hover-light: 240 10% 8%;
+  --hover-medium: 240 3.7% 18%;
+  --active: 180 100% 55%;
+  --focus: 180 100% 60%;
 }
 
 /* ==================== CYBERPUNK THEME ==================== */
 .theme-cyberpunk {
-  --background: 242 45% 10%;
-  --foreground: 180 100% 50%;
-  --card: 242 45% 18%;
-  --card-foreground: 180 100% 50%;
-  --popover: 242 45% 10%;
-  --popover-foreground: 180 100% 50%;
-  --primary: 338 84% 52%;
-  --primary-foreground: 242 45% 10%;
-  --secondary: 338 89% 36%;
-  --secondary-foreground: 180 100% 50%;
-  --muted: 242 45% 18%;
-  --muted-foreground: 338 89% 36%;
-  --accent: 338 84% 52%;
-  --accent-foreground: 242 45% 10%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 242 45% 36%;
-  --input: 242 45% 36%;
-  --ring: 338 84% 52%;
+  --background: 240 45% 4%;
+  --foreground: 180 100% 75%;
+  --card: 240 40% 8%;
+  --card-foreground: 180 100% 75%;
+  --popover: 240 45% 4%;
+  --popover-foreground: 180 100% 75%;
+  --primary: 340 100% 65%;
+  --primary-foreground: 240 45% 4%;
+  --secondary: 280 100% 70%;
+  --secondary-foreground: 240 45% 4%;
+  --muted: 240 22% 18%;
+  --muted-foreground: 240 10% 60%;
+  --accent: 340 100% 65%;
+  --accent-foreground: 240 45% 4%;
+  --destructive: 0 100% 65%;
+  --destructive-foreground: 180 100% 75%;
+  --border: 240 22% 18%;
+  --input: 240 22% 18%;
+  --ring: 340 100% 65%;
+  
+  /* Enhanced semantic tokens */
+  --success: 120 100% 50%;
+  --success-foreground: 240 45% 4%;
+  --warning: 60 100% 50%;
+  --warning-foreground: 240 45% 4%;
+  --info: 200 100% 50%;
+  --info-foreground: 240 45% 4%;
+  
+  /* Text hierarchy */
+  --text-primary: 180 100% 75%;
+  --text-secondary: 340 100% 75%;
+  --text-tertiary: 240 10% 60%;
+  --text-inverse: 240 45% 4%;
+  
+  /* Surface colors */
+  --surface-primary: 240 45% 4%;
+  --surface-secondary: 240 40% 8%;
+  --surface-tertiary: 240 22% 18%;
+  --surface-overlay: 180 100% 75%;
+  
+  /* Interactive states */
+  --hover-light: 240 40% 10%;
+  --hover-medium: 240 22% 22%;
+  --active: 340 100% 60%;
+  --focus: 340 100% 65%;
 }
 
 /* ==================== BASE STYLES ==================== */
