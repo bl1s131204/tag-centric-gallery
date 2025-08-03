@@ -3,12 +3,20 @@ import React, { useState, useEffect } from "react";
 import { ImageGallery } from "@/components/ImageGallery";
 import { HiddenAccess, HiddenFolderAccess } from "@/components/HiddenAccess";
 import Header from "@/components/Header";
+import { SortCriteria, SortDirection } from "@/components/SortControls";
 
 const Index = () => {
   const [showHidden, setShowHidden] = useState(false);
   const [specialFolderPath, setSpecialFolderPath] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState<SortCriteria>("name");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+
+  const handleSortChange = (criteria: SortCriteria, direction: SortDirection) => {
+    setSortBy(criteria);
+    setSortDirection(direction);
+  };
 
   // Check for files from folder selection page on component mount
   useEffect(() => {
@@ -52,7 +60,13 @@ const Index = () => {
 
   return (
     <>
-      <Header searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+      <Header 
+        searchTerm={searchTerm} 
+        onSearchChange={setSearchTerm}
+        sortBy={sortBy}
+        sortDirection={sortDirection}
+        onSortChange={handleSortChange}
+      />
       <main className="pt-16 min-h-screen transition-all duration-200 bg-neutral-900">
         <ImageGallery
           files={files}
