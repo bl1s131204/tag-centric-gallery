@@ -65,20 +65,20 @@ export function sortImages(
         break;
         
       case "size":
-        const sizeA = parseFileSize(a.size || "0");
-        const sizeB = parseFileSize(b.size || "0");
+        const sizeA = parseFileSize(a.size);
+        const sizeB = parseFileSize(b.size);
         comparison = sizeA - sizeB;
         break;
         
       case "dateAdded":
-        const dateA = new Date(a.dateAdded || 0).getTime();
-        const dateB = new Date(b.dateAdded || 0).getTime();
+        const dateA = new Date(a.dateAdded).getTime();
+        const dateB = new Date(b.dateAdded).getTime();
         comparison = dateA - dateB;
         break;
         
       case "dateModified":
-        const modA = new Date(a.lastModified || a.dateAdded || 0).getTime();
-        const modB = new Date(b.lastModified || b.dateAdded || 0).getTime();
+        const modA = new Date(a.lastModified).getTime();
+        const modB = new Date(b.lastModified).getTime();
         comparison = modA - modB;
         break;
         

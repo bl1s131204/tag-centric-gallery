@@ -1,6 +1,7 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import { parseFiles } from "@/utils/tagUtils";
+import { sortImages, SortCriteria, SortDirection } from "@/utils/sortUtils";
 import { TagSidebar } from "./TagSidebar";
 import { FullscreenViewer } from "./FullscreenViewer";
 import { EmptyGallery } from "./EmptyGallery";
@@ -13,6 +14,8 @@ type ImageGalleryProps = {
   onFilesChange: (files: File[]) => void;
   specialFolderPath?: string | null;
   searchTerm?: string;
+  sortBy?: SortCriteria;
+  sortDirection?: SortDirection;
 };
 
 export const ImageGallery: React.FC<ImageGalleryProps> = ({
@@ -20,6 +23,8 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
   onFilesChange,
   specialFolderPath,
   searchTerm = "",
+  sortBy = "name",
+  sortDirection = "asc",
 }) => {
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [viewerIdx, setViewerIdx] = useState<number | null>(null);
@@ -55,20 +60,21 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
     [tagMap]
   );
 
-  const visibleImages: Image[] = useMemo(
-    () =>
-      imageData
-        .filter((img) => !activeTag || img.tags.includes(activeTag))
-        .filter(
-          (img) =>
-            !searchTerm ||
-            img.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            img.tags.some((t) =>
-              t.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-        ),
-    [imageData, activeTag, searchTerm]
-  );
+  const visibleImages: Image[] = useMemo(() => {
+    const filtered = imageData
+      .filter((img) => !activeTag || img.tags.includes(activeTag))
+      .filter(
+        (img) =>
+          !searchTerm ||
+          img.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          img.tags.some((t) =>
+            t.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+      );
+    
+    // Apply sorting
+    return sortImages(filtered, sortBy, sortDirection);
+  }, [imageData, activeTag, searchTerm, sortBy, sortDirection]);
 
   const openViewerAt = (idx: number) => setViewerIdx(idx);
   const closeViewer = () => setViewerIdx(null);

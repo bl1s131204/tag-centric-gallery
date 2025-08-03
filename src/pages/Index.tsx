@@ -73,6 +73,8 @@ const Index = () => {
           onFilesChange={handleFilesSelected}
           specialFolderPath={specialFolderPath}
           searchTerm={searchTerm}
+          sortBy={sortBy}
+          sortDirection={sortDirection}
         />
         <HiddenAccess
           onReveal={() => setShowHidden(true)}

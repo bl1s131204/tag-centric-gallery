@@ -65,10 +65,10 @@ function groupTags(rawTags: string[], threshold = 4): Record<string, string[]> {
  *  - Each tag is trimmed and cleaned, and falsey/stopwords are dropped.
  */
 export function parseFiles(files: File[]): {
-  imageData: { filename: string; url: string; title: string; tags: string[] }[];
+  imageData: { filename: string; url: string; title: string; tags: string[]; size: string; dateAdded: number; lastModified: number }[];
   tagMap: Record<string, { originalVariants: string[]; images: string[] }>;
 } {
-  const imageData: { filename: string; url: string; title: string; tags: string[] }[] = [];
+  const imageData: { filename: string; url: string; title: string; tags: string[]; size: string; dateAdded: number; lastModified: number }[] = [];
   let rawTags: string[] = [];
   const tagRawVariants: Record<string, string[]> = {};
 
@@ -98,11 +98,24 @@ export function parseFiles(files: File[]): {
         rawTags.push(cleaned);
       }
     }
+
+    // Format file size
+    const formatFileSize = (bytes: number): string => {
+      if (bytes === 0) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    };
+
     imageData.push({
       filename: file.name,
       url: URL.createObjectURL(file),
       title,
       tags: normed,
+      size: formatFileSize(file.size),
+      dateAdded: Date.now(),
+      lastModified: file.lastModified,
     });
   });
 
